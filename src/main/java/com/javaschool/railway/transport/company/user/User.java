@@ -25,7 +25,7 @@ public class User{
 	@Column(name = "date_of_birth")
 	private Date date_of_birth;
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "rol_id")
 	Rol rol;
 
