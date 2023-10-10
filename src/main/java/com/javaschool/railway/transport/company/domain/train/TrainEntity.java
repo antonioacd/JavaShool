@@ -1,4 +1,4 @@
-package com.javaschool.railway.transport.company.train;
+package com.javaschool.railway.transport.company.domain.train;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Table(name="trains", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class Train {
+public class TrainEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;

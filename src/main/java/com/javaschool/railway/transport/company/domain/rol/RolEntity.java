@@ -1,4 +1,4 @@
-package com.javaschool.railway.transport.company.rol;
+package com.javaschool.railway.transport.company.domain.rol;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,10 +9,10 @@ import lombok.Setter;
 @Table(name="roles", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class Rol {
+public class RolEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	
 	@Column(name="rol")
 	private String rol;

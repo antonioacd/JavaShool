@@ -1,6 +1,6 @@
-package com.javaschool.railway.transport.company.station;
+package com.javaschool.railway.transport.company.domain.station;
 
-import com.javaschool.railway.transport.company.schedule.Schedule;
+import com.javaschool.railway.transport.company.domain.schedule.ScheduleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name="stations", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class Station {
+public class StationEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -23,9 +23,9 @@ public class Station {
 	private String city;
 
 	@OneToMany(mappedBy = "departure_station")
-	List<Schedule> departureSchedulesList;
+	List<ScheduleEntity> departureSchedulesList;
 
 	@OneToMany(mappedBy = "arrival_station")
-	List<Schedule> arrivalSchedulesList;
+	List<ScheduleEntity> arrivalSchedulesList;
 
 }

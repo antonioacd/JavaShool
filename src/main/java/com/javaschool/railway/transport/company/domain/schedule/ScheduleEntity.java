@@ -1,8 +1,7 @@
-package com.javaschool.railway.transport.company.schedule;
+package com.javaschool.railway.transport.company.domain.schedule;
 
-import com.javaschool.railway.transport.company.rol.Rol;
-import com.javaschool.railway.transport.company.station.Station;
-import com.javaschool.railway.transport.company.train.Train;
+import com.javaschool.railway.transport.company.domain.station.StationEntity;
+import com.javaschool.railway.transport.company.domain.train.TrainEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Table(name="schedules", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class Schedule {
+public class ScheduleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -27,14 +26,14 @@ public class Schedule {
 
 	@ManyToOne
 	@JoinColumn(name = "departure_station_id")
-	Station departure_station;
+	StationEntity departure_station;
 
 	@ManyToOne
 	@JoinColumn(name = "arrival_station_id")
-	Station arrival_station;
+	StationEntity arrival_station;
 
 	@ManyToOne
 	@JoinColumn(name = "train_id")
-	Train train;
+	TrainEntity train;
 
 }

@@ -1,17 +1,17 @@
-package com.javaschool.railway.transport.company.user;
+package com.javaschool.railway.transport.company.domain.user;
 
-import com.javaschool.railway.transport.company.rol.Rol;
+import com.javaschool.railway.transport.company.domain.rol.RolEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="users", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class User{
+public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -23,10 +23,10 @@ public class User{
 	private String surname;
 
 	@Column(name = "date_of_birth")
-	private Date date_of_birth;
+	private LocalDate date_of_birth;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "rol_id")
-	Rol rol;
+	private RolEntity rol;
 
 }
