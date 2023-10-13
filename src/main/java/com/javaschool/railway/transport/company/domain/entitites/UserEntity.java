@@ -1,6 +1,5 @@
-package com.javaschool.railway.transport.company.domain.user;
+package com.javaschool.railway.transport.company.domain.entitites;
 
-import com.javaschool.railway.transport.company.domain.rol.RolEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

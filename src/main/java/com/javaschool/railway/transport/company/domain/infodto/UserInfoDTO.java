@@ -1,6 +1,5 @@
-package com.javaschool.railway.transport.company.domain.user;
+package com.javaschool.railway.transport.company.domain.infodto;
 
-import com.javaschool.railway.transport.company.domain.rol.RolEntity;
 import lombok.Getter;
 import lombok.Setter;
 

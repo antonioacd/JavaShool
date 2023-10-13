@@ -1,7 +1,5 @@
-package com.javaschool.railway.transport.company.domain.schedule;
+package com.javaschool.railway.transport.company.domain.entitites;
 
-import com.javaschool.railway.transport.company.domain.station.StationEntity;
-import com.javaschool.railway.transport.company.domain.train.TrainEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

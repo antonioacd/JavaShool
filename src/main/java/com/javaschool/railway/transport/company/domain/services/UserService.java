@@ -1,7 +1,8 @@
-package com.javaschool.railway.transport.company.domain.user;
+package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.rol.RolEntity;
-import com.javaschool.railway.transport.company.domain.rol.RolRepository;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
+import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
+import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

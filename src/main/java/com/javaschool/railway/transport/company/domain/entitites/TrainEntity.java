@@ -1,4 +1,4 @@
-package com.javaschool.railway.transport.company.domain.train;
+package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
 import lombok.Getter;

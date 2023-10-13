@@ -1,11 +1,10 @@
-package com.javaschool.railway.transport.company.domain.train;
+package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.train.TrainEntity;
-import com.javaschool.railway.transport.company.domain.train.TrainRepository;
+import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
+import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

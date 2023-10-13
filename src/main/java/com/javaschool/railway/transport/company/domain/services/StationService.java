@@ -1,7 +1,7 @@
-package com.javaschool.railway.transport.company.domain.station;
+package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.station.StationEntity;
-import com.javaschool.railway.transport.company.domain.station.StationRepository;
+import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
+import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

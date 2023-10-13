@@ -1,6 +1,9 @@
-package com.javaschool.railway.transport.company.domain.rol;
+package com.javaschool.railway.transport.company.domain.services;
 
 
+import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
+import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
+import com.javaschool.railway.transport.company.domain.repositories.RolRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,5 +1,6 @@
-package com.javaschool.railway.transport.company.domain.schedule;
+package com.javaschool.railway.transport.company.domain.repositories;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

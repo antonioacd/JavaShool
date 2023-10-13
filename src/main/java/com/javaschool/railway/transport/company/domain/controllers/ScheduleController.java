@@ -1,5 +1,7 @@
-package com.javaschool.railway.transport.company.domain.schedule;
+package com.javaschool.railway.transport.company.domain.controllers;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.services.ScheduleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

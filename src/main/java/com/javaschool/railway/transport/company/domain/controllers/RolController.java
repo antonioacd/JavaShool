@@ -1,8 +1,9 @@
-package com.javaschool.railway.transport.company.domain.rol;
+package com.javaschool.railway.transport.company.domain.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
+import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
+import com.javaschool.railway.transport.company.domain.services.RolService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

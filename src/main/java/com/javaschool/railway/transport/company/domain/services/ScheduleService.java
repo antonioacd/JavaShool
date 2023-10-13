@@ -1,7 +1,7 @@
-package com.javaschool.railway.transport.company.domain.schedule;
+package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.schedule.ScheduleEntity;
-import com.javaschool.railway.transport.company.domain.schedule.ScheduleRepository;
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

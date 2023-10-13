@@ -1,7 +1,8 @@
-package com.javaschool.railway.transport.company.domain.train;
+package com.javaschool.railway.transport.company.domain.controllers;
 
+import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
+import com.javaschool.railway.transport.company.domain.services.TrainService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

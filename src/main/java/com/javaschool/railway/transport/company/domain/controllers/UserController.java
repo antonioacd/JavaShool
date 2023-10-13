@@ -1,7 +1,9 @@
-package com.javaschool.railway.transport.company.domain.user;
+package com.javaschool.railway.transport.company.domain.controllers;
 
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
+import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
+import com.javaschool.railway.transport.company.domain.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

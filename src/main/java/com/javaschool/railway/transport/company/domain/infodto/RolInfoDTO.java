@@ -1,4 +1,4 @@
-package com.javaschool.railway.transport.company.domain.rol;
+package com.javaschool.railway.transport.company.domain.infodto;
 
 
 import lombok.Getter;
