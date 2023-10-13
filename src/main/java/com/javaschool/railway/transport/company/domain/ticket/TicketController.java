@@ -10,20 +10,21 @@ import java.util.List;
 public class TicketController {
 
   @Autowired
-  private TicketRepository ticketRepository;
+  private TicketService ticketService;
+
+  @PostMapping
+  public TicketEntity createStation(@RequestBody TicketEntity ticketEntity) {
+    return ticketService.createTicket(ticketEntity);
+  }
 
   @GetMapping
   public List<TicketEntity> getAllStations() {
-    return ticketRepository.findAll();
+    return ticketService.findAll();
   } 
 
   @GetMapping("/{id}")
   public TicketEntity getStationById(@PathVariable Long id) {
-    return ticketRepository.findById(id).get();
+    return ticketService.getTicketById(id);
   }
 
-  @PostMapping
-  public TicketEntity createStation(@RequestBody TicketEntity ticketEntity) {
-    return ticketRepository.save(ticketEntity);
-  }
 }
