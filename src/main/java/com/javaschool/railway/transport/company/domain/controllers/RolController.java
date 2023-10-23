@@ -1,6 +1,5 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
-import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
 import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.RolService;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController // Same as controller but response bodies are by default
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
 @RequestMapping("/api/roles")
 @AllArgsConstructor
 public class RolController {
@@ -16,12 +16,13 @@ public class RolController {
   private final RolService rolService;
 
   @PostMapping
-  public RolEntity createRol(@RequestBody RolEntity rol) {
+  public RolInfoDTO createRol(@RequestBody RolInfoDTO rol) {
+    System.out.println("RolController: " + rol);
     return rolService.createRol(rol);
   }
 
   @GetMapping("/{id}")
-  public RolEntity getRolById(@PathVariable Long id) {
+  public RolInfoDTO getRolById(@PathVariable Long id) {
     return rolService.getRolById(id);
   }
 
@@ -29,5 +30,4 @@ public class RolController {
   public List<RolInfoDTO> getAllRoles() {
     return rolService.findAll();
   }
-
 }

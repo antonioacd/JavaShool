@@ -2,12 +2,14 @@ package com.javaschool.railway.transport.company.domain.controllers;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.services.ScheduleService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/schedules")
+@AllArgsConstructor
 public class ScheduleController {
 
   private ScheduleService scheduleService;
@@ -20,7 +22,12 @@ public class ScheduleController {
   @GetMapping
   public List<ScheduleEntity> getAllSchedules() {
     return scheduleService.findAll();
-  } 
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteScheduleById(@PathVariable Long id) {
+    scheduleService.deleteScheduleById(id);
+  }
 
   @GetMapping("/{id}")
   public ScheduleEntity getScheduleById(@PathVariable Long id) {

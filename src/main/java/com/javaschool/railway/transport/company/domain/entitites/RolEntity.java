@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 public class RolEntity {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name="rol")
+	@Column(name="rol", nullable=false)
 	private String rol;
 }

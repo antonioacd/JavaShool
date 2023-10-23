@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.util.List;
 
 @Entity
-@Table(name="stations", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
+@Table(name = "stations", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
 public class StationEntity {
@@ -15,16 +15,9 @@ public class StationEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="name")
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name="city")
+	@Column(name = "city", nullable = false)
 	private String city;
-
-	@OneToMany(mappedBy = "departure_station")
-	List<ScheduleEntity> departureSchedulesList;
-
-	@OneToMany(mappedBy = "arrival_station")
-	List<ScheduleEntity> arrivalSchedulesList;
-
 }

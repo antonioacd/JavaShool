@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
@@ -16,18 +17,18 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping
-  public UserEntity createUser(@RequestBody UserEntity user) {
+  public UserInfoDTO createUser(@RequestBody UserEntity user) {
+    System.out.println("UserEntity: " + "Holaa");
     return userService.createUser(user);
   }
 
   @GetMapping("/{id}")
-  public UserEntity getUserById(@PathVariable Long id) {
+  public UserInfoDTO getUserById(@PathVariable Long id) {
     return userService.getUserById(id);
   }
 
   @GetMapping
   public List<UserInfoDTO> getAllUsers() {
-    return userService.findAll();
+    return userService.getAllUsers();
   }
-
 }

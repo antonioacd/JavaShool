@@ -2,50 +2,55 @@ package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
+import com.javaschool.railway.transport.company.domain.repositories.RolRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
+@NoArgsConstructor(force = true)
 public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserEntity createUser(UserEntity user){
-        return userRepository.save(user);
+    private final RolRepository rolRepository;
+
+    private ModelMapper modelMapper;
+
+    public UserInfoDTO createUser(UserEntity user) {
+        System.out.println("User:" + user.toString());
+        user.setRol(rolRepository.getReferenceById(user.getRol().getId()));
+        return modelMapper.map(userRepository.save(user), UserInfoDTO.class);
     }
 
-    public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).get();
-    }
-
-    public List<UserInfoDTO> findAll(){
-
-        List<UserEntity> userEntityList = userRepository.findAll();
-
-        List<UserInfoDTO> userInfoDTOList = new ArrayList<>();
-
-        for (UserEntity userEntity : userEntityList) {
-            // Add the DTO useres
-            userInfoDTOList.add(createInfoDTO(userEntity));
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("Usuario no encontrado");
         }
 
-        return userInfoDTOList;
+        userRepository.deleteById(userId);
     }
 
-    private UserInfoDTO createInfoDTO(UserEntity user){
+    public List<UserInfoDTO> getAllUsers() {
+        List<UserEntity> users = userRepository.findAll();
 
-        UserInfoDTO userInfoDto = new UserInfoDTO();
+        return users.stream()
+                .map(user -> modelMapper.map(user, UserInfoDTO.class))
+                .collect(Collectors.toList());
+    }
 
-        userInfoDto.setId(user.getId());
-        userInfoDto.setName(user.getName());
-        userInfoDto.setSurname(user.getSurname());
-        userInfoDto.setDate_of_birth(user.getDate_of_birth());
+    public UserInfoDTO getUserById(Long userId) {
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
-        return userInfoDto;
+        return modelMapper.map(user, UserInfoDTO.class);
     }
 }

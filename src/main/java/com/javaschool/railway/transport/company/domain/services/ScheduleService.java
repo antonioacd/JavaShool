@@ -21,6 +21,11 @@ public class ScheduleService {
         return scheduleRepository.findById(id).get();
     }
 
+    public void deleteScheduleById(Long id) {
+        scheduleRepository.deleteById(id);
+    }
+
+
     public List<ScheduleEntity> findAll(){
         return scheduleRepository.findAll();
     }

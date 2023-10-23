@@ -13,19 +13,25 @@ import java.time.LocalDate;
 public class UserEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	
-	@Column(name="name")
+	@Column(name="name", nullable = false)
 	private String name;
 
-	@Column(name = "surname")
+	@Column(name = "surname", nullable = false)
 	private String surname;
 
-	@Column(name = "date_of_birth")
-	private LocalDate date_of_birth;
+	@Column(name = "email", nullable = false)
+	private String email;
+
+	@Column(name = "password", nullable = false)
+	private String password;
+
+	@Column(name = "date_of_birth", nullable = false)
+	private LocalDate dateOfBirth;
 
 	@ManyToOne
-	@JoinColumn(name = "rol_id")
+	@JoinColumn(name = "rol_id", referencedColumnName= "id", nullable = false)
 	private RolEntity rol;
 
 }

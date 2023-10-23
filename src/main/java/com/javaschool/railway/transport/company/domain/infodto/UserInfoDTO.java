@@ -1,15 +1,19 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@Data
+@ToString
 public class UserInfoDTO {
-    private Integer id;
+    private Long id;
     private String name;
     private String surname;
-    private LocalDate date_of_birth;
+    private String email;
+    private LocalDate dateOfBirth;
+    private RolInfoDTO rol;
 }

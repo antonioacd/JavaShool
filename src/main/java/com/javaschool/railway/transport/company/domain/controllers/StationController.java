@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/stations")
 @AllArgsConstructor
@@ -22,6 +22,11 @@ public class StationController {
   @GetMapping("/{id}")
   public StationEntity getStationById(@PathVariable Long id) {
     return stationService.getStationById(id);
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteStationById(@PathVariable Long id) {
+    stationService.deleteStationById(id);
   }
 
   @GetMapping

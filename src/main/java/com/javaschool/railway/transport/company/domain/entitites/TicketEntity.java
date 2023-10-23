@@ -13,15 +13,15 @@ public class TicketEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
-	@Column(name="seat_number")
-	private String seat_number;
+	@Column(name="seat_number", nullable = false)
+	private String seatNumber;
 
 	@OneToOne
-	@JoinColumn(name = "user_id")
-	UserEntity user;
+	@JoinColumn(name = "user_id", referencedColumnName= "id", nullable = false)
+	private UserEntity user;
 
 	@ManyToOne
-	@JoinColumn(name = "schedule_id")
-    ScheduleEntity schedule;
+	@JoinColumn(name = "schedule_id", referencedColumnName= "id",nullable = false)
+	private ScheduleEntity schedule;
 
 }

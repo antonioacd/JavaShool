@@ -21,9 +21,12 @@ public class TrainService {
         return trainRepository.findById(id).get();
     }
 
+    public void deleteTrainById(Long id) {
+        trainRepository.deleteById(id);
+    }
+
     public List<TrainEntity> findAll(){
         return trainRepository.findAll();
     }
-
 
 }

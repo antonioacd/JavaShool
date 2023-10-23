@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/trains")
 @AllArgsConstructor
@@ -22,6 +23,11 @@ public class TrainController {
   @GetMapping("/{id}")
   public TrainEntity getTrainById(@PathVariable Long id) {
     return trainService.getTrainById(id);
+  }
+
+  @DeleteMapping("/{id}")
+  public void deleteTrainById(@PathVariable Long id) {
+    trainService.deleteTrainById(id);
   }
 
   @GetMapping

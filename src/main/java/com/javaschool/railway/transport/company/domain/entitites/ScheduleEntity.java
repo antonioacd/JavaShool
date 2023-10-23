@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name="schedules", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
@@ -12,26 +14,28 @@ public class ScheduleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	
-	@Column(name="departure_time")
-	private String departure_time;
 
-	@Column(name="arrival_time")
-	private String arrival_time;
+	@Column(name="departure_time", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date departureTime;
 
-	@Column(name="occupied_seats")
-	private String occupied_seats;
+	@Column(name="arrival_time", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date arrivalTime;
 
-	@ManyToOne
-	@JoinColumn(name = "departure_station_id")
-	StationEntity departure_station;
+	@Column(name="occupied_seats", nullable = false)
+	private String occupiedSeats;
 
 	@ManyToOne
-	@JoinColumn(name = "arrival_station_id")
-	StationEntity arrival_station;
+	@JoinColumn(name = "departure_station_id", referencedColumnName= "id", nullable = false)
+	private StationEntity departureStation;
 
 	@ManyToOne
-	@JoinColumn(name = "train_id")
-	TrainEntity train;
+	@JoinColumn(name = "arrival_station_id", referencedColumnName= "id", nullable = false)
+	private StationEntity arrivalStation;
+
+	@ManyToOne
+	@JoinColumn(name = "train_id", referencedColumnName= "id", nullable = false)
+	private TrainEntity train;
 
 }

@@ -13,7 +13,11 @@ public class TrainEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
-	@Column(name="seats")
+	@Column(name="seats", nullable = false)
 	private String seats;
+
+	@ManyToOne
+	@JoinColumn(name = "current_station_id", nullable = false)
+	private StationEntity currentStation;
 
 }
