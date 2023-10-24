@@ -1,4 +1,5 @@
 package com.javaschool.railway.transport.company.domain.services;
+
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing train-related operations.
+ */
 @Service
 @AllArgsConstructor
 public class TrainService {
@@ -23,31 +27,45 @@ public class TrainService {
     @Autowired
     private final ModelMapper modelMapper;
 
-    public TrainInfoDTO createTrain(TrainEntity train){
-
-        System.out.println("Tren1: " + train.toString());
-        System.out.println("Tren1.5" + stationRepository.getReferenceById(train.getCurrentStation().getId()).toString());
-
+    /**
+     * Creates a new train and returns the train's information.
+     *
+     * @param train The train entity to be created.
+     * @return A DTO (Data Transfer Object) containing the train's information.
+     */
+    public TrainInfoDTO createTrain(TrainEntity train) {
         train.setCurrentStation(stationRepository.getReferenceById(train.getCurrentStation().getId()));
-
-        System.out.println("Tren2: " + train.toString());
-
-        System.out.print("Tren3: " + modelMapper.map(trainRepository.save(train), TrainInfoDTO.class));
-
         return modelMapper.map(trainRepository.save(train), TrainInfoDTO.class);
     }
 
+    /**
+     * Deletes a train by its ID.
+     *
+     * @param id The ID of the train to be deleted.
+     */
     public void deleteTrainById(Long id) {
         trainRepository.deleteById(id);
     }
 
-    public TrainInfoDTO findTrainById(Long trainId) {
+    /**
+     * Retrieves train information by its ID.
+     *
+     * @param trainId The ID of the train to retrieve.
+     * @return A DTO containing the train's information.
+     * @throws EntityNotFoundException If the train is not found.
+     */
+    public TrainInfoDTO getTrainById(Long trainId) {
         TrainEntity train = trainRepository.findById(trainId)
-                .orElseThrow(() -> new EntityNotFoundException("Tren no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Train not found"));
 
         return modelMapper.map(train, TrainInfoDTO.class);
     }
 
+    /**
+     * Retrieves a list of all trains.
+     *
+     * @return A list of DTOs containing train information.
+     */
     public List<TrainInfoDTO> getAllTrains() {
         List<TrainEntity> trains = trainRepository.findAll();
 
@@ -55,5 +73,4 @@ public class TrainService {
                 .map(train -> modelMapper.map(train, TrainInfoDTO.class))
                 .collect(Collectors.toList());
     }
-
 }

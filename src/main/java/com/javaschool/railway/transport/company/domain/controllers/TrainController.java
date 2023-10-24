@@ -23,7 +23,7 @@ public class TrainController {
 
   @GetMapping("/{id}")
   public TrainInfoDTO getTrainById(@PathVariable Long id) {
-    return trainService.findTrainById(id);
+    return trainService.getTrainById(id);
   }
 
   @DeleteMapping("/{id}")

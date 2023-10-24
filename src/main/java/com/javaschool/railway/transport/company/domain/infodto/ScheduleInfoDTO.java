@@ -17,7 +17,7 @@ public class ScheduleInfoDTO {
     private Date departureTime;
     private Date arrivalTime;
     private String occupiedSeats;
-    private StationEntity departureStation;
-    private StationEntity arrivalStation;
-    private TrainEntity train;
+    private StationInfoDTO departureStation;
+    private StationInfoDTO arrivalStation;
+    private TrainInfoDTO train;
 }

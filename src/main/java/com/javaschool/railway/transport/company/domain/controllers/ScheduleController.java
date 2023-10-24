@@ -21,8 +21,8 @@ public class ScheduleController {
   }
 
   @GetMapping
-  public List<ScheduleEntity> getAllSchedules() {
-    return scheduleService.findAll();
+  public List<ScheduleInfoDTO> getAllSchedules() {
+    return scheduleService.getAllSchedules();
   }
 
   @DeleteMapping("/{id}")
@@ -31,7 +31,7 @@ public class ScheduleController {
   }
 
   @GetMapping("/{id}")
-  public ScheduleEntity getScheduleById(@PathVariable Long id) {
+  public ScheduleInfoDTO getScheduleById(@PathVariable Long id) {
     return scheduleService.getScheduleById(id);
   }
 

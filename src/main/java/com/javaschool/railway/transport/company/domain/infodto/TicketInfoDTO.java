@@ -16,6 +16,6 @@ import lombok.*;
 public class TicketInfoDTO {
     private Long id;
     private String seatNumber;
-    private UserEntity user;
-    private ScheduleEntity schedule;
+    private UserInfoDTO user;
+    private ScheduleInfoDTO schedule;
 }

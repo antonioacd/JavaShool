@@ -28,6 +28,6 @@ public class RolController {
 
   @GetMapping
   public List<RolInfoDTO> getAllRoles() {
-    return rolService.findAll();
+    return rolService.getAllRoles();
   }
 }

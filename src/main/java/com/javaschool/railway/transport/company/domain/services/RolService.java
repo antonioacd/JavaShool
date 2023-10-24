@@ -1,9 +1,7 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
-import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
-import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.RolRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -14,6 +12,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service class for managing roles-related operations.
+ */
 @Service
 @AllArgsConstructor
 public class RolService {
@@ -23,21 +24,47 @@ public class RolService {
     @Autowired
     private final ModelMapper modelMapper;
 
+    /**
+     * Creates a new role and returns the role's information.
+     *
+     * @param rol The role entity to be created.
+     * @return A DTO (Data Transfer Object) containing the role's information.
+     */
     public RolInfoDTO createRol(RolEntity rol) {
         return modelMapper.map(rolRepository.save(rol), RolInfoDTO.class);
     }
 
+    /**
+     * Deletes a role by its ID.
+     *
+     * @param id The ID of the role to be deleted.
+     */
+    public void deleteRolById(Long id) {
+        rolRepository.deleteById(id);
+    }
+
+    /**
+     * Retrieves role information by its ID.
+     *
+     * @param id The ID of the role to retrieve.
+     * @return A DTO containing the role's information.
+     * @throws EntityNotFoundException If the role is not found.
+     */
     public RolInfoDTO getRolById(Long id) {
         RolEntity rolEntity = rolRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Rol no encontrado"));
-
+                .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         return modelMapper.map(rolEntity, RolInfoDTO.class);
     }
 
-    public List<RolInfoDTO> findAll() {
-        List<RolEntity> rolEntityList = rolRepository.findAll();
+    /**
+     * Retrieves a list of all roles.
+     *
+     * @return A list of DTOs containing role information.
+     */
+    public List<RolInfoDTO> getAllRoles() {
+        List<RolEntity> roles = rolRepository.findAll();
 
-        return rolEntityList.stream()
+        return roles.stream()
                 .map(rol -> modelMapper.map(rol, RolInfoDTO.class))
                 .collect(Collectors.toList());
     }

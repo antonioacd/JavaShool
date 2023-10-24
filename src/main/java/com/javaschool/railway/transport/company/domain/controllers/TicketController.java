@@ -15,7 +15,7 @@ public class TicketController {
   private TicketService ticketService;
 
   @PostMapping
-  public TicketEntity createTicket(@RequestBody TicketEntity ticketEntity) {
+  public TicketInfoDTO createTicket(@RequestBody TicketEntity ticketEntity) {
     return ticketService.createTicket(ticketEntity);
   }
 
@@ -25,7 +25,7 @@ public class TicketController {
   } 
 
   @GetMapping("/{id}")
-  public TicketEntity getTicketById(@PathVariable Long id) {
+  public TicketInfoDTO getTicketById(@PathVariable Long id) {
     return ticketService.getTicketById(id);
   }
 

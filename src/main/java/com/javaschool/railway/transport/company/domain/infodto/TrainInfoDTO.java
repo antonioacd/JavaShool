@@ -12,5 +12,5 @@ import lombok.*;
 public class TrainInfoDTO {
     private Long id;
     private String seats;
-    private StationEntity currentStation;
+    private StationInfoDTO currentStation;
 }
