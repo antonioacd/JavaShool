@@ -18,7 +18,6 @@ public class UserController {
 
   @PostMapping
   public UserInfoDTO createUser(@RequestBody UserEntity user) {
-    System.out.println("UserEntity: " + "Holaa");
     return userService.createUser(user);
   }
 

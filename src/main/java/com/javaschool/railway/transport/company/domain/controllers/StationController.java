@@ -1,6 +1,7 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
+import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.StationService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,12 @@ public class StationController {
   private final StationService stationService;
 
   @PostMapping
-  public StationEntity createStation(@RequestBody StationEntity station) {
+  public StationInfoDTO createStation(@RequestBody StationEntity station) {
     return stationService.createStation(station);
   }
 
   @GetMapping("/{id}")
-  public StationEntity getStationById(@PathVariable Long id) {
+  public StationInfoDTO getStationById(@PathVariable Long id) {
     return stationService.getStationById(id);
   }
 
@@ -30,8 +31,8 @@ public class StationController {
   }
 
   @GetMapping
-  public List<StationEntity> getAllStations() {
-    return stationService.findAll();
+  public List<StationInfoDTO> getAllStations() {
+    return stationService.getAllStations();
   }
 
 }

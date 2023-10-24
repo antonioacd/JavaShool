@@ -1,5 +1,6 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
+import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
 import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.RolService;
 import lombok.AllArgsConstructor;
@@ -16,8 +17,7 @@ public class RolController {
   private final RolService rolService;
 
   @PostMapping
-  public RolInfoDTO createRol(@RequestBody RolInfoDTO rol) {
-    System.out.println("RolController: " + rol);
+  public RolInfoDTO createRol(@RequestBody RolEntity rol) {
     return rolService.createRol(rol);
   }
 

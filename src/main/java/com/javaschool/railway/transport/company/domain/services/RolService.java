@@ -1,11 +1,14 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
+import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.RolRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,16 +18,13 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RolService {
 
+    @Autowired
     private final RolRepository rolRepository;
+    @Autowired
     private final ModelMapper modelMapper;
 
-    public RolInfoDTO createRol(RolInfoDTO rol) {
-        System.out.println("Rol: " + rol.toString());
-        RolEntity rolEntity = modelMapper.map(rol, RolEntity.class);
-        rolEntity = rolRepository.save(rolEntity);
-
-        System.out.println("RolEntity: " + rolEntity);
-        return modelMapper.map(rolEntity, RolInfoDTO.class);
+    public RolInfoDTO createRol(RolEntity rol) {
+        return modelMapper.map(rolRepository.save(rol), RolInfoDTO.class);
     }
 
     public RolInfoDTO getRolById(Long id) {

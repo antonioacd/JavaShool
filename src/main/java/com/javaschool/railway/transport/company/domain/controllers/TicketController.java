@@ -1,6 +1,7 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
+import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class TicketController {
   }
 
   @GetMapping
-  public List<TicketEntity> getAllTickets() {
-    return ticketService.findAll();
+  public List<TicketInfoDTO> getAllTickets() {
+    return ticketService.getAllTickets();
   } 
 
   @GetMapping("/{id}")

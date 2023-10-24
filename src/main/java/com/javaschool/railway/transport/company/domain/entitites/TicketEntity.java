@@ -11,7 +11,7 @@ import lombok.Setter;
 public class TicketEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	@Column(name="seat_number", nullable = false)
 	private String seatNumber;

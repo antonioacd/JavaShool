@@ -13,7 +13,7 @@ import java.util.Date;
 public class ScheduleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 
 	@Column(name="departure_time", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
