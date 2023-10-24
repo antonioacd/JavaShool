@@ -1,0 +1,21 @@
+package com.javaschool.railway.transport.company.domain.infodto;
+
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@Data
+@ToString
+public class TicketInfoDTO {
+    private Long id;
+    private String seatNumber;
+    private UserEntity user;
+    private ScheduleEntity schedule;
+}
