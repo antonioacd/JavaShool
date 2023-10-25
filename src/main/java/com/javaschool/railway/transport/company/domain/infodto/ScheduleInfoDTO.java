@@ -7,11 +7,8 @@ import lombok.*;
 
 import java.util.Date;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Data
-@ToString
 public class ScheduleInfoDTO {
     private Long id;
     private Date departureTime;

@@ -4,11 +4,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 @NoArgsConstructor
 @Data
-@ToString
 public class UserInfoDTO {
     private Long id;
     private String name;

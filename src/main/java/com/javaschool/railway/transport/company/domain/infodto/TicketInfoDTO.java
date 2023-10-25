@@ -8,11 +8,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 
-@Getter
-@Setter
 @NoArgsConstructor
 @Data
-@ToString
 public class TicketInfoDTO {
     private Long id;
     private String seatNumber;
