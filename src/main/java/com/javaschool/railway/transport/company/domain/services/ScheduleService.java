@@ -2,7 +2,6 @@ package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
-import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
@@ -33,8 +32,6 @@ public class ScheduleService {
      * @return A DTO (Data Transfer Object) containing the schedule's information.
      */
     public ScheduleInfoDTO createSchedule(ScheduleEntity schedule) {
-        schedule.setDepartureStation(stationRepository.getReferenceById(schedule.getDepartureStation().getId()));
-        schedule.setArrivalStation(stationRepository.getReferenceById(schedule.getArrivalStation().getId()));
         schedule.setTrain(trainRepository.getReferenceById(schedule.getTrain().getId()));
         return modelMapper.map(scheduleRepository.save(schedule), ScheduleInfoDTO.class);
     }

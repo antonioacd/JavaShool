@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.Duration;
+
 @Entity
 @Table(name="trains", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
@@ -16,10 +18,17 @@ public class TrainEntity {
 	private Long id;
 	
 	@Column(name="seats", nullable = false)
-	private String seats;
+	private int seats;
+
+	@Column(name="duration", nullable = false)
+	private Duration duration;
 
 	@ManyToOne
 	@JoinColumn(name = "current_station_id", referencedColumnName= "id",  nullable = false)
-	private StationEntity currentStation;
+	private StationEntity departureStation;
+
+	@ManyToOne
+	@JoinColumn(name = "station_station_id", referencedColumnName= "id",  nullable = false)
+	private StationEntity arrivalStation;
 
 }

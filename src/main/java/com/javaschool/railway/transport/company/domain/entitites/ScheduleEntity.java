@@ -24,15 +24,7 @@ public class ScheduleEntity {
 	private Date arrivalTime;
 
 	@Column(name="occupied_seats", nullable = false)
-	private String occupiedSeats;
-
-	@ManyToOne
-	@JoinColumn(name = "departure_station_id", referencedColumnName= "id", nullable = false)
-	private StationEntity departureStation;
-
-	@ManyToOne
-	@JoinColumn(name = "arrival_station_id", referencedColumnName= "id", nullable = false)
-	private StationEntity arrivalStation;
+	private int occupiedSeats;
 
 	@ManyToOne
 	@JoinColumn(name = "train_id", referencedColumnName= "id", nullable = false)

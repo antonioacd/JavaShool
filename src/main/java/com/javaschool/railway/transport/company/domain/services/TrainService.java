@@ -34,7 +34,8 @@ public class TrainService {
      * @return A DTO (Data Transfer Object) containing the train's information.
      */
     public TrainInfoDTO createTrain(TrainEntity train) {
-        train.setCurrentStation(stationRepository.getReferenceById(train.getCurrentStation().getId()));
+        train.setDepartureStation(stationRepository.getReferenceById(train.getDepartureStation().getId()));
+        train.setArrivalStation(stationRepository.getReferenceById(train.getArrivalStation().getId()));
         return modelMapper.map(trainRepository.save(train), TrainInfoDTO.class);
     }
 

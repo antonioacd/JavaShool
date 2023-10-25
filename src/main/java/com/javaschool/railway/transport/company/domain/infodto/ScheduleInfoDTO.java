@@ -13,8 +13,6 @@ public class ScheduleInfoDTO {
     private Long id;
     private Date departureTime;
     private Date arrivalTime;
-    private String occupiedSeats;
-    private StationInfoDTO departureStation;
-    private StationInfoDTO arrivalStation;
+    private int occupiedSeats;
     private TrainInfoDTO train;
 }
