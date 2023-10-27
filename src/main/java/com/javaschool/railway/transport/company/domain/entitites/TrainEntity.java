@@ -23,6 +23,9 @@ public class TrainEntity {
 	@Column(name="duration", nullable = false)
 	private Duration duration;
 
+	@Column(name="train_number", nullable = false)
+	private String trainNumber;
+
 	@ManyToOne
 	@JoinColumn(name = "current_station_id", referencedColumnName= "id",  nullable = false)
 	private StationEntity departureStation;

@@ -1,8 +1,10 @@
 package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.catalina.User;
 
 import java.time.LocalDate;
 
@@ -10,7 +12,14 @@ import java.time.LocalDate;
 @Table(name="users", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
+@AllArgsConstructor
 public class UserEntity {
+
+	public UserEntity(String email, String password) {
+		this.email = email;
+		this.password = password;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -33,5 +42,4 @@ public class UserEntity {
 	@ManyToOne
 	@JoinColumn(name = "rol_id", referencedColumnName= "id", nullable = false)
 	private RolEntity rol;
-
 }

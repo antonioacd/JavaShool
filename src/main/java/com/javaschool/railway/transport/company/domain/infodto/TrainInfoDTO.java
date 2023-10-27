@@ -12,6 +12,7 @@ public class TrainInfoDTO {
     private Long id;
     private String seats;
     private Duration duration;
+    private String trainNumber;
     private StationInfoDTO departureStation;
     private StationInfoDTO arrivalStation;
 }
