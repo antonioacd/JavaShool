@@ -36,9 +36,6 @@ public class UserEntity {
 	@Column(name = "password", nullable = false)
 	private String password;
 
-	@Column(name = "date_of_birth", nullable = false)
-	private LocalDate dateOfBirth;
-
 	@ManyToOne
 	@JoinColumn(name = "rol_id", referencedColumnName= "id", nullable = false)
 	private RolEntity rol;

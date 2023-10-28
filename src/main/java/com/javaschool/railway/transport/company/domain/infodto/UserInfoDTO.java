@@ -12,6 +12,5 @@ public class UserInfoDTO {
     private String name;
     private String surname;
     private String email;
-    private LocalDate dateOfBirth;
     private RolInfoDTO rol;
 }

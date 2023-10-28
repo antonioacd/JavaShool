@@ -31,7 +31,7 @@ public class TrainEntity {
 	private StationEntity departureStation;
 
 	@ManyToOne
-	@JoinColumn(name = "station_station_id", referencedColumnName= "id",  nullable = false)
+	@JoinColumn(name = "arrival_station_id", referencedColumnName= "id",  nullable = false)
 	private StationEntity arrivalStation;
 
 }
