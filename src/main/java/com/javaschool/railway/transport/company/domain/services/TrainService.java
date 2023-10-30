@@ -1,6 +1,8 @@
 package com.javaschool.railway.transport.company.domain.services;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
+import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
@@ -38,6 +40,28 @@ public class TrainService {
         train.setArrivalStation(stationRepository.getReferenceById(train.getArrivalStation().getId()));
         return modelMapper.map(trainRepository.save(train), TrainInfoDTO.class);
     }
+
+    /**
+     * Updates a train entity and returns the updated train's information.
+     *
+     * @param train The train entity to be updated.
+     * @return A DTO (Data Transfer Object) containing the updated train's information.
+     * @throws EntityNotFoundException If the train is not found.
+     */
+    public TrainInfoDTO updateTrain(Long id, TrainEntity train) {
+        TrainEntity existingTrain = trainRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Train not found"));
+
+        // Update the train information
+        existingTrain.setSeats(train.getSeats());
+        existingTrain.setDuration(train.getDuration());
+        existingTrain.setTrainNumber(train.getTrainNumber());
+        existingTrain.setDepartureStation(stationRepository.getReferenceById(train.getDepartureStation().getId()));
+        existingTrain.setArrivalStation(stationRepository.getReferenceById(train.getArrivalStation().getId()));
+
+        return modelMapper.map(trainRepository.save(existingTrain), TrainInfoDTO.class);
+    }
+
 
     /**
      * Deletes a train by its ID.

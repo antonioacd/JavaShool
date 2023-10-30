@@ -35,6 +35,26 @@ public class StationService {
     }
 
     /**
+     * Updates a station entity by ID and returns the updated station's information.
+     *
+     * @param id             The ID of the station to be updated.
+     * @param updatedStation The updated station entity.
+     * @return A DTO (Data Transfer Object) containing the updated station's information.
+     * @throws EntityNotFoundException If the station is not found.
+     */
+    public StationInfoDTO updateStation(Long id, StationInfoDTO updatedStation) {
+        StationEntity existingStation = stationRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Station not found"));
+
+        // Update the station information
+        existingStation.setName(updatedStation.getName());
+        existingStation.setCity(updatedStation.getCity());
+
+        return modelMapper.map(stationRepository.save(existingStation), StationInfoDTO.class);
+    }
+
+
+    /**
      * Deletes a station by its ID.
      *
      * @param id The ID of the station to be deleted.

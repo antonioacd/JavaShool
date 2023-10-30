@@ -4,6 +4,8 @@ import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
+import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
+import com.javaschool.railway.transport.company.domain.repositories.UserRepositoryJWT;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,8 @@ public class TicketService {
     @Autowired
     private final ScheduleRepository scheduleRepository;
     @Autowired
+    private final UserRepository userRepository;
+    @Autowired
     private final ModelMapper modelMapper;
 
     /**
@@ -37,6 +41,35 @@ public class TicketService {
         ticket.setSchedule(scheduleRepository.getReferenceById(ticket.getSchedule().getId()));
         return modelMapper.map(ticketRepository.save(ticket), TicketInfoDTO.class);
     }
+
+    /**
+     * Updates a ticket entity by ID and returns the updated ticket's information.
+     *
+     * @param id              The ID of the ticket to be updated.
+     * @param updatedTicket   The updated ticket entity.
+     * @return A DTO (Data Transfer Object) containing the updated ticket's information.
+     * @throws EntityNotFoundException If the ticket is not found.
+     */
+    public TicketInfoDTO updateTicket(Long id, TicketInfoDTO updatedTicket) {
+        TicketEntity existingTicket = ticketRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+
+        // Update the ticket information
+        existingTicket.setSeatNumber(updatedTicket.getSeatNumber());
+
+        // Update the associated user (if different)
+        if (!existingTicket.getUser().getId().equals(updatedTicket.getUser().getId())) {
+            existingTicket.setUser(userRepository.getReferenceById(updatedTicket.getUser().getId()));
+        }
+
+        // Update the associated schedule (if different)
+        if (!existingTicket.getSchedule().getId().equals(updatedTicket.getSchedule().getId())) {
+            existingTicket.setSchedule(scheduleRepository.getReferenceById(updatedTicket.getSchedule().getId()));
+        }
+
+        return modelMapper.map(ticketRepository.save(existingTicket), TicketInfoDTO.class);
+    }
+
 
     /**
      * Deletes a ticket by its ID.

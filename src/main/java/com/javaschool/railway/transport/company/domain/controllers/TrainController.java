@@ -21,6 +21,11 @@ public class TrainController {
     return trainService.createTrain(train);
   }
 
+  @PutMapping("/{id}")
+  public TrainInfoDTO updateTrain(@PathVariable Long id, @RequestBody TrainEntity train) {
+    return trainService.updateTrain(id, train);
+  }
+
   @GetMapping("/{id}")
   public TrainInfoDTO getTrainById(@PathVariable Long id) {
     return trainService.getTrainById(id);

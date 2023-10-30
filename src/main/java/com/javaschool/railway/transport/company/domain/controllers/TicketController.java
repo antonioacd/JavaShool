@@ -19,6 +19,11 @@ public class TicketController {
     return ticketService.createTicket(ticketEntity);
   }
 
+  @PutMapping("/{id}")
+  public TicketInfoDTO updateTicket(@PathVariable Long id, @RequestBody TicketInfoDTO updatedTicket) {
+    return ticketService.updateTicket(id, updatedTicket);
+  }
+
   @GetMapping
   public List<TicketInfoDTO> getAllTickets() {
     return ticketService.getAllTickets();

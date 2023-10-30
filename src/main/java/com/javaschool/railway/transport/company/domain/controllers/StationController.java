@@ -20,6 +20,11 @@ public class StationController {
     return stationService.createStation(station);
   }
 
+  @PutMapping("/{id}")
+  public StationInfoDTO updateStation(@PathVariable Long id, @RequestBody StationInfoDTO updatedStation) {
+    return stationService.updateStation(id, updatedStation);
+  }
+
   @GetMapping("/{id}")
   public StationInfoDTO getStationById(@PathVariable Long id) {
     return stationService.getStationById(id);
