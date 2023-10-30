@@ -37,6 +37,33 @@ public class ScheduleService {
     }
 
     /**
+     * Updates an existing schedule and returns the updated schedule's information.
+     *
+     * @param id              The ID of the schedule to be updated.
+     * @param updatedSchedule The updated schedule entity.
+     * @return A DTO (Data Transfer Object) containing the updated schedule's information.
+     * @throws EntityNotFoundException If the schedule is not found.
+     */
+    public ScheduleInfoDTO updateSchedule(Long id, ScheduleInfoDTO updatedSchedule) {
+        // Busca el schedule existente por su ID
+        ScheduleEntity existingSchedule = scheduleRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
+
+        // Actualiza los campos relevantes con los valores del updatedSchedule
+        existingSchedule.setDepartureTime(updatedSchedule.getDepartureTime());
+        existingSchedule.setArrivalTime(updatedSchedule.getArrivalTime());
+
+        // Actualiza el tren asociado (si es diferente)
+        if (!existingSchedule.getTrain().getId().equals(updatedSchedule.getTrain().getId())) {
+            existingSchedule.setTrain(trainRepository.getReferenceById(updatedSchedule.getTrain().getId()));
+        }
+
+        // Guarda y devuelve el schedule actualizado
+        return modelMapper.map(scheduleRepository.save(existingSchedule), ScheduleInfoDTO.class);
+    }
+
+
+    /**
      * Deletes a schedule by its ID.
      *
      * @param id The ID of the schedule to be deleted.

@@ -20,6 +20,11 @@ public class ScheduleController {
     return scheduleService.createSchedule(scheduleEntity);
   }
 
+  @PutMapping("/{id}")
+  public ScheduleInfoDTO updateSchedule(@PathVariable Long id, @RequestBody ScheduleInfoDTO updatedScheduleDTO) {
+    return scheduleService.updateSchedule(id, updatedScheduleDTO);
+  }
+
   @GetMapping
   public List<ScheduleInfoDTO> getAllSchedules() {
     return scheduleService.getAllSchedules();
