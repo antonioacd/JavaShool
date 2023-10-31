@@ -68,6 +68,12 @@
 			<version>2.3.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>dayjs</artifactId>
+			<version>1.11.10</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

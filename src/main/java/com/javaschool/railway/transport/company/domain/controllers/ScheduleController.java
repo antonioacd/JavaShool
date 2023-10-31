@@ -40,5 +40,14 @@ public class ScheduleController {
     return scheduleService.getScheduleById(id);
   }
 
+  @GetMapping("/search")
+  public List<ScheduleInfoDTO> searchSchedules(
+          @RequestParam(required = false) String departureStation,
+          @RequestParam(required = false) String arrivalStation,
+          @RequestParam(required = false) String departureDate
+  ) {
+    return scheduleService.getSchedulesByFilters(departureStation, arrivalStation, departureDate);
+  }
+
 
 }
