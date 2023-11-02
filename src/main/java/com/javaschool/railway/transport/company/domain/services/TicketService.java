@@ -5,7 +5,6 @@ import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
-import com.javaschool.railway.transport.company.domain.repositories.UserRepositoryJWT;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
