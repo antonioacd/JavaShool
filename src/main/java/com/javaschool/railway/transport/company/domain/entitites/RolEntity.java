@@ -14,6 +14,6 @@ public class RolEntity {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;
 	
-	@Column(name="rol", nullable=false)
-	private String rol;
+	@Column(name="name", nullable=false)
+	private String name;
 }

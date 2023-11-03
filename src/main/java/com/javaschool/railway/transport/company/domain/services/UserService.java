@@ -2,7 +2,7 @@ package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
-import com.javaschool.railway.transport.company.domain.repositories.RolRepository;
+import com.javaschool.railway.transport.company.domain.repositories.RoleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -23,7 +23,7 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     @Autowired
-    private final RolRepository rolRepository;
+    private final RoleRepository roleRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -34,7 +34,6 @@ public class UserService {
      * @return A DTO (Data Transfer Object) containing the user's information.
      */
     public UserInfoDTO createUser(UserEntity user) {
-        user.setRol(rolRepository.getReferenceById(user.getRol().getId()));
         return modelMapper.map(userRepository.save(user), UserInfoDTO.class);
     }
 
