@@ -102,54 +102,8 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public List<ScheduleInfoDTO> getSchedulesByFilters(String departureStation, String arrivalStation, String departureDate) {
-        List<ScheduleEntity> schedules = scheduleRepository.findAll();
-
-        if (departureStation != null) {
-            schedules = schedules.stream()
-                    .filter(schedule -> schedule.getTrain().getDepartureStation().getCity().equals(departureStation))
-                    .collect(Collectors.toList());
-        }
-
-        if (arrivalStation != null) {
-            schedules = schedules.stream()
-                    .filter(schedule -> schedule.getTrain().getArrivalStation().getCity().equals(arrivalStation))
-                    .collect(Collectors.toList());
-        }
-
-        if (departureDate != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-            try {
-                Date date = sdf.parse(departureDate);
-
-                for (ScheduleEntity schedule: schedules) {
-                    SimpleDateFormat scheduleSdf = new SimpleDateFormat("yyyy-MM-dd");
-                    String scheduleDate = scheduleSdf.format(schedule.getDepartureTime());
-                    String inputDate = scheduleSdf.format(date);
-                    System.out.println("Comparacion " + scheduleDate + " - " + inputDate);
-                }
-
-                // Filtra las fechas utilizando la parte de la fecha (ignorando la hora)
-                schedules = schedules.stream()
-                        .filter(schedule -> {
-                            SimpleDateFormat scheduleSdf = new SimpleDateFormat("yyyy-MM-dd");
-                            String scheduleDate = scheduleSdf.format(schedule.getDepartureTime());
-                            String inputDate = scheduleSdf.format(date);
-                            return scheduleDate.equals(inputDate);
-                        })
-                        .collect(Collectors.toList());
-
-            } catch (ParseException e) {
-                System.out.print("Error: " + e.getMessage());
-            }
-        }
-
-        System.out.println("Schedules" + schedules);
-
-        return schedules.stream()
-                .map(schedule -> modelMapper.map(schedule, ScheduleInfoDTO.class))
-                .collect(Collectors.toList());
+    public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity) {
+        return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity);
     }
 
 }

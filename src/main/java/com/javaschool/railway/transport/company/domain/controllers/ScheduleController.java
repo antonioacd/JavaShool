@@ -4,6 +4,7 @@ import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.ScheduleService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,12 +42,11 @@ public class ScheduleController {
   }
 
   @GetMapping("/search")
-  public List<ScheduleInfoDTO> searchSchedules(
-          @RequestParam(required = false) String departureStation,
-          @RequestParam(required = false) String arrivalStation,
-          @RequestParam(required = false) String departureDate
-  ) {
-    return scheduleService.getSchedulesByFilters(departureStation, arrivalStation, departureDate);
+  public ResponseEntity<List<ScheduleEntity>> searchSchedules(
+          @RequestParam("departureCity") String departureCity,
+          @RequestParam("arrivalCity") String arrivalCity) {
+    List<ScheduleEntity> schedules = scheduleService.findSchedulesByCitiesAndDate(departureCity, arrivalCity);
+    return ResponseEntity.ok(schedules);
   }
 
 
