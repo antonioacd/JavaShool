@@ -18,12 +18,10 @@ public class JwtGenerator {
         String email = authentication.getName();
 
         Date currentDate = new Date();
-        Date expiredDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
         String token = Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(expiredDate)
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
                 .compact();
         return token;
