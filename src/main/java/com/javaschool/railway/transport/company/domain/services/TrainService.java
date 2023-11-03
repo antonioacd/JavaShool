@@ -1,8 +1,8 @@
 package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
-import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
+import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
+import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
@@ -97,5 +97,17 @@ public class TrainService {
         return trains.stream()
                 .map(train -> modelMapper.map(train, TrainInfoDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<TrainEntity> findTrainsByDepartureStationAndArrivalStation(String departureCity, String arrivalCity) {
+        return trainRepository.findTrainsByDepartureStationAndArrivalStation(departureCity, arrivalCity);
+    }
+
+    public List<TrainEntity> findTrainsByDepartureStation(String departureCity) {
+        return trainRepository.findTrainsByDepartureStation(departureCity);
+    }
+
+    public List<TrainEntity> findTrainsByArrivalStation(String arrivalCity) {
+        return trainRepository.findTrainsByArrivalStation(arrivalCity);
     }
 }
