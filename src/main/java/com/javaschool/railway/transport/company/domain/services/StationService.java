@@ -1,5 +1,6 @@
 package com.javaschool.railway.transport.company.domain.services;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
@@ -9,6 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -88,5 +91,10 @@ public class StationService {
                 .map(station -> modelMapper.map(station, StationInfoDTO.class))
                 .collect(Collectors.toList());
     }
+
+    public List<StationEntity> findStationsByCity(String city) {
+        return stationRepository.findStationsByCity(city);
+    }
+
 }
 

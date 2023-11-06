@@ -45,24 +45,11 @@ public class TrainController {
 
   @GetMapping("/searchByDepartureStationAndArrivalStation")
   public ResponseEntity<List<TrainEntity>> findTrainsByDepartureStationAndArrivalStation(
-          @RequestParam("departureStation") String departureStation,
-          @RequestParam("arrivalStation") String arrivalStation) {
-    List<TrainEntity> trains = trainService.findTrainsByDepartureStationAndArrivalStation(departureStation, arrivalStation);
+          @RequestParam(name = "departureStation", required = false) String departureStation,
+          @RequestParam(name = "arrivalStation", required = false) String arrivalStation) {
+    List<TrainEntity> trains = trainService.findTrainsByDepartureAndArrivalStations(departureStation, arrivalStation);
     return ResponseEntity.ok(trains);
   }
 
-  @GetMapping("/searchTrainsByDepartureStation")
-  public ResponseEntity<List<TrainEntity>> findTrainsByDepartureStation(
-          @RequestParam("departureStation") String departureStation) {
-    List<TrainEntity> trains = trainService.findTrainsByDepartureStation(departureStation);
-    return ResponseEntity.ok(trains);
-  }
-
-  @GetMapping("/searchTrainsByArrivalStation")
-  public ResponseEntity<List<TrainEntity>> findTrainsByArrivalStation(
-          @RequestParam("arrivalStation") String arrivalStation) {
-    List<TrainEntity> trains = trainService.findTrainsByArrivalStation(arrivalStation);
-    return ResponseEntity.ok(trains);
-  }
 
 }

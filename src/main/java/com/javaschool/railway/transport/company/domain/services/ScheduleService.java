@@ -102,8 +102,14 @@ public class ScheduleService {
                 .collect(Collectors.toList());
     }
 
-    public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity) {
-        return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity);
+    public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity, Date selectedDate) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(selectedDate);
+        return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity, formattedDate);
+    }
+
+    public List<ScheduleEntity> findByTrainNumber(String trainNumber) {
+        return scheduleRepository.findSchedulesByTrainNumber(trainNumber);
     }
 
 }

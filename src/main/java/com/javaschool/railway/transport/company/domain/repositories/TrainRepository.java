@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface TrainRepository extends JpaRepository<TrainEntity, Long> {
-    @Query("SELECT train FROM TrainEntity train " +
+    /*@Query("SELECT train FROM TrainEntity train " +
             "WHERE train.departureStation.name = :departureStation " +
             "AND train.arrivalStation.name = :arrivalStation ")
     List<TrainEntity> findTrainsByDepartureStationAndArrivalStation(
@@ -27,5 +27,14 @@ public interface TrainRepository extends JpaRepository<TrainEntity, Long> {
             "WHERE train.arrivalStation.name = :arrivalStation ")
     List<TrainEntity> findTrainsByArrivalStation(
             @Param("arrivalStation") String arrivalStation
+    );*/
+
+    @Query("SELECT train FROM TrainEntity train " +
+            "WHERE (:departureStation IS NULL OR train.departureStation.name = :departureStation) " +
+            "AND (:arrivalStation IS NULL OR train.arrivalStation.name = :arrivalStation)")
+    List<TrainEntity> findTrainsByDepartureAndArrivalStations(
+            @Param("departureStation") String departureStation,
+            @Param("arrivalStation") String arrivalStation
     );
+
 }

@@ -13,11 +13,18 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
 
     @Query("SELECT s FROM ScheduleEntity s " +
             "WHERE s.train.departureStation.city = :departureCity " +
-            "AND s.train.arrivalStation.city = :arrivalCity ")
+            "AND s.train.arrivalStation.city = :arrivalCity " +
+            "AND DATE_TRUNC('day', s.departureTime) = DATE_TRUNC('day', TO_TIMESTAMP(:selectedDate, 'YYYY-MM-DD'))")
     List<ScheduleEntity> findSchedulesByCitiesAndDate(
             @Param("departureCity") String departureCity,
-            @Param("arrivalCity") String arrivalCity
+            @Param("arrivalCity") String arrivalCity,
+            @Param("selectedDate") String selectedDate
+    );
+
+    @Query("SELECT s FROM ScheduleEntity s " +
+            "WHERE s.train.trainNumber = :trainNumber")
+    List<ScheduleEntity> findSchedulesByTrainNumber(
+            @Param("trainNumber") String trainNumber
     );
 
 }
-

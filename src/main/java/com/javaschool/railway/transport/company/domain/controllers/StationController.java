@@ -1,11 +1,14 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
+import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.StationService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -38,6 +41,13 @@ public class StationController {
   @GetMapping
   public List<StationInfoDTO> getAllStations() {
     return stationService.getAllStations();
+  }
+
+  @GetMapping("/search")
+  public ResponseEntity<List<StationEntity>> searchStations(
+          @RequestParam("city") String city) {
+    List<StationEntity> stations = stationService.findStationsByCity(city);
+    return ResponseEntity.ok(stations);
   }
 
 }

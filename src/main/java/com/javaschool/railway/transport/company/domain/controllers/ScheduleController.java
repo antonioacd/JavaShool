@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -42,12 +43,22 @@ public class ScheduleController {
   }
 
   @GetMapping("/search")
-  public ResponseEntity<List<ScheduleEntity>> searchSchedules(
+  public ResponseEntity<List<ScheduleEntity>> searchSchedulesByCitiesAndDate(
           @RequestParam("departureCity") String departureCity,
-          @RequestParam("arrivalCity") String arrivalCity) {
-    List<ScheduleEntity> schedules = scheduleService.findSchedulesByCitiesAndDate(departureCity, arrivalCity);
+          @RequestParam("arrivalCity") String arrivalCity,
+          @RequestParam("selectedDate") Date selectedDate) {
+    List<ScheduleEntity> schedules = scheduleService.findSchedulesByCitiesAndDate(departureCity, arrivalCity, selectedDate);
     return ResponseEntity.ok(schedules);
   }
+
+  @GetMapping("/searchByTrainNumber")
+  public ResponseEntity<List<ScheduleEntity>> searchSchedulesByTrainNumber(
+          @RequestParam("trainNumber") String trainNumber) {
+    List<ScheduleEntity> schedules = scheduleService.findByTrainNumber(trainNumber);
+    return ResponseEntity.ok(schedules);
+  }
+
+
 
 
 }

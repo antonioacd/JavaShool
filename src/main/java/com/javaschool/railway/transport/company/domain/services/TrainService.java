@@ -99,7 +99,7 @@ public class TrainService {
                 .collect(Collectors.toList());
     }
 
-    public List<TrainEntity> findTrainsByDepartureStationAndArrivalStation(String departureCity, String arrivalCity) {
+    /*public List<TrainEntity> findTrainsByDepartureStationAndArrivalStation(String departureCity, String arrivalCity) {
         return trainRepository.findTrainsByDepartureStationAndArrivalStation(departureCity, arrivalCity);
     }
 
@@ -109,5 +109,11 @@ public class TrainService {
 
     public List<TrainEntity> findTrainsByArrivalStation(String arrivalCity) {
         return trainRepository.findTrainsByArrivalStation(arrivalCity);
+    }*/
+
+
+    public List<TrainEntity> findTrainsByDepartureAndArrivalStations(String departureCity, String arrivalCity) {
+        return trainRepository.findTrainsByDepartureAndArrivalStations(departureCity, arrivalCity);
     }
+
 }
