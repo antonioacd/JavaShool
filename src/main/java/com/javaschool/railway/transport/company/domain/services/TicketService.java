@@ -1,6 +1,9 @@
 package com.javaschool.railway.transport.company.domain.services;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
@@ -37,9 +40,21 @@ public class TicketService {
      * @return A DTO (Data Transfer Object) containing the ticket's information.
      */
     public TicketInfoDTO createTicket(TicketEntity ticket) {
-        ticket.setSchedule(scheduleRepository.getReferenceById(ticket.getSchedule().getId()));
+        ScheduleEntity schedule = scheduleRepository.getReferenceById(ticket.getSchedule().getId());
+
+        if (schedule.getOccupiedSeats() >= schedule.getTrain().getSeats()) {
+            throw new IllegalStateException("There are no seats available for this schedule.");
+        }
+
+        int nextAvailableSeat = schedule.getOccupiedSeats() + 1;
+
+        ticket.setSeatNumber(nextAvailableSeat);
+        schedule.setOccupiedSeats(nextAvailableSeat);
+
+        scheduleRepository.save(schedule);
         return modelMapper.map(ticketRepository.save(ticket), TicketInfoDTO.class);
     }
+
 
     /**
      * Updates a ticket entity by ID and returns the updated ticket's information.
@@ -103,5 +118,13 @@ public class TicketService {
         return tickets.stream()
                 .map(ticket -> modelMapper.map(ticket, TicketInfoDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    public List<TicketEntity> findTicketsByUser(Long userId) {
+
+        UserEntity user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        return ticketRepository.findTicketsByUser(user);
     }
 }

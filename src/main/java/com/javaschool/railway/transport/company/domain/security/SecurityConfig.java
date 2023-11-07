@@ -46,6 +46,7 @@ public class SecurityConfig {
                             CorsConfiguration corsConfig = new CorsConfiguration();
                             corsConfig.applyPermitDefaultValues();
                             corsConfig.addAllowedMethod(HttpMethod.PUT);
+                            corsConfig.addAllowedMethod(HttpMethod.POST);
                             corsConfig.addAllowedMethod(HttpMethod.DELETE);
                             return corsConfig;
                         }))

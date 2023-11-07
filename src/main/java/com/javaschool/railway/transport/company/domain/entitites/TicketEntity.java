@@ -14,7 +14,7 @@ public class TicketEntity {
 	private Long id;
 
 	@Column(name="seat_number", nullable = false)
-	private String seatNumber;
+	private int seatNumber;
 
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName= "id", nullable = false)

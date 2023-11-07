@@ -12,7 +12,7 @@ import lombok.*;
 @Data
 public class TicketInfoDTO {
     private Long id;
-    private String seatNumber;
+    private int seatNumber;
     private UserInfoDTO user;
     private ScheduleInfoDTO schedule;
 }
