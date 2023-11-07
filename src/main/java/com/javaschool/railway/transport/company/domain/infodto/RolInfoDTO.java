@@ -10,5 +10,5 @@ import lombok.Setter;
 @Data
 public class RolInfoDTO {
     private Long id;
-    private String rol;
+    private String name;
 }

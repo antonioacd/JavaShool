@@ -1,10 +1,7 @@
 package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.catalina.User;
 
 import java.time.LocalDate;
@@ -15,6 +12,7 @@ import java.util.List;
 @Table(name="users", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserEntity {

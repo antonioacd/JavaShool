@@ -1,6 +1,7 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
+import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.RoleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
@@ -42,7 +43,7 @@ public class UserService {
      *
      * @param id The ID of the user to be deleted.
      */
-    public void deleteTrainById(Long id) {
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -71,7 +72,14 @@ public class UserService {
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
-        return modelMapper.map(user, UserInfoDTO.class);
+        UserInfoDTO userInfoDTO = modelMapper.map(user, UserInfoDTO.class);
+        userInfoDTO.setRoles(user.getRoles().stream()
+                .map(rol -> modelMapper.map(rol, RolInfoDTO.class))
+                .collect(Collectors.toList()));
+
+        System.out.println("user: " + userInfoDTO.toString());
+
+        return userInfoDTO;
     }
 
     /**
