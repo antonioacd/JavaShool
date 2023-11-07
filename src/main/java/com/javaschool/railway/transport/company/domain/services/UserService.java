@@ -61,6 +61,20 @@ public class UserService {
     }
 
     /**
+     * Retrieves user information by their user ID.
+     *
+     * @param email The email of the user to retrieve.
+     * @return A DTO containing the user's information.
+     * @throws EntityNotFoundException If the user is not found.
+     */
+    public UserInfoDTO getUserByEmail(String email) {
+        UserEntity user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        return modelMapper.map(user, UserInfoDTO.class);
+    }
+
+    /**
      * Retrieves a list of all users.
      *
      * @return A list of DTOs containing user information.

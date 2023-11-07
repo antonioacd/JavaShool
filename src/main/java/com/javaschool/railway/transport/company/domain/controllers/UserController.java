@@ -26,6 +26,11 @@ public class UserController {
     return userService.getUserById(id);
   }
 
+  @GetMapping("/{email}")
+  public UserInfoDTO getUserByEmail(@PathVariable String email) {
+    return userService.getUserByEmail(email);
+  }
+
   @GetMapping
   public List<UserInfoDTO> getAllUsers() {
     return userService.getAllUsers();

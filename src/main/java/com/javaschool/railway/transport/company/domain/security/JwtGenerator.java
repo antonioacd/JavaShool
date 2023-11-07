@@ -17,8 +17,6 @@ public class JwtGenerator {
     public String generateToken(Authentication authentication) {
         String email = authentication.getName();
 
-        Date currentDate = new Date();
-
         String token = Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
