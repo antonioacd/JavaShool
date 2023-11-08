@@ -13,6 +13,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,7 +47,6 @@ public class TicketService {
         ScheduleEntity schedule = scheduleRepository.getReferenceById(ticket.getSchedule().getId());
         UserEntity user = userRepository.getReferenceById(ticket.getUser().getId());
 
-
         List<TicketEntity> userTicketsForSchedule = ticketRepository.findTicketsByUserIdAndScheduleId(user.getId(), schedule.getId());
         if (!userTicketsForSchedule.isEmpty()) {
             throw new IllegalStateException("El usuario ya tiene un billete para este tren.");
@@ -50,6 +54,21 @@ public class TicketService {
 
         if (schedule.getOccupiedSeats() >= schedule.getTrain().getSeats()) {
             throw new IllegalStateException("No hay asientos disponibles para este horario.");
+        }
+
+        Date departureDate = schedule.getDepartureTime();
+        LocalDateTime departureTime = departureDate.toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
+
+        LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
+
+        long minutesUntilDeparture = ChronoUnit.MINUTES.between(currentTime, departureTime);
+
+        System.out.println("Departure: " + departureTime.toString());
+        System.out.println("Current: " + currentTime.toString());
+        System.out.println("Minutes until departure: " + minutesUntilDeparture);
+
+        if (minutesUntilDeparture-60 <= 10) {
+            throw new IllegalStateException("Time exception");
         }
 
         int nextAvailableSeat = schedule.getOccupiedSeats() + 1;
