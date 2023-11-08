@@ -1,7 +1,6 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
-import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
@@ -41,9 +40,16 @@ public class TicketService {
      */
     public TicketInfoDTO createTicket(TicketEntity ticket) {
         ScheduleEntity schedule = scheduleRepository.getReferenceById(ticket.getSchedule().getId());
+        UserEntity user = userRepository.getReferenceById(ticket.getUser().getId());
+
+
+        List<TicketEntity> userTicketsForSchedule = ticketRepository.findTicketsByUserIdAndScheduleId(user.getId(), schedule.getId());
+        if (!userTicketsForSchedule.isEmpty()) {
+            throw new IllegalStateException("El usuario ya tiene un billete para este tren.");
+        }
 
         if (schedule.getOccupiedSeats() >= schedule.getTrain().getSeats()) {
-            throw new IllegalStateException("There are no seats available for this schedule.");
+            throw new IllegalStateException("No hay asientos disponibles para este horario.");
         }
 
         int nextAvailableSeat = schedule.getOccupiedSeats() + 1;
@@ -120,11 +126,8 @@ public class TicketService {
                 .collect(Collectors.toList());
     }
 
-    public List<TicketEntity> findTicketsByUser(Long userId) {
+    public List<TicketEntity> findTicketsByUserAndSchedule(Long userId, Long scheduleId) {
 
-        UserEntity user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
-
-        return ticketRepository.findTicketsByUser(user);
+        return ticketRepository.findTicketsByUserIdAndScheduleId(userId, scheduleId);
     }
 }

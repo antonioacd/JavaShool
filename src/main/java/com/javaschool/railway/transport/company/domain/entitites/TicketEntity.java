@@ -16,12 +16,11 @@ public class TicketEntity {
 	@Column(name="seat_number", nullable = false)
 	private int seatNumber;
 
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName= "id", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
 	private UserEntity user;
 
 	@ManyToOne
-	@JoinColumn(name = "schedule_id", referencedColumnName= "id",nullable = false)
+	@JoinColumn(name = "schedule_id", referencedColumnName= "id", nullable = false)
 	private ScheduleEntity schedule;
-
 }

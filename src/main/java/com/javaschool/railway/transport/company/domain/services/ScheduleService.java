@@ -105,6 +105,7 @@ public class ScheduleService {
     public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity, Date selectedDate) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(selectedDate);
+        System.out.println("Data formateada:" + formattedDate);
         return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity, formattedDate);
     }
 

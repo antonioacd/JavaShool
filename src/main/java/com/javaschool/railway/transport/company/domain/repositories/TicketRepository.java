@@ -1,5 +1,6 @@
 package com.javaschool.railway.transport.company.domain.repositories;
 
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,11 @@ import java.util.List;
 
 public interface TicketRepository extends JpaRepository<TicketEntity, Long> {
 
-    @Query("SELECT ticket FROM TicketEntity ticket WHERE ticket.user = :user")
-    List<TicketEntity> findTicketsByUser(@Param("user") UserEntity user);
+    @Query("SELECT ticket FROM TicketEntity ticket WHERE ticket.user.id = :userId " +
+            "AND (:scheduleId IS NULL OR ticket.schedule.id = :scheduleId)")
+    List<TicketEntity> findTicketsByUserIdAndScheduleId(
+            @Param("userId") Long userId,
+            @Param("scheduleId") Long scheduleId
+    );
 
 }

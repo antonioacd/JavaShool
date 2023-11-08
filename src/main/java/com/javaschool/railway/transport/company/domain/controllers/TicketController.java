@@ -1,7 +1,6 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
-import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +29,18 @@ public class TicketController {
   @GetMapping
   public List<TicketInfoDTO> getAllTickets() {
     return ticketService.getAllTickets();
-  } 
+  }
 
   @GetMapping("/{id}")
   public TicketInfoDTO getTicketById(@PathVariable Long id) {
     return ticketService.getTicketById(id);
   }
 
-  @GetMapping("/searchTicketsByUser")
+  @GetMapping("/searchTicketsByUserAndScheduleId")
   public ResponseEntity<List<TicketEntity>> findTicketsByUser(
-          @RequestParam(name = "userId", required = false) Long userId) {
-    List<TicketEntity> tickets = ticketService.findTicketsByUser(userId);
+          @RequestParam(name = "userId", required = false) Long userId,
+          @RequestParam(name = "scheduleId", required = false) Long scheduleId) {
+    List<TicketEntity> tickets = ticketService.findTicketsByUserAndSchedule(userId, scheduleId);
     return ResponseEntity.ok(tickets);
   }
 
