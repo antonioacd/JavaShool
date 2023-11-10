@@ -1,5 +1,6 @@
 package com.javaschool.railway.transport.company.domain.security;
 
+import com.javaschool.railway.transport.company.domain.services.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -8,19 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtGenerator tokenGenerator;
-
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 

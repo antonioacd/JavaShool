@@ -8,41 +8,76 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
 
-  @Autowired
-  private TicketService ticketService;
+    @Autowired
+    private TicketService ticketService;
 
-  @PostMapping
-  public TicketInfoDTO createTicket(@RequestBody TicketEntity ticketEntity) {
-    return ticketService.createTicket(ticketEntity);
-  }
+    /**
+     * Creates a new ticket.
+     *
+     * @param ticketEntity The ticket entity to be created.
+     * @return A DTO (Data Transfer Object) containing the ticket's information.
+     */
+    @PostMapping
+    public TicketInfoDTO createTicket(@RequestBody TicketEntity ticketEntity) {
+        // Delegate ticket creation logic to the TicketService and return the DTO
+        return ticketService.createTicket(ticketEntity);
+    }
 
-  @PutMapping("/{id}")
-  public TicketInfoDTO updateTicket(@PathVariable Long id, @RequestBody TicketInfoDTO updatedTicket) {
-    return ticketService.updateTicket(id, updatedTicket);
-  }
+    /**
+     * Updates an existing ticket.
+     *
+     * @param id           The ID of the ticket to be updated.
+     * @param updatedTicket The updated ticket DTO.
+     * @return A DTO (Data Transfer Object) containing the updated ticket's information.
+     */
+    @PutMapping("/{id}")
+    public TicketInfoDTO updateTicket(@PathVariable Long id, @RequestBody TicketInfoDTO updatedTicket) {
+        // Delegate ticket update logic to the TicketService and return the DTO
+        return ticketService.updateTicket(id, updatedTicket);
+    }
 
-  @GetMapping
-  public List<TicketInfoDTO> getAllTickets() {
-    return ticketService.getAllTickets();
-  }
+    /**
+     * Retrieves a list of all tickets.
+     *
+     * @return A list of DTOs containing ticket information.
+     */
+    @GetMapping
+    public List<TicketInfoDTO> getAllTickets() {
+        // Retrieve all tickets from the service and return the list of DTOs
+        return ticketService.getAllTickets();
+    }
 
-  @GetMapping("/{id}")
-  public TicketInfoDTO getTicketById(@PathVariable Long id) {
-    return ticketService.getTicketById(id);
-  }
+    /**
+     * Retrieves ticket information by its ID.
+     *
+     * @param id The ID of the ticket to retrieve.
+     * @return A DTO containing the ticket's information.
+     */
+    @GetMapping("/{id}")
+    public TicketInfoDTO getTicketById(@PathVariable Long id) {
+        // Delegate ticket retrieval logic to the TicketService and return the DTO
+        return ticketService.getTicketById(id);
+    }
 
-  @GetMapping("/searchTicketsByUserAndScheduleId")
-  public ResponseEntity<List<TicketEntity>> findTicketsByUser(
-          @RequestParam(name = "userId", required = false) Long userId,
-          @RequestParam(name = "scheduleId", required = false) Long scheduleId) {
-    List<TicketEntity> tickets = ticketService.findTicketsByUserAndSchedule(userId, scheduleId);
-    return ResponseEntity.ok(tickets);
-  }
-
-
+    /**
+     * Searches for tickets based on user and schedule ID.
+     *
+     * @param userId     The ID of the user.
+     * @param scheduleId The ID of the schedule.
+     * @return ResponseEntity containing a list of ticket entities.
+     */
+    @GetMapping("/searchTicketsByUserAndScheduleId")
+    public ResponseEntity<List<TicketEntity>> findTicketsByUser(
+            @RequestParam(name = "userId", required = false) Long userId,
+            @RequestParam(name = "scheduleId", required = false) Long scheduleId) {
+        // Search for tickets based on the provided user and schedule IDs and return the ResponseEntity
+        List<TicketEntity> tickets = ticketService.findTicketsByUserAndSchedule(userId, scheduleId);
+        return ResponseEntity.ok(tickets);
+    }
 }

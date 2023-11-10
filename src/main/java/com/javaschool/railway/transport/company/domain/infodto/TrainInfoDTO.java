@@ -1,9 +1,7 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
-import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
-import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.NoArgsConstructor;
+import lombok.Data;
 import java.time.Duration;
 
 @NoArgsConstructor

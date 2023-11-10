@@ -1,6 +1,5 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

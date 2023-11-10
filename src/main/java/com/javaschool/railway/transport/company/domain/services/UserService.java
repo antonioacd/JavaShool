@@ -33,6 +33,7 @@ public class UserService {
      * @param id The ID of the user to be deleted.
      */
     public void deleteUserById(Long id) {
+        // Delete the user by ID
         userRepository.deleteById(id);
     }
 
@@ -44,9 +45,11 @@ public class UserService {
      * @throws EntityNotFoundException If the user is not found.
      */
     public UserInfoDTO getUserById(Long userId) {
+        // Find the user by ID or throw an exception if not found
         UserEntity user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
+        // Map the user entity to a DTO
         return modelMapper.map(user, UserInfoDTO.class);
     }
 
@@ -58,15 +61,17 @@ public class UserService {
      * @throws EntityNotFoundException If the user is not found.
      */
     public UserInfoDTO getUserByEmail(String email) {
+        // Find the user by email or throw an exception if not found
         UserEntity user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
+        // Map the user entity to a DTO
         UserInfoDTO userInfoDTO = modelMapper.map(user, UserInfoDTO.class);
+
+        // Map roles to DTOs and set them in the UserInfoDTO
         userInfoDTO.setRoles(user.getRoles().stream()
                 .map(rol -> modelMapper.map(rol, RoleInfoDTO.class))
                 .collect(Collectors.toList()));
-
-        System.out.println("user: " + userInfoDTO.toString());
 
         return userInfoDTO;
     }
@@ -77,8 +82,10 @@ public class UserService {
      * @return A list of DTOs containing user information.
      */
     public List<UserInfoDTO> getAllUsers() {
+        // Retrieve all users from the repository
         List<UserEntity> users = userRepository.findAll();
 
+        // Map each user entity to a DTO and collect into a list
         return users.stream()
                 .map(user -> modelMapper.map(user, UserInfoDTO.class))
                 .collect(Collectors.toList());

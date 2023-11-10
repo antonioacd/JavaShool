@@ -1,7 +1,7 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
-import jakarta.persistence.Column;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data

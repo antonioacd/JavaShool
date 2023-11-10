@@ -50,39 +50,37 @@ public class TicketService {
         ScheduleEntity schedule = scheduleRepository.getReferenceById(ticket.getSchedule().getId());
         UserEntity user = userRepository.getReferenceById(ticket.getUser().getId());
 
+        // Check if the user already has a ticket for this schedule
         List<TicketEntity> userTicketsForSchedule = ticketRepository.findTicketsByUserIdAndScheduleId(user.getId(), schedule.getId());
         if (!userTicketsForSchedule.isEmpty()) {
-            throw new IllegalStateException("El usuario ya tiene un billete para este tren.");
+            throw new IllegalStateException("The user already has a ticket for this train.");
         }
 
+        // Check if there are available seats for this schedule
         if (schedule.getOccupiedSeats() >= schedule.getTrain().getSeats()) {
-            throw new IllegalStateException("No hay asientos disponibles para este horario.");
+            throw new IllegalStateException("No available seats for this schedule.");
         }
 
+        // Calculate minutes until departure
         Date departureDate = schedule.getDepartureTime();
         LocalDateTime departureTime = departureDate.toInstant().atZone(ZoneOffset.UTC).toLocalDateTime();
-
         LocalDateTime currentTime = LocalDateTime.now(ZoneOffset.UTC);
-
         long minutesUntilDeparture = ChronoUnit.MINUTES.between(currentTime, departureTime);
 
-        System.out.println("Departure: " + departureTime.toString());
-        System.out.println("Current: " + currentTime.toString());
-        System.out.println("Minutes until departure: " + minutesUntilDeparture);
-
-        if (minutesUntilDeparture-60 <= 10) {
+        // Check if it's within the allowed time frame for ticket purchase
+        if (minutesUntilDeparture - 60 <= 10) {
             throw new IllegalStateException("Time exception");
         }
 
+        // Assign the next available seat
         int nextAvailableSeat = schedule.getOccupiedSeats() + 1;
-
         ticket.setSeatNumber(nextAvailableSeat);
         schedule.setOccupiedSeats(nextAvailableSeat);
 
+        // Save changes to schedule and ticket entities
         scheduleRepository.save(schedule);
         return modelMapper.map(ticketRepository.save(ticket), TicketInfoDTO.class);
     }
-
 
     /**
      * Updates a ticket entity by ID and returns the updated ticket's information.
@@ -109,9 +107,9 @@ public class TicketService {
             existingTicket.setSchedule(scheduleRepository.getReferenceById(updatedTicket.getSchedule().getId()));
         }
 
+        // Save changes to the ticket entity
         return modelMapper.map(ticketRepository.save(existingTicket), TicketInfoDTO.class);
     }
-
 
     /**
      * Deletes a ticket by its ID.
@@ -119,6 +117,7 @@ public class TicketService {
      * @param id The ID of the ticket to be deleted.
      */
     public void deleteTicketById(Long id) {
+        // Delete the ticket by ID
         ticketRepository.deleteById(id);
     }
 
@@ -130,8 +129,10 @@ public class TicketService {
      * @throws EntityNotFoundException If the ticket is not found.
      */
     public TicketInfoDTO getTicketById(Long id) {
+        // Find the ticket by ID or throw an exception if not found
         TicketEntity ticketEntity = ticketRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
+        // Map the ticket entity to a DTO
         return modelMapper.map(ticketEntity, TicketInfoDTO.class);
     }
 
@@ -141,15 +142,23 @@ public class TicketService {
      * @return A list of DTOs containing ticket information.
      */
     public List<TicketInfoDTO> getAllTickets() {
+        // Retrieve all tickets from the repository
         List<TicketEntity> tickets = ticketRepository.findAll();
-
+        // Map each ticket entity to a DTO and collect into a list
         return tickets.stream()
                 .map(ticket -> modelMapper.map(ticket, TicketInfoDTO.class))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a list of tickets based on user ID and schedule ID.
+     *
+     * @param userId     The ID of the user.
+     * @param scheduleId The ID of the schedule.
+     * @return A list of ticket entities that match the criteria.
+     */
     public List<TicketEntity> findTicketsByUserAndSchedule(Long userId, Long scheduleId) {
-
+        // Find tickets based on user ID and schedule ID
         return ticketRepository.findTicketsByUserIdAndScheduleId(userId, scheduleId);
     }
 }

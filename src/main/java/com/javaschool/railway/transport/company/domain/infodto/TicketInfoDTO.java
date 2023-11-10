@@ -1,12 +1,7 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
-import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
-import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.Data;
 
 @NoArgsConstructor
 @Data

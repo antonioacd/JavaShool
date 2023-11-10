@@ -3,20 +3,15 @@ package com.javaschool.railway.transport.company.domain.services;
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
-import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
-import com.sun.tools.jconsole.JConsoleContext;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.text.SimpleDateFormat;
 
 /**
  * Service class for managing schedule-related operations.
@@ -35,8 +30,6 @@ public class ScheduleService {
         this.modelMapper = modelMapper;
     }
 
-
-
     /**
      * Creates a new schedule and returns the schedule's information.
      *
@@ -44,7 +37,9 @@ public class ScheduleService {
      * @return A DTO (Data Transfer Object) containing the schedule's information.
      */
     public ScheduleInfoDTO createSchedule(ScheduleEntity schedule) {
+        // Set the train reference using the train ID from the schedule entity
         schedule.setTrain(trainRepository.getReferenceById(schedule.getTrain().getId()));
+        // Save the schedule entity and map it to a DTO
         return modelMapper.map(scheduleRepository.save(schedule), ScheduleInfoDTO.class);
     }
 
@@ -61,16 +56,18 @@ public class ScheduleService {
         ScheduleEntity existingSchedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
 
+        // Update the existing schedule with the information from the updated schedule DTO
         existingSchedule.setDepartureTime(updatedSchedule.getDepartureTime());
         existingSchedule.setArrivalTime(updatedSchedule.getArrivalTime());
 
+        // Check if the train ID has changed and update the reference accordingly
         if (!existingSchedule.getTrain().getId().equals(updatedSchedule.getTrain().getId())) {
             existingSchedule.setTrain(trainRepository.getReferenceById(updatedSchedule.getTrain().getId()));
         }
 
+        // Save the updated schedule entity and map it to a DTO
         return modelMapper.map(scheduleRepository.save(existingSchedule), ScheduleInfoDTO.class);
     }
-
 
     /**
      * Deletes a schedule by its ID.
@@ -89,8 +86,10 @@ public class ScheduleService {
      * @throws EntityNotFoundException If the schedule is not found.
      */
     public ScheduleInfoDTO getScheduleById(Long id) {
+        // Find the schedule entity by ID or throw an exception if not found
         ScheduleEntity scheduleEntity = scheduleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
+        // Map the schedule entity to a DTO
         return modelMapper.map(scheduleEntity, ScheduleInfoDTO.class);
     }
 
@@ -100,21 +99,38 @@ public class ScheduleService {
      * @return A list of DTOs containing schedule information.
      */
     public List<ScheduleInfoDTO> getAllSchedules() {
+        // Retrieve all schedules from the repository
         List<ScheduleEntity> schedules = scheduleRepository.findAll();
-
+        // Map each schedule entity to a DTO and collect into a list
         return schedules.stream()
                 .map(schedule -> modelMapper.map(schedule, ScheduleInfoDTO.class))
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a list of schedules based on departure city, arrival city, and selected date.
+     *
+     * @param departureCity The departure city.
+     * @param arrivalCity   The arrival city.
+     * @param selectedDate  The selected date.
+     * @return A list of schedule entities that match the criteria.
+     */
     public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity, Date selectedDate) {
+        // Format the selected date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(selectedDate);
-        System.out.println("Data formateada:" + formattedDate);
+        // Find schedules based on cities and date
         return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity, formattedDate);
     }
 
+    /**
+     * Retrieves a list of schedules based on train number.
+     *
+     * @param trainNumber The train number.
+     * @return A list of schedule entities that match the train number.
+     */
     public List<ScheduleEntity> findByTrainNumber(String trainNumber) {
+        // Find schedules based on train number
         return scheduleRepository.findSchedulesByTrainNumber(trainNumber);
     }
 

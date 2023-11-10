@@ -1,9 +1,7 @@
 package com.javaschool.railway.transport.company.domain.entitites;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 
 @Entity
 @Table(name="roles", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")

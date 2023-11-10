@@ -1,14 +1,11 @@
 package com.javaschool.railway.transport.company.domain.security;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.hibernate.annotations.Comment;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-
 import java.util.Date;
 
 @Component
@@ -42,5 +39,4 @@ public class JwtGenerator {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
     }
-
 }

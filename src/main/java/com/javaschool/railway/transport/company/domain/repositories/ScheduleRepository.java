@@ -4,9 +4,6 @@ import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
-import java.util.Date;
 import java.util.List;
 
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
@@ -26,5 +23,4 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
     List<ScheduleEntity> findSchedulesByTrainNumber(
             @Param("trainNumber") String trainNumber
     );
-
 }
