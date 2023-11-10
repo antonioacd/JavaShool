@@ -2,9 +2,7 @@ package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.apache.catalina.User;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,5 +39,5 @@ public class UserEntity {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-	private List<RolEntity> roles = new ArrayList<>();
+	private List<RoleEntity> roles = new ArrayList<>();
 }

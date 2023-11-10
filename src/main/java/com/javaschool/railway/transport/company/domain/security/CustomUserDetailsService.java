@@ -1,6 +1,6 @@
 package com.javaschool.railway.transport.company.domain.security;
 
-import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
+import com.javaschool.railway.transport.company.domain.entitites.RoleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
     }
 
-    private Collection<GrantedAuthority> mapRolesToAuthorities(List<RolEntity> roles) {
+    private Collection<GrantedAuthority> mapRolesToAuthorities(List<RoleEntity> roles) {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

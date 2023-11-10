@@ -1,10 +1,9 @@
 package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.entitites.RolEntity;
-import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
+import com.javaschool.railway.transport.company.domain.entitites.RoleEntity;
+import com.javaschool.railway.transport.company.domain.infodto.RoleInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.RoleRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +15,16 @@ import java.util.stream.Collectors;
  * Service class for managing roles-related operations.
  */
 @Service
-@AllArgsConstructor
-public class RolService {
+public class RoleService {
+
+    private final RoleRepository roleRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    private final RoleRepository roleRepository;
-    @Autowired
-    private final ModelMapper modelMapper;
+    public RoleService(RoleRepository roleRepository, ModelMapper modelMapper) {
+        this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Creates a new role and returns the role's information.
@@ -30,8 +32,8 @@ public class RolService {
      * @param rol The role entity to be created.
      * @return A DTO (Data Transfer Object) containing the role's information.
      */
-    public RolInfoDTO createRol(RolEntity rol) {
-        return modelMapper.map(roleRepository.save(rol), RolInfoDTO.class);
+    public RoleInfoDTO createRol(RoleEntity rol) {
+        return modelMapper.map(roleRepository.save(rol), RoleInfoDTO.class);
     }
 
     /**
@@ -50,10 +52,10 @@ public class RolService {
      * @return A DTO containing the role's information.
      * @throws EntityNotFoundException If the role is not found.
      */
-    public RolInfoDTO getRolById(Long id) {
-        RolEntity rolEntity = roleRepository.findById(id)
+    public RoleInfoDTO getRolById(Long id) {
+        RoleEntity roleEntity = roleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
-        return modelMapper.map(rolEntity, RolInfoDTO.class);
+        return modelMapper.map(roleEntity, RoleInfoDTO.class);
     }
 
     /**
@@ -61,11 +63,11 @@ public class RolService {
      *
      * @return A list of DTOs containing role information.
      */
-    public List<RolInfoDTO> getAllRoles() {
-        List<RolEntity> roles = roleRepository.findAll();
+    public List<RoleInfoDTO> getAllRoles() {
+        List<RoleEntity> roles = roleRepository.findAll();
 
         return roles.stream()
-                .map(rol -> modelMapper.map(rol, RolInfoDTO.class))
+                .map(rol -> modelMapper.map(rol, RoleInfoDTO.class))
                 .collect(Collectors.toList());
     }
 }

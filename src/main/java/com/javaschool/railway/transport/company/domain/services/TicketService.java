@@ -25,17 +25,20 @@ import java.util.stream.Collectors;
  * Service class for managing ticket-related operations.
  */
 @Service
-@AllArgsConstructor
 public class TicketService {
 
-    @Autowired
     private final TicketRepository ticketRepository;
-    @Autowired
     private final ScheduleRepository scheduleRepository;
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, ModelMapper modelMapper) {
+        this.ticketRepository = ticketRepository;
+        this.scheduleRepository = scheduleRepository;
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Creates a new ticket and returns the ticket's information.

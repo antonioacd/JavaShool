@@ -19,15 +19,18 @@ import java.util.stream.Collectors;
  * Service class for managing train-related operations.
  */
 @Service
-@AllArgsConstructor
 public class TrainService {
 
-    @Autowired
     private final TrainRepository trainRepository;
-    @Autowired
     private final StationRepository stationRepository;
-    @Autowired
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public TrainService(TrainRepository trainRepository, StationRepository stationRepository, ModelMapper modelMapper) {
+        this.trainRepository = trainRepository;
+        this.stationRepository = stationRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Creates a new train and returns the train's information.

@@ -9,6 +9,7 @@ import com.sun.tools.jconsole.JConsoleContext;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -21,13 +22,20 @@ import java.text.SimpleDateFormat;
  * Service class for managing schedule-related operations.
  */
 @Service
-@AllArgsConstructor
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final TrainRepository trainRepository;
-    private final StationRepository stationRepository;
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public ScheduleService(ScheduleRepository scheduleRepository, TrainRepository trainRepository, ModelMapper modelMapper) {
+        this.scheduleRepository = scheduleRepository;
+        this.trainRepository = trainRepository;
+        this.modelMapper = modelMapper;
+    }
+
+
 
     /**
      * Creates a new schedule and returns the schedule's information.
@@ -49,20 +57,17 @@ public class ScheduleService {
      * @throws EntityNotFoundException If the schedule is not found.
      */
     public ScheduleInfoDTO updateSchedule(Long id, ScheduleInfoDTO updatedSchedule) {
-        // Busca el schedule existente por su ID
+
         ScheduleEntity existingSchedule = scheduleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
 
-        // Actualiza los campos relevantes con los valores del updatedSchedule
         existingSchedule.setDepartureTime(updatedSchedule.getDepartureTime());
         existingSchedule.setArrivalTime(updatedSchedule.getArrivalTime());
 
-        // Actualiza el tren asociado (si es diferente)
         if (!existingSchedule.getTrain().getId().equals(updatedSchedule.getTrain().getId())) {
             existingSchedule.setTrain(trainRepository.getReferenceById(updatedSchedule.getTrain().getId()));
         }
 
-        // Guarda y devuelve el schedule actualizado
         return modelMapper.map(scheduleRepository.save(existingSchedule), ScheduleInfoDTO.class);
     }
 

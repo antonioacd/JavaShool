@@ -19,13 +19,16 @@ import java.util.stream.Collectors;
  * Service class for managing station-related operations.
  */
 @Service
-@AllArgsConstructor
 public class StationService {
 
-    @Autowired
     private final StationRepository stationRepository;
-    @Autowired
     private final ModelMapper modelMapper;
+
+    @Autowired
+    public StationService(StationRepository stationRepository, ModelMapper modelMapper) {
+        this.stationRepository = stationRepository;
+        this.modelMapper = modelMapper;
+    }
 
     /**
      * Creates a new station and returns the station's information.

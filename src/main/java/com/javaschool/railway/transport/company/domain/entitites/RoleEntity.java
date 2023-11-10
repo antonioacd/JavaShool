@@ -9,7 +9,7 @@ import lombok.Setter;
 @Table(name="roles", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
-public class RolEntity {
+public class RoleEntity {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Long id;

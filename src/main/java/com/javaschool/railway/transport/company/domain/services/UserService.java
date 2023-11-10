@@ -1,12 +1,10 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
-import com.javaschool.railway.transport.company.domain.infodto.RolInfoDTO;
+import com.javaschool.railway.transport.company.domain.infodto.RoleInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
-import com.javaschool.railway.transport.company.domain.repositories.RoleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,24 +16,15 @@ import java.util.stream.Collectors;
  * Service class for managing user-related operations.
  */
 @Service
-@AllArgsConstructor
 public class UserService {
 
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
-    private final RoleRepository roleRepository;
-    @Autowired
     private ModelMapper modelMapper;
 
-    /**
-     * Creates a new user and returns the user's information.
-     *
-     * @param user The user entity to be created.
-     * @return A DTO (Data Transfer Object) containing the user's information.
-     */
-    public UserInfoDTO createUser(UserEntity user) {
-        return modelMapper.map(userRepository.save(user), UserInfoDTO.class);
+    @Autowired
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+        this.userRepository = userRepository;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -74,7 +63,7 @@ public class UserService {
 
         UserInfoDTO userInfoDTO = modelMapper.map(user, UserInfoDTO.class);
         userInfoDTO.setRoles(user.getRoles().stream()
-                .map(rol -> modelMapper.map(rol, RolInfoDTO.class))
+                .map(rol -> modelMapper.map(rol, RoleInfoDTO.class))
                 .collect(Collectors.toList()));
 
         System.out.println("user: " + userInfoDTO.toString());
