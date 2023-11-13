@@ -1,8 +1,11 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
+import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -36,6 +39,11 @@ public class UserController {
     public UserInfoDTO getUserByEmail(@PathVariable String email) {
         // Delegate user retrieval by email logic to the UserService and return the DTO
         return userService.getUserByEmail(email);
+    }
+
+    @GetMapping("/passengers/{scheduleId}")
+    public List<UserEntity> getUsersByScheduleId(@PathVariable Long scheduleId) {
+        return userService.getUsersByScheduleId(scheduleId);
     }
 
     /**

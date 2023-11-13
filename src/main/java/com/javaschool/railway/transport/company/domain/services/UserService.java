@@ -90,4 +90,14 @@ public class UserService {
                 .map(user -> modelMapper.map(user, UserInfoDTO.class))
                 .collect(Collectors.toList());
     }
+
+    /**
+     * Retrieves a list of users by schedule id.
+     *
+     * @param scheduleId
+     * @return A list of DTOs containing user information.
+     */
+    public List<UserEntity> getUsersByScheduleId(Long scheduleId) {
+        return userRepository.findUsersByScheduleId(scheduleId);
+    }
 }

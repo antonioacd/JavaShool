@@ -1,8 +1,10 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.entitites.SeatEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
+import com.javaschool.railway.transport.company.domain.repositories.SeatRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -21,12 +23,14 @@ public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final TrainRepository trainRepository;
+    private final SeatRepository seatRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ScheduleService(ScheduleRepository scheduleRepository, TrainRepository trainRepository, ModelMapper modelMapper) {
+    public ScheduleService(ScheduleRepository scheduleRepository, TrainRepository trainRepository, SeatRepository seatRepository,ModelMapper modelMapper) {
         this.scheduleRepository = scheduleRepository;
         this.trainRepository = trainRepository;
+        this.seatRepository = seatRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -39,8 +43,33 @@ public class ScheduleService {
     public ScheduleInfoDTO createSchedule(ScheduleEntity schedule) {
         // Set the train reference using the train ID from the schedule entity
         schedule.setTrain(trainRepository.getReferenceById(schedule.getTrain().getId()));
+
         // Save the schedule entity and map it to a DTO
-        return modelMapper.map(scheduleRepository.save(schedule), ScheduleInfoDTO.class);
+        ScheduleEntity savedSchedule = scheduleRepository.save(schedule);
+
+        // Create seats for the new schedule
+        createSeatsForSchedule(savedSchedule);
+
+        return modelMapper.map(savedSchedule, ScheduleInfoDTO.class);
+    }
+
+    /**
+     * Create seats for the given schedule.
+     *
+     * @param schedule The schedule entity for which seats should be created.
+     */
+    private void createSeatsForSchedule(ScheduleEntity schedule) {
+        // Get the total number of seats from the associated train
+        int totalSeats = schedule.getTrain().getSeats();
+
+        // Create and save seat entities for the new schedule
+        for (int seatNumber = 1; seatNumber <= totalSeats; seatNumber++) {
+            SeatEntity seat = new SeatEntity();
+            seat.setSchedule(schedule);
+            seat.setSeatNumber(seatNumber);
+            seat.setOccupied(false);
+            seatRepository.save(seat);
+        }
     }
 
     /**

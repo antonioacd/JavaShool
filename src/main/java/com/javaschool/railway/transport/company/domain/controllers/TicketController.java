@@ -66,6 +66,17 @@ public class TicketController {
     }
 
     /**
+     * Deletes a ticket by its ID.
+     *
+     * @param id The ID of the ticket to be deleted.
+     */
+    @DeleteMapping("/{id}")
+    public void deleteTicketById(@PathVariable Long id) {
+        // Delegate ticket deletion logic to the TicketService
+        ticketService.deleteTicketById(id);
+    }
+
+    /**
      * Searches for tickets based on user and schedule ID.
      *
      * @param userId     The ID of the user.
@@ -79,5 +90,10 @@ public class TicketController {
         // Search for tickets based on the provided user and schedule IDs and return the ResponseEntity
         List<TicketEntity> tickets = ticketService.findTicketsByUserAndSchedule(userId, scheduleId);
         return ResponseEntity.ok(tickets);
+    }
+
+    @GetMapping("search/{scheduleId}")
+    public List<TicketEntity> getTicketsByScheduleId(@PathVariable Long scheduleId) {
+        return ticketService.getTicketsByScheduleId(scheduleId);
     }
 }

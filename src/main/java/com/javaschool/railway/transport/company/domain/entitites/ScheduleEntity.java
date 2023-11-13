@@ -30,4 +30,5 @@ public class ScheduleEntity {
 	@JoinColumn(name = "train_id", referencedColumnName= "id", nullable = false)
 	private TrainEntity train;
 
+
 }
