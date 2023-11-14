@@ -1,7 +1,6 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
-import com.javaschool.railway.transport.company.domain.entitites.SeatEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
@@ -9,18 +8,11 @@ import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepo
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -33,7 +25,6 @@ public class TicketService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    private final SeatService seatService;
 
     /**
      * Constructor for TicketService.
@@ -42,15 +33,13 @@ public class TicketService {
      * @param scheduleRepository The repository for ScheduleEntity.
      * @param userRepository     The repository for UserEntity.
      * @param modelMapper        The ModelMapper for entity-DTO mapping.
-     * @param seatService        The SeatService for seat-related operations.
      */
     @Autowired
-    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, ModelMapper modelMapper, SeatService seatService) {
+    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.ticketRepository = ticketRepository;
         this.scheduleRepository = scheduleRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
-        this.seatService = seatService;
     }
 
     /**
@@ -60,41 +49,51 @@ public class TicketService {
      * @return A DTO (Data Transfer Object) containing the ticket's information.
      * @throws IllegalStateException If there are issues with ticket creation.
      */
+    /**
+     * Asigna el primer asiento disponible en el horario especificado y devuelve la información del ticket creado.
+     *
+     * @param ticket El ticket.
+     * @return Una DTO que contiene la información del ticket creado.
+     * @throws IllegalStateException Si no hay asientos disponibles en el horario especificado.
+     */
     public TicketInfoDTO createTicket(TicketEntity ticket) {
-        ScheduleEntity schedule = scheduleRepository.getReferenceById(ticket.getSchedule().getId());
-        UserEntity user = userRepository.getReferenceById(ticket.getUser().getId());
 
-        // Check if the user already has a ticket for this schedule
+        ScheduleEntity schedule = scheduleRepository.findById(ticket.getSchedule().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Schedule not found"));
+
+        UserEntity user = userRepository.findById(ticket.getUser().getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        // Verificar si el usuario ya tiene un ticket para este horario
         List<TicketEntity> userTicketsForSchedule = ticketRepository.findTicketsByUserIdAndScheduleId(user.getId(), schedule.getId());
         if (!userTicketsForSchedule.isEmpty()) {
-            throw new IllegalStateException("The user already has a ticket for this train.");
+            throw new IllegalStateException("The user already has a ticket for this schedule.");
         }
 
-        // Check if there are available seats for this schedule
-        Optional<Integer> nextAvailableSeat = seatService.findNextAvailableSeat(schedule.getId());
+        int totalSeats = schedule.getTrain().getSeats();
 
-        if (!nextAvailableSeat.isPresent()) {
-            throw new IllegalStateException("No available seats for this schedule.");
+        for (int seatNumber = 1; seatNumber <= totalSeats; seatNumber++) {
+            // Verificar si hay un ticket existente con este asiento y horario
+            boolean seatOccupied = ticketRepository.existsByScheduleIdAndSeatNumber(schedule.getId(), seatNumber);
+
+            if (!seatOccupied) {
+                // Asignar el asiento y marcarlo como ocupado
+                schedule.setOccupiedSeats(schedule.getOccupiedSeats() + 1);
+                scheduleRepository.save(schedule);
+
+                System.out.println("Ha encontrado un sitio libre: " + seatNumber);
+
+                // Crear y guardar el ticket
+                TicketEntity newTicket = new TicketEntity();
+                newTicket.setSeatNumber(seatNumber);
+                newTicket.setUser(user);
+                newTicket.setSchedule(schedule);
+                return modelMapper.map(ticketRepository.save(newTicket), TicketInfoDTO.class);
+            }
         }
 
-        int nextSeatNumber = nextAvailableSeat.get();
-
-        // Perform seat assignment and occupation check
-        if (schedule != null && nextSeatNumber > 0 && nextSeatNumber <= schedule.getTrain().getSeats()) {
-            schedule.setOccupiedSeats(schedule.getOccupiedSeats() + 1);
-
-            // Mark the seat as occupied
-            seatService.markSeatAsOccupied(nextSeatNumber, schedule.getId());
-            System.out.println("Marcado como ocupado");
-
-            // Save changes to schedule and ticket entities
-            scheduleRepository.save(schedule);
-            ticket.setSeatNumber(nextSeatNumber);
-            return modelMapper.map(ticketRepository.save(ticket), TicketInfoDTO.class);
-        } else {
-            // Handle the case where the next available seat is not valid
-            throw new IllegalStateException("Invalid seat assignment for this schedule.");
-        }
+        // Si llegamos aquí, no hay asientos disponibles
+        throw new IllegalStateException("No available seats for this schedule.");
     }
 
     /**
@@ -143,9 +142,6 @@ public class TicketService {
             schedule.setOccupiedSeats(schedule.getOccupiedSeats() - 1);
             scheduleRepository.save(schedule);
         }
-
-        // Mark the seat as occupied
-        seatService.markSeatAsAvailable(ticketEntity.getSeatNumber(), schedule.getId());
 
         System.out.println("Pasa por el borrado: ");
 
