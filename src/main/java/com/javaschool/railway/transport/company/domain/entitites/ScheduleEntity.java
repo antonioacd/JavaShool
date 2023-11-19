@@ -1,15 +1,18 @@
 package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
 @Entity
-@Table(name="schedules", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
+@Table(name = "schedules", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
 @Getter
 @Setter
+@ToString
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ScheduleEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
