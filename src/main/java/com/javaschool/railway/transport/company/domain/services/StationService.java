@@ -1,6 +1,5 @@
 package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
@@ -8,6 +7,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,4 +108,5 @@ public class StationService {
         // Find stations based on city
         return stationRepository.findStationsByCity(city);
     }
+
 }
