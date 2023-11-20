@@ -25,6 +25,7 @@ public class TrainService {
     private final StationRepository stationRepository;
     private final ModelMapper modelMapper;
 
+
     @Autowired
     public TrainService(TrainRepository trainRepository, StationRepository stationRepository, ModelMapper modelMapper) {
         this.trainRepository = trainRepository;
@@ -53,7 +54,7 @@ public class TrainService {
      * @return A DTO (Data Transfer Object) containing the updated train's information.
      * @throws EntityNotFoundException If the train is not found.
      */
-    public TrainInfoDTO updateTrain(Long id, TrainEntity train) {
+    public TrainInfoDTO updateTrain(Long id, TrainInfoDTO train) {
         // Find the existing train by ID or throw an exception if not found
         TrainEntity existingTrain = trainRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Train not found"));

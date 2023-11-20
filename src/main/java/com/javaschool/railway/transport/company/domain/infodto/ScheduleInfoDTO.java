@@ -9,6 +9,8 @@ import java.util.Date;
 
 @NoArgsConstructor
 @Data
+@Builder
+@AllArgsConstructor
 public class ScheduleInfoDTO {
     private Long id;
     private Date departureTime;

@@ -36,7 +36,7 @@ public class TrainController {
      * @return A DTO (Data Transfer Object) containing the updated train's information.
      */
     @PutMapping("/{id}")
-    public TrainInfoDTO updateTrain(@PathVariable Long id, @RequestBody TrainEntity train) {
+    public TrainInfoDTO updateTrain(@PathVariable Long id, @RequestBody TrainInfoDTO train) {
         // Delegate train update logic to the TrainService and return the DTO
         return trainService.updateTrain(id, train);
     }
