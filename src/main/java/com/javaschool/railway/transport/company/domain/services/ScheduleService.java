@@ -124,13 +124,6 @@ public class ScheduleService {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String formattedDate = dateFormat.format(selectedDate);
 
-        ScheduleEntity scheduleEntity = scheduleRepository.findById(104L).orElseThrow(null);
-
-        System.out.println("Campos de busqueda: " + departureCity + arrivalCity + formattedDate);
-        System.out.println("Campos de la schedule" + scheduleEntity.toString());
-        System.out.println("Comparacion: " + formattedDate + " - " + scheduleEntity.getDepartureTime().toString());
-
-
         // Find schedules based on cities and date
         return scheduleRepository.findSchedulesByCitiesAndDate(departureCity, arrivalCity, formattedDate);
     }

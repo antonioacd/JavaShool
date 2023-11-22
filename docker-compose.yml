@@ -33,3 +33,14 @@ services:
       DATABASE_PASSWORD: root
     ports:
       - "8080:8080"
+
+  sonarqube:
+    image: sonarqube:latest
+    environment:
+      - SONARQUBE_JDBC_URL=jdbc:postgresql://postgres:5432/RAILWAY_TRANSPORT_COMPANY
+      - SONARQUBE_JDBC_USERNAME=postgres
+      - SONARQUBE_JDBC_PASSWORD=root
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
