@@ -1,10 +1,7 @@
 package com.javaschool.railway.transport.company.domain.entitites;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "tickets", schema = "public", catalog = "RAILWAY_TRANSPORT_COMPANY")
@@ -12,6 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TicketEntity {
 
 	@Id

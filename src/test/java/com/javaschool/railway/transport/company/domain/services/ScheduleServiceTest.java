@@ -1,11 +1,14 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
+import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
+import java.time.Duration;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,6 +33,9 @@ public class ScheduleServiceTest {
 
     @Mock
     private ScheduleRepository scheduleRepository;
+
+    @Mock
+    private StationRepository stationRepository;
 
     @Mock
     private TrainRepository trainRepository;
@@ -259,4 +266,46 @@ public class ScheduleServiceTest {
             assertThat(foundSchedules.get(i).getTrain().getId()).isEqualTo(schedulesByCities.get(i).getTrain().getId());
         }
     }*/
+
+    /**
+     * Test for finding schedules by train number and returning a list of ScheduleEntities.
+     */
+    @Test
+    public void findSchedulesByTrainNumber_ReturnsListOfScheduleEntities() {
+        // Arrange
+        String trainNumber = "T123";
+
+        List<ScheduleEntity> schedulesByTrainNumber = Arrays.asList(
+                ScheduleEntity.builder()
+                        .id(1L)
+                        .departureTime(new Date())
+                        .arrivalTime(new Date())
+                        .train(TrainEntity.builder().id(1L).trainNumber(trainNumber).build())
+                        .build(),
+                ScheduleEntity.builder()
+                        .id(2L)
+                        .departureTime(new Date())
+                        .arrivalTime(new Date())
+                        .train(TrainEntity.builder().id(2L).trainNumber(trainNumber).build())
+                        .build()
+        );
+
+        // Mocking behavior of scheduleRepository.findSchedulesByTrainNumber
+        when(scheduleRepository.findSchedulesByTrainNumber(trainNumber)).thenReturn(schedulesByTrainNumber);
+
+        // Calling the method under test
+        List<ScheduleEntity> foundSchedules = scheduleService.findByTrainNumber(trainNumber);
+
+        // Verifying that the result is not null and contains the expected number of schedules
+        assertThat(foundSchedules).isNotNull();
+        assertThat(foundSchedules).hasSize(schedulesByTrainNumber.size());
+
+        // Additional assertions for each schedule
+        for (int i = 0; i < foundSchedules.size(); i++) {
+            assertThat(foundSchedules.get(i).getDepartureTime()).isEqualTo(schedulesByTrainNumber.get(i).getDepartureTime());
+            assertThat(foundSchedules.get(i).getArrivalTime()).isEqualTo(schedulesByTrainNumber.get(i).getArrivalTime());
+            assertThat(foundSchedules.get(i).getTrain().getId()).isEqualTo(schedulesByTrainNumber.get(i).getTrain().getId());
+        }
+    }
+
 }

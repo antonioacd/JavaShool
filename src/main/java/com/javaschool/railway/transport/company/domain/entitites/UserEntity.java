@@ -13,6 +13,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserEntity {
 
 	public UserEntity(String email, String password) {

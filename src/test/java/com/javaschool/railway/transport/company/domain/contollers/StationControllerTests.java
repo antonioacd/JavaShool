@@ -41,11 +41,11 @@ public class StationControllerTests {
 
     @BeforeEach
     public void init() {
-        station = StationEntity.builder().name("pikachu").city("electric").build();
-        stationDTO = StationInfoDTO.builder().name("pikachu").city("electric").build();
+        station = StationEntity.builder().name("station1").city("city1").build();
+        stationDTO = StationInfoDTO.builder().name("station1").city("city1").build();
     }
 
-    /*@Test
+    @Test
     public void StationController_CreateStation_ReturnCreated() throws Exception {
         given(stationService.createStation(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
 
@@ -56,7 +56,7 @@ public class StationControllerTests {
         response.andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(stationDTO.getName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city", CoreMatchers.is(stationDTO.getCity())));
-    }*/
+    }
 
     /*@Test
     public void PokemonController_GetAllPokemon_ReturnResponseDto() throws Exception {
