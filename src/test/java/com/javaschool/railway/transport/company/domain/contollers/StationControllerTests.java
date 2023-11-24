@@ -1,113 +1,102 @@
 package com.javaschool.railway.transport.company.domain.contollers;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaschool.railway.transport.company.domain.controllers.StationController;
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.StationService;
-import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest(classes = StationController.class)
-@AutoConfigureMockMvc(addFilters = false)
-@ExtendWith(MockitoExtension.class)
 public class StationControllerTests {
-    @Autowired
-    private MockMvc mockMvc;
 
-    @MockBean
+    @Mock
     private StationService stationService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-    private StationEntity station;
-    private StationInfoDTO stationDTO;
+    @InjectMocks
+    private StationController stationController;
+
+    private MockMvc mockMvc;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @BeforeEach
-    public void init() {
-        station = StationEntity.builder().name("station1").city("city1").build();
-        stationDTO = StationInfoDTO.builder().name("station1").city("city1").build();
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(stationController).build();
     }
 
     @Test
-    public void StationController_CreateStation_ReturnCreated() throws Exception {
-        given(stationService.createStation(ArgumentMatchers.any())).willAnswer((invocation -> invocation.getArgument(0)));
+    public void createStation_ReturnCreated() throws Exception {
+        // Arrange
+        StationEntity station = StationEntity.builder().name("station1").city("city1").build();
+        given(stationService.createStation(station)).willReturn(StationInfoDTO.builder().id(1L).name("station1").city("city1").build());
 
-        ResultActions response = mockMvc.perform(post("/api/stations")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(stationDTO)));
+        String responseContent = mockMvc.perform(post("/api/stations")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(station)))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
 
-        response.andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(stationDTO.getName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.city", CoreMatchers.is(stationDTO.getCity())));
+// Use the response content for assertions
+        StationInfoDTO createdStation = objectMapper.readValue(responseContent, StationInfoDTO.class);
+        assertNotNull(createdStation.getId());
+        assertEquals("station1", createdStation.getName());
+        assertEquals("city1", createdStation.getCity());
     }
 
-    /*@Test
-    public void PokemonController_GetAllPokemon_ReturnResponseDto() throws Exception {
-        PokemonResponse responseDto = PokemonResponse.builder().pageSize(10).last(true).pageNo(1).content(Arrays.asList(stationDTO)).build();
-        when(stationService.getAllPokemon(1,10)).thenReturn(responseDto);
+    @Test
+    public void updateStation_ReturnUpdated() throws Exception {
+        // Arrange
+        Long stationId = 1L;
+        StationInfoDTO updatedStation = StationInfoDTO.builder().id(stationId).name("updatedStation").city("updatedCity").build();
+        given(stationService.updateStation(stationId, updatedStation)).willReturn(updatedStation);
 
-        ResultActions response = mockMvc.perform(get("/api/pokemon")
-                .contentType(MediaType.APPLICATION_JSON)
-                .param("pageNo","1")
-                .param("pageSize", "10"));
+        // Act and Assert
+        mockMvc.perform(put("/api/stations/{id}", stationId)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedStation)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(stationId)))
+                .andExpect(jsonPath("$.name", is("updatedStation")))
+                .andExpect(jsonPath("$.city", is("updatedCity")));
+    }
 
-        response.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content.size()", CoreMatchers.is(responseDto.getContent().size())));
-    }*/
+    @Test
+    public void getAllStations_ReturnListOfStations() throws Exception {
+        // Arrange
+        List<StationInfoDTO> stationList = Arrays.asList(
+                StationInfoDTO.builder().id(1L).name("station1").city("city1").build(),
+                StationInfoDTO.builder().id(2L).name("station2").city("city2").build()
+        );
 
-    /*@Test
-    public void PokemonController_PokemonDetail_ReturnPokemonDto() throws Exception {
-        int pokemonId = 1;
-        when(stationService.getPokemonById(pokemonId)).thenReturn(stationDTO);
+        given(stationService.getAllStations()).willReturn(stationList);
 
-        ResultActions response = mockMvc.perform(get("/api/pokemon/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(stationDTO)));
+        // Act and Assert
+        mockMvc.perform(get("/api/stations")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", is("station1")))
+                .andExpect(jsonPath("$[1].name", is("station2")));
+    }
 
-        response.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(stationDTO.getName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type", CoreMatchers.is(stationDTO.getType())));
-    }*/
-
-    /*@Test
-    public void PokemonController_UpdatePokemon_ReturnPokemonDto() throws Exception {
-        int pokemonId = 1;
-        when(stationService.updatePokemon(stationDTO, pokemonId)).thenReturn(stationDTO);
-
-        ResultActions response = mockMvc.perform(put("/api/pokemon/1/update")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(stationDTO)));
-
-        response.andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", CoreMatchers.is(stationDTO.getName())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.type", CoreMatchers.is(stationDTO.getType())));
-    }*/
-
-    /*@Test
-    public void PokemonController_DeletePokemon_ReturnString() throws Exception {
-        int pokemonId = 1;
-        doNothing().when(stationService).deletePokemonId(1);
-
-        ResultActions response = mockMvc.perform(delete("/api/pokemon/1/delete")
-                .contentType(MediaType.APPLICATION_JSON));
-
-        response.andExpect(MockMvcResultMatchers.status().isOk());
-    }*/
+    // Add more tests for getStationById, deleteStationById, and searchStations as needed
 }
