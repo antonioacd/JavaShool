@@ -41,4 +41,17 @@ public class UserEntity {
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
 	private List<RoleEntity> roles = new ArrayList<>();
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
+		return ((UserEntity) o).id.equals(this.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }

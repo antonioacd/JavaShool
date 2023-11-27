@@ -33,5 +33,16 @@ public class ScheduleEntity {
 	@JoinColumn(name = "train_id", referencedColumnName= "id", nullable = false)
 	private TrainEntity train;
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
+		return ((ScheduleEntity) o).id.equals(this.id);
+	}
 
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }

@@ -1,15 +1,18 @@
 package com.javaschool.railway.transport.company.domain.infodto;
 
+import com.javaschool.railway.transport.company.domain.security.SecurityConstants;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 
 @Data
-@Getter
+@AllArgsConstructor
 public class AuthResponseDTO {
-    private String accessToken;
-    private String tokenType = "Bearer ";
 
-    public AuthResponseDTO(String accessToken) {
-        this.accessToken = accessToken;
+    private String accessToken;
+    private static final String tokenType = SecurityConstants.TOKEN_TYPE;
+
+    public String getTokenType() {
+        return tokenType;
     }
 }

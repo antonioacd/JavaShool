@@ -26,4 +26,17 @@ public class TicketEntity {
 	@ManyToOne
 	@JoinColumn(name = "schedule_id", referencedColumnName= "id", nullable = false)
 	private ScheduleEntity schedule;
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
+		return ((TicketEntity) o).id.equals(this.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }

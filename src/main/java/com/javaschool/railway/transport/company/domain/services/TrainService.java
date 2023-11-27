@@ -8,6 +8,7 @@ import com.javaschool.railway.transport.company.domain.repositories.StationRepos
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,19 +20,12 @@ import java.util.stream.Collectors;
  * Service class for managing train-related operations.
  */
 @Service
+@RequiredArgsConstructor
 public class TrainService {
 
     private final TrainRepository trainRepository;
     private final StationRepository stationRepository;
     private final ModelMapper modelMapper;
-
-
-    @Autowired
-    public TrainService(TrainRepository trainRepository, StationRepository stationRepository, ModelMapper modelMapper) {
-        this.trainRepository = trainRepository;
-        this.stationRepository = stationRepository;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Creates a new train and returns the train's information.

@@ -26,7 +26,6 @@ public class ScheduleController {
      */
     @PostMapping
     public ScheduleInfoDTO createSchedule(@RequestBody ScheduleEntity scheduleEntity) {
-        // Delegate schedule creation logic to the ScheduleService and return the DTO
         return scheduleService.createSchedule(scheduleEntity);
     }
 
@@ -39,7 +38,6 @@ public class ScheduleController {
      */
     @PutMapping("/{id}")
     public ScheduleInfoDTO updateSchedule(@PathVariable Long id, @RequestBody ScheduleInfoDTO updatedScheduleDTO) {
-        // Delegate schedule update logic to the ScheduleService and return the DTO
         return scheduleService.updateSchedule(id, updatedScheduleDTO);
     }
 
@@ -50,7 +48,6 @@ public class ScheduleController {
      */
     @GetMapping
     public List<ScheduleInfoDTO> getAllSchedules() {
-        // Retrieve all schedules from the service and return the list of DTOs
         return scheduleService.getAllSchedules();
     }
 
@@ -61,7 +58,6 @@ public class ScheduleController {
      */
     @DeleteMapping("/{id}")
     public void deleteScheduleById(@PathVariable Long id) {
-        // Delegate schedule deletion logic to the ScheduleService
         scheduleService.deleteScheduleById(id);
     }
 
@@ -73,7 +69,6 @@ public class ScheduleController {
      */
     @GetMapping("/{id}")
     public ScheduleInfoDTO getScheduleById(@PathVariable Long id) {
-        // Delegate schedule retrieval logic to the ScheduleService and return the DTO
         return scheduleService.getScheduleById(id);
     }
 
@@ -90,7 +85,6 @@ public class ScheduleController {
             @RequestParam("departureCity") String departureCity,
             @RequestParam("arrivalCity") String arrivalCity,
             @RequestParam("selectedDate") Date selectedDate) {
-        // Search for schedules based on the provided parameters and return the ResponseEntity
         List<ScheduleEntity> schedules = scheduleService.findSchedulesByCitiesAndDate(departureCity, arrivalCity, selectedDate);
         return ResponseEntity.ok(schedules);
     }
@@ -104,7 +98,6 @@ public class ScheduleController {
     @GetMapping("/searchByTrainNumber")
     public ResponseEntity<List<ScheduleEntity>> searchSchedulesByTrainNumber(
             @RequestParam("trainNumber") String trainNumber) {
-        // Search for schedules based on the provided train number and return the ResponseEntity
         List<ScheduleEntity> schedules = scheduleService.findByTrainNumber(trainNumber);
         return ResponseEntity.ok(schedules);
     }

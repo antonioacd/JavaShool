@@ -28,20 +28,11 @@ public class RoleService {
     /**
      * Creates a new role and returns the role's information.
      *
-     * @param rol The role entity to be created.
+     * @param role The role entity to be created.
      * @return A DTO (Data Transfer Object) containing the role's information.
      */
-    public RoleInfoDTO createRol(RoleEntity rol) {
-        return modelMapper.map(roleRepository.save(rol), RoleInfoDTO.class);
-    }
-
-    /**
-     * Deletes a role by its ID.
-     *
-     * @param id The ID of the role to be deleted.
-     */
-    public void deleteRolById(Long id) {
-        roleRepository.deleteById(id);
+    public RoleInfoDTO createRole(RoleEntity role) {
+        return modelMapper.map(roleRepository.save(role), RoleInfoDTO.class);
     }
 
     /**
@@ -51,7 +42,7 @@ public class RoleService {
      * @return A DTO containing the role's information.
      * @throws EntityNotFoundException If the role is not found.
      */
-    public RoleInfoDTO getRolById(Long id) {
+    public RoleInfoDTO getRoleById(Long id) {
         RoleEntity roleEntity = roleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         return modelMapper.map(roleEntity, RoleInfoDTO.class);

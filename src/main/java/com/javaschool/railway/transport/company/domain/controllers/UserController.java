@@ -25,7 +25,6 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public UserInfoDTO getUserById(@PathVariable Long id) {
-        // Delegate user retrieval logic to the UserService and return the DTO
         return userService.getUserById(id);
     }
 
@@ -37,7 +36,6 @@ public class UserController {
      */
     @GetMapping("email/{email}")
     public UserInfoDTO getUserByEmail(@PathVariable String email) {
-        // Delegate user retrieval by email logic to the UserService and return the DTO
         return userService.getUserByEmail(email);
     }
 
@@ -53,7 +51,6 @@ public class UserController {
      */
     @GetMapping
     public List<UserInfoDTO> getAllUsers() {
-        // Retrieve all users from the service and return the list of DTOs
         return userService.getAllUsers();
     }
 }

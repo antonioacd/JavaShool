@@ -5,6 +5,7 @@ import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,18 +19,12 @@ import java.util.stream.Collectors;
  * Service class for managing schedule-related operations.
  */
 @Service
+@RequiredArgsConstructor
 public class ScheduleService {
 
     private final ScheduleRepository scheduleRepository;
     private final TrainRepository trainRepository;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public ScheduleService(ScheduleRepository scheduleRepository, TrainRepository trainRepository, ModelMapper modelMapper) {
-        this.scheduleRepository = scheduleRepository;
-        this.trainRepository = trainRepository;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Creates a new schedule and returns the schedule's information.

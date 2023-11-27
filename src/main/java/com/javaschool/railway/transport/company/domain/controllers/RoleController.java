@@ -23,8 +23,7 @@ public class RoleController {
      */
     @PostMapping
     public RoleInfoDTO createRole(@RequestBody RoleEntity role) {
-        // Delegate role creation logic to the RoleService and return the DTO
-        return roleService.createRol(role);
+        return roleService.createRole(role);
     }
 
     /**
@@ -35,8 +34,7 @@ public class RoleController {
      */
     @GetMapping("/{id}")
     public RoleInfoDTO getRoleById(@PathVariable Long id) {
-        // Delegate role retrieval logic to the RoleService and return the DTO
-        return roleService.getRolById(id);
+        return roleService.getRoleById(id);
     }
 
     /**
@@ -46,7 +44,6 @@ public class RoleController {
      */
     @GetMapping
     public List<RoleInfoDTO> getAllRoles() {
-        // Retrieve all roles from the service and return the list of DTOs
         return roleService.getAllRoles();
     }
 }

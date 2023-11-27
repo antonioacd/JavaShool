@@ -25,7 +25,6 @@ public class TicketController {
      */
     @PostMapping
     public TicketInfoDTO createTicket(@RequestBody TicketEntity ticketEntity) {
-        // Delegate ticket creation logic to the TicketService and return the DTO
         return ticketService.createTicket(ticketEntity);
     }
 
@@ -38,7 +37,6 @@ public class TicketController {
      */
     @PutMapping("/{id}")
     public TicketInfoDTO updateTicket(@PathVariable Long id, @RequestBody TicketInfoDTO updatedTicket) {
-        // Delegate ticket update logic to the TicketService and return the DTO
         return ticketService.updateTicket(id, updatedTicket);
     }
 
@@ -49,7 +47,6 @@ public class TicketController {
      */
     @GetMapping
     public List<TicketInfoDTO> getAllTickets() {
-        // Retrieve all tickets from the service and return the list of DTOs
         return ticketService.getAllTickets();
     }
 
@@ -61,7 +58,6 @@ public class TicketController {
      */
     @GetMapping("/{id}")
     public TicketInfoDTO getTicketById(@PathVariable Long id) {
-        // Delegate ticket retrieval logic to the TicketService and return the DTO
         return ticketService.getTicketById(id);
     }
 
@@ -72,7 +68,6 @@ public class TicketController {
      */
     @DeleteMapping("/{id}")
     public void deleteTicketById(@PathVariable Long id) {
-        // Delegate ticket deletion logic to the TicketService
         ticketService.deleteTicketById(id);
     }
 
@@ -87,7 +82,6 @@ public class TicketController {
     public ResponseEntity<List<TicketEntity>> findTicketsByUser(
             @RequestParam(name = "userId", required = false) Long userId,
             @RequestParam(name = "scheduleId", required = false) Long scheduleId) {
-        // Search for tickets based on the provided user and schedule IDs and return the ResponseEntity
         List<TicketEntity> tickets = ticketService.findTicketsByUserAndSchedule(userId, scheduleId);
         return ResponseEntity.ok(tickets);
     }

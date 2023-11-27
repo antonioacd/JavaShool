@@ -24,7 +24,6 @@ public class TrainController {
      */
     @PostMapping
     public TrainInfoDTO createTrain(@RequestBody TrainEntity train) {
-        // Delegate train creation logic to the TrainService and return the DTO
         return trainService.createTrain(train);
     }
 
@@ -37,7 +36,6 @@ public class TrainController {
      */
     @PutMapping("/{id}")
     public TrainInfoDTO updateTrain(@PathVariable Long id, @RequestBody TrainInfoDTO train) {
-        // Delegate train update logic to the TrainService and return the DTO
         return trainService.updateTrain(id, train);
     }
 
@@ -49,7 +47,6 @@ public class TrainController {
      */
     @GetMapping("/{id}")
     public TrainInfoDTO getTrainById(@PathVariable Long id) {
-        // Delegate train retrieval logic to the TrainService and return the DTO
         return trainService.getTrainById(id);
     }
 
@@ -60,7 +57,6 @@ public class TrainController {
      */
     @DeleteMapping("/{id}")
     public void deleteTrainById(@PathVariable Long id) {
-        // Delegate train deletion logic to the TrainService
         trainService.deleteTrainById(id);
     }
 
@@ -71,7 +67,6 @@ public class TrainController {
      */
     @GetMapping
     public List<TrainInfoDTO> getAllTrains() {
-        // Retrieve all trains from the service and return the list of DTOs
         return trainService.getAllTrains();
     }
 
@@ -86,7 +81,6 @@ public class TrainController {
     public ResponseEntity<List<TrainEntity>> findTrainsByDepartureStationAndArrivalStation(
             @RequestParam(name = "departureStation", required = false) String departureStation,
             @RequestParam(name = "arrivalStation", required = false) String arrivalStation) {
-        // Search for trains based on the provided departure and arrival stations and return the ResponseEntity
         List<TrainEntity> trains = trainService.findTrainsByDepartureAndArrivalStations(departureStation, arrivalStation);
         return ResponseEntity.ok(trains);
     }

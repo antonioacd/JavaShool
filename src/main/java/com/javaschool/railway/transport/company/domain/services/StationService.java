@@ -4,6 +4,7 @@ import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +16,11 @@ import java.util.stream.Collectors;
  * Service class for managing station-related operations.
  */
 @Service
+@RequiredArgsConstructor
 public class StationService {
 
     private final StationRepository stationRepository;
     private final ModelMapper modelMapper;
-
-    @Autowired
-    public StationService(StationRepository stationRepository, ModelMapper modelMapper) {
-        this.stationRepository = stationRepository;
-        this.modelMapper = modelMapper;
-    }
 
     /**
      * Creates a new station and returns the station's information.

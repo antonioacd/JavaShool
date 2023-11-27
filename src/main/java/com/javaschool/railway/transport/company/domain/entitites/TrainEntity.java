@@ -36,4 +36,16 @@ public class TrainEntity {
 	@JoinColumn(name = "arrival_station_id", referencedColumnName= "id",  nullable = false)
 	private StationEntity arrivalStation;
 
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
+		return ((TrainEntity) o).id.equals(this.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return id != null ? id.hashCode() : 0;
+	}
 }

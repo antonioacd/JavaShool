@@ -24,7 +24,6 @@ public class StationController {
      */
     @PostMapping
     public StationInfoDTO createStation(@RequestBody StationEntity station) {
-        // Delegate station creation logic to the StationService and return the DTO
         return stationService.createStation(station);
     }
 
@@ -37,7 +36,6 @@ public class StationController {
      */
     @PutMapping("/{id}")
     public StationInfoDTO updateStation(@PathVariable Long id, @RequestBody StationInfoDTO updatedStation) {
-        // Delegate station update logic to the StationService and return the DTO
         return stationService.updateStation(id, updatedStation);
     }
 
@@ -49,7 +47,6 @@ public class StationController {
      */
     @GetMapping("/{id}")
     public StationInfoDTO getStationById(@PathVariable Long id) {
-        // Delegate station retrieval logic to the StationService and return the DTO
         return stationService.getStationById(id);
     }
 
@@ -60,7 +57,6 @@ public class StationController {
      */
     @DeleteMapping("/{id}")
     public void deleteStationById(@PathVariable Long id) {
-        // Delegate station deletion logic to the StationService
         stationService.deleteStationById(id);
     }
 
@@ -71,7 +67,6 @@ public class StationController {
      */
     @GetMapping
     public List<StationInfoDTO> getAllStations() {
-        // Retrieve all stations from the service and return the list of DTOs
         return stationService.getAllStations();
     }
 
@@ -84,7 +79,6 @@ public class StationController {
     @GetMapping("/search")
     public ResponseEntity<List<StationEntity>> searchStations(
             @RequestParam("city") String city) {
-        // Search for stations based on the provided city and return the ResponseEntity
         List<StationEntity> stations = stationService.findStationsByCity(city);
         return ResponseEntity.ok(stations);
     }

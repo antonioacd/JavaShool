@@ -8,6 +8,7 @@ import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepo
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * Service class for managing ticket-related operations.
  */
 @Service
+@RequiredArgsConstructor
 public class TicketService {
 
     private final TicketRepository ticketRepository;
@@ -27,34 +29,11 @@ public class TicketService {
     private final ModelMapper modelMapper;
 
     /**
-     * Constructor for TicketService.
-     *
-     * @param ticketRepository   The repository for TicketEntity.
-     * @param scheduleRepository The repository for ScheduleEntity.
-     * @param userRepository     The repository for UserEntity.
-     * @param modelMapper        The ModelMapper for entity-DTO mapping.
-     */
-    @Autowired
-    public TicketService(TicketRepository ticketRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, ModelMapper modelMapper) {
-        this.ticketRepository = ticketRepository;
-        this.scheduleRepository = scheduleRepository;
-        this.userRepository = userRepository;
-        this.modelMapper = modelMapper;
-    }
-
-    /**
      * Creates a new ticket and returns the ticket's information.
      *
      * @param ticket The ticket entity to be created.
      * @return A DTO (Data Transfer Object) containing the ticket's information.
      * @throws IllegalStateException If there are issues with ticket creation.
-     */
-    /**
-     * Asigna el primer asiento disponible en el horario especificado y devuelve la información del ticket creado.
-     *
-     * @param ticket El ticket.
-     * @return Una DTO que contiene la información del ticket creado.
-     * @throws IllegalStateException Si no hay asientos disponibles en el horario especificado.
      */
     public TicketInfoDTO createTicket(TicketEntity ticket) {
 
@@ -142,8 +121,6 @@ public class TicketService {
             schedule.setOccupiedSeats(schedule.getOccupiedSeats() - 1);
             scheduleRepository.save(schedule);
         }
-
-        System.out.println("Pasa por el borrado: ");
 
         // Delete the ticket by ID
         ticketRepository.deleteById(id);
