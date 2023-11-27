@@ -38,7 +38,6 @@ public class AuthControllerTest {
     private ObjectMapper objectMapper;
 
     private LoginDTO loginDTO;
-    private AuthResponseDTO authResponseDTO;
 
     /**
      * Set up common data for tests.
@@ -46,7 +45,6 @@ public class AuthControllerTest {
     @BeforeEach
     public void setUp() {
         loginDTO = LoginDTO.builder().email("user@example.com").password("password").build();
-        authResponseDTO = AuthResponseDTO.builder().accessToken("mocked-token").build();
     }
 
     /**
@@ -82,7 +80,7 @@ public class AuthControllerTest {
         String surname = "Doe";
         RegisterDTO registerDTO = new RegisterDTO(email, password, name, surname);
 
-        given(authService.register(registerDTO)).willReturn(ResponseEntity.ok("User registered success!"));
+        given(authService.register(registerDTO)).willReturn(new ResponseEntity<>("User registered success!", HttpStatus.OK));
 
         // Act and Assert
         mockMvc.perform(post("/api/auth/register")
