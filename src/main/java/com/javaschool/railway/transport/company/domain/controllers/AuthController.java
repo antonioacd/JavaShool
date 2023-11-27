@@ -41,15 +41,4 @@ public class AuthController {
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
         return authService.register(registerDTO);
     }
-
-    /**
-     * Handles admin registration.
-     *
-     * @param registerDTO The registration data transfer object.
-     * @return ResponseEntity containing a message indicating the success or failure of the registration.
-     */
-    @PostMapping("/register/admin")
-    public ResponseEntity<String> registerAdmin(@RequestBody RegisterDTO registerDTO) {
-        return authService.registerAdmin(registerDTO);
-    }
 }
