@@ -5,6 +5,7 @@ import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -32,7 +33,7 @@ public class ScheduleController {
     /**
      * Updates an existing schedule.
      *
-     * @param id                The ID of the schedule to be updated.
+     * @param id                 The ID of the schedule to be updated.
      * @param updatedScheduleDTO The updated schedule DTO.
      * @return A DTO (Data Transfer Object) containing the updated schedule's information.
      */
@@ -46,6 +47,7 @@ public class ScheduleController {
      *
      * @return A list of DTOs containing schedule information.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<ScheduleInfoDTO> getAllSchedules() {
         return scheduleService.getAllSchedules();
