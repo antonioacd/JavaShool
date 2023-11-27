@@ -1,14 +1,12 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
-import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,8 +14,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import java.time.Duration;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -180,28 +180,34 @@ public class ScheduleServiceTest {
      */
     @Test
     public void getAllSchedules_ReturnsScheduleDTOs() {
+
+        Date defaultDate = new Date();
         // Arrange
         ScheduleEntity schedule1 = ScheduleEntity.builder()
-                .departureTime(new Date())
-                .arrivalTime(new Date())
+                .id(1L)
+                .departureTime(defaultDate)
+                .arrivalTime(defaultDate)
                 .train(TrainEntity.builder().id(1L).build())
                 .build();
 
         ScheduleInfoDTO scheduleDTO1 = ScheduleInfoDTO.builder()
-                .departureTime(new Date())
-                .arrivalTime(new Date())
+                .id(1L)
+                .departureTime(defaultDate)
+                .arrivalTime(defaultDate)
                 .train(TrainInfoDTO.builder().id(1L).build())
                 .build();
 
         ScheduleEntity schedule2 = ScheduleEntity.builder()
-                .departureTime(new Date())
-                .arrivalTime(new Date())
+                .id(2L)
+                .departureTime(defaultDate)
+                .arrivalTime(defaultDate)
                 .train(TrainEntity.builder().id(2L).build())
                 .build();
 
         ScheduleInfoDTO scheduleDTO2 = ScheduleInfoDTO.builder()
-                .departureTime(new Date())
-                .arrivalTime(new Date())
+                .id(2L)
+                .departureTime(defaultDate)
+                .arrivalTime(defaultDate)
                 .train(TrainInfoDTO.builder().id(2L).build())
                 .build();
 

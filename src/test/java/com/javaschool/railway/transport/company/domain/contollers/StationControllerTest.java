@@ -1,67 +1,83 @@
 package com.javaschool.railway.transport.company.domain.contollers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaschool.railway.transport.company.domain.controllers.StationController;
 import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.StationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class StationControllerTests {
+/**
+ * This class contains test cases for the StationController class.
+ */
+@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
+@SpringBootTest
+public class StationControllerTest {
 
-    @Mock
-    private StationService stationService;
-
-    @InjectMocks
-    private StationController stationController;
-
+    @Autowired
     private MockMvc mockMvc;
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    @MockBean
+    private StationService stationService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private StationInfoDTO stationInfoDTO;
+    private StationEntity station;
+
+    /**
+     * Set up common data for tests.
+     */
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(stationController).build();
+        station = StationEntity.builder().id(1L).name("station1").city("city1").build();
+        stationInfoDTO = StationInfoDTO.builder().id(1L).name("station1").city("city1").build();
     }
 
+    /**
+     * Test case for creating a new station.
+     *
+     * @throws Exception If an error occurs during the test.
+     */
     @Test
     public void createStation_ReturnCreated() throws Exception {
-        // Arrange
-        StationEntity station = StationEntity.builder().name("station1").city("city1").build();
-        given(stationService.createStation(station)).willReturn(StationInfoDTO.builder().id(1L).name("station1").city("city1").build());
+        given(stationService.createStation(station)).willReturn(stationInfoDTO);
 
-        String responseContent = mockMvc.perform(post("/api/stations")
+        // Act and Assert
+        mockMvc.perform(post("/api/stations")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(station)))
+                        .content(objectMapper.writeValueAsString(stationInfoDTO)))
                 .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
-
-// Use the response content for assertions
-        StationInfoDTO createdStation = objectMapper.readValue(responseContent, StationInfoDTO.class);
-        assertNotNull(createdStation.getId());
-        assertEquals("station1", createdStation.getName());
-        assertEquals("city1", createdStation.getCity());
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is("station1")))
+                .andExpect(jsonPath("$.city", is("city1")));
     }
 
+    /**
+     * Test case for updating an existing station.
+     *
+     * @throws Exception If an error occurs during the test.
+     */
     @Test
     public void updateStation_ReturnUpdated() throws Exception {
         // Arrange
@@ -74,11 +90,16 @@ public class StationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedStation)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(stationId)))
+                .andExpect(jsonPath("$.id", is(1)))
                 .andExpect(jsonPath("$.name", is("updatedStation")))
                 .andExpect(jsonPath("$.city", is("updatedCity")));
     }
 
+    /**
+     * Test case for retrieving a list of all stations.
+     *
+     * @throws Exception If an error occurs during the test.
+     */
     @Test
     public void getAllStations_ReturnListOfStations() throws Exception {
         // Arrange
@@ -98,5 +119,4 @@ public class StationControllerTests {
                 .andExpect(jsonPath("$[1].name", is("station2")));
     }
 
-    // Add more tests for getStationById, deleteStationById, and searchStations as needed
 }

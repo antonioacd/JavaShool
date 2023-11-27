@@ -4,14 +4,12 @@ import com.javaschool.railway.transport.company.domain.entitites.StationEntity;
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
 import com.javaschool.railway.transport.company.domain.infodto.StationInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
-import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
@@ -24,7 +22,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -188,6 +185,7 @@ public class TrainServiceTest {
     public void getAllTrains_ReturnsTrainDTOs() {
         // Arrange
         TrainEntity train1 = TrainEntity.builder()
+                .id(1L)
                 .seats(100)
                 .duration(Duration.ofHours(2))
                 .trainNumber("T123")
@@ -196,6 +194,7 @@ public class TrainServiceTest {
                 .build();
 
         TrainInfoDTO trainDTO1 = TrainInfoDTO.builder()
+                .id(1L)
                 .seats(100)
                 .duration(Duration.ofHours(2))
                 .trainNumber("T123")
@@ -204,6 +203,7 @@ public class TrainServiceTest {
                 .build();
 
         TrainEntity train2 = TrainEntity.builder()
+                .id(2L)
                 .seats(150)
                 .duration(Duration.ofHours(3))
                 .trainNumber("T456")
@@ -212,6 +212,7 @@ public class TrainServiceTest {
                 .build();
 
         TrainInfoDTO trainDTO2 = TrainInfoDTO.builder()
+                .id(2L)
                 .seats(150)
                 .duration(Duration.ofHours(3))
                 .trainNumber("T456")

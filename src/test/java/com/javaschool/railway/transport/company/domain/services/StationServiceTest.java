@@ -165,21 +165,25 @@ public class StationServiceTest {
     public void StationService_GetAllStations_ReturnsStationDTOs() {
         // Arrange
         StationEntity station1 = StationEntity.builder()
+                .id(1L)
                 .name("Granada Station")
                 .city("Granada")
                 .build();
 
         StationInfoDTO stationDTO1 = StationInfoDTO.builder()
+                .id(1L)
                 .name("Granada Station")
                 .city("Granada")
                 .build();
 
         StationEntity station2 = StationEntity.builder()
+                .id(2L)
                 .name("Málaga Station")
                 .city("Málaga")
                 .build();
 
         StationInfoDTO stationDTO2 = StationInfoDTO.builder()
+                .id(2L)
                 .name("Málaga Station")
                 .city("Málaga")
                 .build();
