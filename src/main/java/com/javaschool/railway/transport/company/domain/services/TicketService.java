@@ -10,7 +10,6 @@ import com.javaschool.railway.transport.company.domain.repositories.UserReposito
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,8 +58,6 @@ public class TicketService {
                 // Asignar el asiento y marcarlo como ocupado
                 schedule.setOccupiedSeats(schedule.getOccupiedSeats() + 1);
                 scheduleRepository.save(schedule);
-
-                System.out.println("Ha encontrado un sitio libre: " + seatNumber);
 
                 // Crear y guardar el ticket
                 TicketEntity newTicket = new TicketEntity();

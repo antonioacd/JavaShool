@@ -1,12 +1,12 @@
 package com.javaschool.railway.transport.company.domain.controllers;
 
-import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -23,6 +23,7 @@ public class UserController {
      * @param id The ID of the user to retrieve.
      * @return A DTO containing the user's information.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/{id}")
     public UserInfoDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
@@ -34,11 +35,13 @@ public class UserController {
      * @param email The email of the user to retrieve.
      * @return A DTO containing the user's information.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("email/{email}")
     public UserInfoDTO getUserByEmail(@PathVariable String email) {
         return userService.getUserByEmail(email);
     }
 
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/passengers/{scheduleId}")
     public List<UserEntity> getUsersByScheduleId(@PathVariable Long scheduleId) {
         return userService.getUsersByScheduleId(scheduleId);
@@ -49,6 +52,7 @@ public class UserController {
      *
      * @return A list of DTOs containing user information.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<UserInfoDTO> getAllUsers() {
         return userService.getAllUsers();

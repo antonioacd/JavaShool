@@ -5,7 +5,9 @@ import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.TrainService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -22,6 +24,7 @@ public class TrainController {
      * @param train The train entity to be created.
      * @return A DTO (Data Transfer Object) containing the train's information.
      */
+    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public TrainInfoDTO createTrain(@RequestBody TrainEntity train) {
         return trainService.createTrain(train);
@@ -34,6 +37,7 @@ public class TrainController {
      * @param train The updated train entity.
      * @return A DTO (Data Transfer Object) containing the updated train's information.
      */
+    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     public TrainInfoDTO updateTrain(@PathVariable Long id, @RequestBody TrainInfoDTO train) {
         return trainService.updateTrain(id, train);
@@ -45,6 +49,7 @@ public class TrainController {
      * @param id The ID of the train to retrieve.
      * @return A DTO containing the train's information.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/{id}")
     public TrainInfoDTO getTrainById(@PathVariable Long id) {
         return trainService.getTrainById(id);
@@ -55,6 +60,7 @@ public class TrainController {
      *
      * @param id The ID of the train to be deleted.
      */
+    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public void deleteTrainById(@PathVariable Long id) {
         trainService.deleteTrainById(id);
@@ -65,6 +71,7 @@ public class TrainController {
      *
      * @return A list of DTOs containing train information.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<TrainInfoDTO> getAllTrains() {
         return trainService.getAllTrains();
@@ -77,6 +84,7 @@ public class TrainController {
      * @param arrivalStation   The arrival station.
      * @return ResponseEntity containing a list of train entities.
      */
+    @Secured({"ROLE_ADMIN"})
     @GetMapping("/searchByDepartureStationAndArrivalStation")
     public ResponseEntity<List<TrainEntity>> findTrainsByDepartureStationAndArrivalStation(
             @RequestParam(name = "departureStation", required = false) String departureStation,

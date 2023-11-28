@@ -9,7 +9,6 @@ import com.javaschool.railway.transport.company.domain.repositories.RoleReposito
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
 import com.javaschool.railway.transport.company.domain.security.JwtGenerator;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -81,7 +80,7 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         // Retrieve the "USER" role from the database or throw an exception if not found
-        RoleEntity userRole = roleRepository.findByName("USER")
+        RoleEntity userRole = roleRepository.findByName("ROLE_USER")
                 .orElseThrow(() -> new IllegalStateException("Role 'USER' not found"));
 
         // Assign the role to the user
