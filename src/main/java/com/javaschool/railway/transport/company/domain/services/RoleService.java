@@ -6,7 +6,9 @@ import com.javaschool.railway.transport.company.domain.repositories.RoleReposito
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +33,7 @@ public class RoleService {
      * @param role The role entity to be created.
      * @return A DTO (Data Transfer Object) containing the role's information.
      */
+    @Secured({"ROLE_ADMIN"})
     public RoleInfoDTO createRole(RoleEntity role) {
         return modelMapper.map(roleRepository.save(role), RoleInfoDTO.class);
     }
@@ -42,6 +45,7 @@ public class RoleService {
      * @return A DTO containing the role's information.
      * @throws EntityNotFoundException If the role is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public RoleInfoDTO getRoleById(Long id) {
         RoleEntity roleEntity = roleRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
@@ -53,6 +57,7 @@ public class RoleService {
      *
      * @return A list of DTOs containing role information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<RoleInfoDTO> getAllRoles() {
         List<RoleEntity> roles = roleRepository.findAll();
 

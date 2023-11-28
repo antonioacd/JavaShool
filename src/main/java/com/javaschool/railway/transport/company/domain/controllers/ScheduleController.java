@@ -5,7 +5,6 @@ import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.ScheduleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -25,7 +24,6 @@ public class ScheduleController {
      * @param scheduleEntity The schedule entity to be created.
      * @return A DTO (Data Transfer Object) containing the schedule's information.
      */
-    @Secured({"ROLE_ADMIN"})
     @PostMapping
     public ScheduleInfoDTO createSchedule(@RequestBody ScheduleEntity scheduleEntity) {
         return scheduleService.createSchedule(scheduleEntity);
@@ -38,7 +36,6 @@ public class ScheduleController {
      * @param updatedScheduleDTO The updated schedule DTO.
      * @return A DTO (Data Transfer Object) containing the updated schedule's information.
      */
-    @Secured({"ROLE_ADMIN"})
     @PutMapping("/{id}")
     public ScheduleInfoDTO updateSchedule(@PathVariable Long id, @RequestBody ScheduleInfoDTO updatedScheduleDTO) {
         return scheduleService.updateSchedule(id, updatedScheduleDTO);
@@ -49,7 +46,6 @@ public class ScheduleController {
      *
      * @return A list of DTOs containing schedule information.
      */
-    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<ScheduleInfoDTO> getAllSchedules() {
         return scheduleService.getAllSchedules();
@@ -60,7 +56,6 @@ public class ScheduleController {
      *
      * @param id The ID of the schedule to be deleted.
      */
-    @Secured({"ROLE_ADMIN"})
     @DeleteMapping("/{id}")
     public void deleteScheduleById(@PathVariable Long id) {
         scheduleService.deleteScheduleById(id);
@@ -85,7 +80,6 @@ public class ScheduleController {
      * @param selectedDate  The selected date.
      * @return ResponseEntity containing a list of schedule entities.
      */
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/search")
     public ResponseEntity<List<ScheduleEntity>> searchSchedulesByCitiesAndDate(
             @RequestParam("departureCity") String departureCity,
@@ -101,7 +95,6 @@ public class ScheduleController {
      * @param trainNumber The train number.
      * @return ResponseEntity containing a list of schedule entities.
      */
-    @Secured({"ROLE_ADMIN"})
     @GetMapping("/searchByTrainNumber")
     public ResponseEntity<List<ScheduleEntity>> searchSchedulesByTrainNumber(
             @RequestParam("trainNumber") String trainNumber) {

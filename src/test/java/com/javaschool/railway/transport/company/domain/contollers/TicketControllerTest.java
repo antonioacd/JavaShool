@@ -72,27 +72,6 @@ public class TicketControllerTest {
     }
 
     /**
-     * Test case for updating an existing ticket.
-     *
-     * @throws Exception If an error occurs during the test.
-     */
-    @Test
-    public void updateTicket_ReturnUpdated() throws Exception {
-        // Arrange
-        Long ticketId = 1L;
-        TicketInfoDTO updatedTicket = TicketInfoDTO.builder().id(ticketId).seatNumber(2).build();
-        given(ticketService.updateTicket(ticketId, updatedTicket)).willReturn(updatedTicket);
-
-        // Act and Assert
-        mockMvc.perform(put("/api/tickets/{id}", ticketId)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedTicket)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", is(1)))
-                .andExpect(jsonPath("$.seatNumber", is(2)));
-    }
-
-    /**
      * Test case for retrieving a list of all tickets.
      *
      * @throws Exception If an error occurs during the test.

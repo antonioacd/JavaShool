@@ -19,7 +19,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,7 +87,7 @@ public class AuthServiceTest {
         // Arrange
         RegisterDTO registerDTO = new RegisterDTO("John", "Doe", "john@example.com", "password");
         when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
-        when(roleRepository.findByName("USER")).thenReturn(Optional.of(RoleEntity.builder().id(1L).name("USER").build()));
+        when(roleRepository.findByName("ROLE_USER")).thenReturn(Optional.of(RoleEntity.builder().id(1L).name("ROLE_USER").build()));
         when(passwordEncoder.encode("password")).thenReturn("encoded-password");
 
         // Act
@@ -129,9 +128,6 @@ public class AuthServiceTest {
         // If the save method were called, it would indicate an issue with the registration logic.
         verify(userRepository, never()).save(any(UserEntity.class));
     }
-
-
-
 
 
 }

@@ -7,6 +7,7 @@ import com.javaschool.railway.transport.company.domain.repositories.UserReposito
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class UserService {
      *
      * @param id The ID of the user to be deleted.
      */
+    @Secured({"ROLE_ADMIN"})
     public void deleteUserById(Long id) {
         // Delete the user by ID
         userRepository.deleteById(id);
@@ -39,6 +41,7 @@ public class UserService {
      * @return A DTO containing the user's information.
      * @throws EntityNotFoundException If the user is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public UserInfoDTO getUserById(Long userId) {
         // Find the user by ID or throw an exception if not found
         UserEntity user = userRepository.findById(userId)
@@ -55,6 +58,7 @@ public class UserService {
      * @return A DTO containing the user's information.
      * @throws EntityNotFoundException If the user is not found.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public UserInfoDTO getUserByEmail(String email) {
         // Find the user by email or throw an exception if not found
         UserEntity user = userRepository.findByEmail(email)
@@ -76,6 +80,7 @@ public class UserService {
      *
      * @return A list of DTOs containing user information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<UserInfoDTO> getAllUsers() {
         // Retrieve all users from the repository
         List<UserEntity> users = userRepository.findAll();
@@ -92,6 +97,7 @@ public class UserService {
      * @param scheduleId
      * @return A list of DTOs containing user information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<UserEntity> getUsersByScheduleId(Long scheduleId) {
         return userRepository.findUsersByScheduleId(scheduleId);
     }

@@ -1,9 +1,12 @@
 package com.javaschool.railway.transport.company.domain.services;
 
-import com.javaschool.railway.transport.company.domain.entitites.*;
+import com.javaschool.railway.transport.company.domain.entitites.ScheduleEntity;
+import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
+import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
+import com.javaschool.railway.transport.company.domain.entitites.UserEntity;
 import com.javaschool.railway.transport.company.domain.infodto.ScheduleInfoDTO;
-import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
+import com.javaschool.railway.transport.company.domain.infodto.UserInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.ScheduleRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TicketRepository;
 import com.javaschool.railway.transport.company.domain.repositories.UserRepository;
@@ -170,45 +173,6 @@ class TicketServiceTest {
 
         // Act & Assert
         assertThrows(IllegalStateException.class, () -> ticketService.createTicket(existingTicket));
-    }
-
-    /**
-     * Test for the updateTicket method when the ticket update is successful.
-     */
-    @Test
-    void updateTicket_Successful() {
-        // Arrange
-        Long ticketId = 1L;
-        TicketEntity existingTicket = TicketEntity.builder()
-                .id(ticketId)
-                .seatNumber(1)
-                .user(UserEntity.builder().id(1L).build())
-                .schedule(ScheduleEntity.builder().id(1L).build())
-                .build();
-
-        TicketInfoDTO updatedTicketDTO = TicketInfoDTO.builder()
-                .id(ticketId)
-                .seatNumber(2)
-                .user(UserInfoDTO.builder().id(1L).build())
-                .schedule(ScheduleInfoDTO.builder().id(1L).build())
-                .build();
-
-        // Mocking necessary repository methods
-        when(ticketRepository.findById(ticketId)).thenReturn(java.util.Optional.of(existingTicket));
-        when(userRepository.getReferenceById(anyLong())).thenReturn(UserEntity.builder().id(1L).build());
-        when(scheduleRepository.getReferenceById(anyLong())).thenReturn(ScheduleEntity.builder().id(1L).build());
-        when(modelMapper.map(any(), eq(TicketInfoDTO.class))).thenReturn(updatedTicketDTO);
-        when(ticketRepository.save(any())).thenReturn(existingTicket);
-
-        // Act
-        TicketInfoDTO updatedTicketResult = ticketService.updateTicket(ticketId, updatedTicketDTO);
-
-        // Assert
-        assertThat(updatedTicketResult).isNotNull();
-        assertThat(updatedTicketResult.getId()).isEqualTo(updatedTicketDTO.getId());
-        assertThat(updatedTicketResult.getSeatNumber()).isEqualTo(updatedTicketDTO.getSeatNumber());
-        assertThat(updatedTicketResult.getUser().getId()).isEqualTo(updatedTicketDTO.getUser().getId());
-        assertThat(updatedTicketResult.getSchedule().getId()).isEqualTo(updatedTicketDTO.getSchedule().getId());
     }
 
     /**

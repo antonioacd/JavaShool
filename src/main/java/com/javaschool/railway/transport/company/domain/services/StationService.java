@@ -6,7 +6,7 @@ import com.javaschool.railway.transport.company.domain.repositories.StationRepos
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +28,7 @@ public class StationService {
      * @param station The station entity to be created.
      * @return A DTO (Data Transfer Object) containing the station's information.
      */
+    @Secured({"ROLE_ADMIN"})
     public StationInfoDTO createStation(StationEntity station) {
         // Save the station entity and map it to a DTO
         return modelMapper.map(stationRepository.save(station), StationInfoDTO.class);
@@ -41,6 +42,7 @@ public class StationService {
      * @return A DTO (Data Transfer Object) containing the updated station's information.
      * @throws EntityNotFoundException If the station is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public StationInfoDTO updateStation(Long id, StationInfoDTO updatedStation) {
         // Find the existing station by ID or throw an exception if not found
         StationEntity existingStation = stationRepository.findById(id)
@@ -60,6 +62,7 @@ public class StationService {
      *
      * @param id The ID of the station to be deleted.
      */
+    @Secured({"ROLE_ADMIN"})
     public void deleteStationById(Long id) {
         // Delete the station by ID
         stationRepository.deleteById(id);
@@ -72,6 +75,7 @@ public class StationService {
      * @return A DTO containing the station's information.
      * @throws EntityNotFoundException If the station is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public StationInfoDTO getStationById(Long id) {
         // Find the station by ID or throw an exception if not found
         StationEntity stationEntity = stationRepository.findById(id)
@@ -85,6 +89,7 @@ public class StationService {
      *
      * @return A list of DTOs containing station information.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public List<StationInfoDTO> getAllStations() {
         // Retrieve all stations from the repository
         List<StationEntity> stations = stationRepository.findAll();
@@ -100,6 +105,7 @@ public class StationService {
      * @param city The city to filter stations by.
      * @return A list of station entities that match the city.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<StationEntity> findStationsByCity(String city) {
         // Find stations based on city
         return stationRepository.findStationsByCity(city);

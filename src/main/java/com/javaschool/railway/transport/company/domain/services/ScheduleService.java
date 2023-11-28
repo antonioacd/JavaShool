@@ -7,7 +7,7 @@ import com.javaschool.railway.transport.company.domain.repositories.TrainReposit
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -32,6 +32,7 @@ public class ScheduleService {
      * @param schedule The schedule entity to be created.
      * @return A DTO (Data Transfer Object) containing the schedule's information.
      */
+    @Secured({"ROLE_ADMIN"})
     public ScheduleInfoDTO createSchedule(ScheduleEntity schedule) {
         // Set the train reference using the train ID from the schedule entity
         schedule.setTrain(trainRepository.getReferenceById(schedule.getTrain().getId()));
@@ -50,6 +51,7 @@ public class ScheduleService {
      * @return A DTO (Data Transfer Object) containing the updated schedule's information.
      * @throws EntityNotFoundException If the schedule is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public ScheduleInfoDTO updateSchedule(Long id, ScheduleInfoDTO updatedSchedule) {
 
         ScheduleEntity existingSchedule = scheduleRepository.findById(id)
@@ -73,6 +75,7 @@ public class ScheduleService {
      *
      * @param id The ID of the schedule to be deleted.
      */
+    @Secured({"ROLE_ADMIN"})
     public void deleteScheduleById(Long id) {
         scheduleRepository.deleteById(id);
     }
@@ -84,6 +87,7 @@ public class ScheduleService {
      * @return A DTO containing the schedule's information.
      * @throws EntityNotFoundException If the schedule is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public ScheduleInfoDTO getScheduleById(Long id) {
         // Find the schedule entity by ID or throw an exception if not found
         ScheduleEntity scheduleEntity = scheduleRepository.findById(id)
@@ -97,6 +101,7 @@ public class ScheduleService {
      *
      * @return A list of DTOs containing schedule information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<ScheduleInfoDTO> getAllSchedules() {
         // Retrieve all schedules from the repository
         List<ScheduleEntity> schedules = scheduleRepository.findAll();
@@ -114,6 +119,7 @@ public class ScheduleService {
      * @param selectedDate  The selected date.
      * @return A list of schedule entities that match the criteria.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public List<ScheduleEntity> findSchedulesByCitiesAndDate(String departureCity, String arrivalCity, Date selectedDate) {
         // Format the selected date
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -129,6 +135,7 @@ public class ScheduleService {
      * @param trainNumber The train number.
      * @return A list of schedule entities that match the train number.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<ScheduleEntity> findByTrainNumber(String trainNumber) {
         // Find schedules based on train number
         return scheduleRepository.findSchedulesByTrainNumber(trainNumber);

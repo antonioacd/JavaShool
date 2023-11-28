@@ -10,6 +10,7 @@ import com.javaschool.railway.transport.company.domain.repositories.UserReposito
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class TicketService {
      * @return A DTO (Data Transfer Object) containing the ticket's information.
      * @throws IllegalStateException If there are issues with ticket creation.
      */
+    @Secured({"ROLE_ADMIN"})
     public TicketInfoDTO createTicket(TicketEntity ticket) {
 
         ScheduleEntity schedule = scheduleRepository.findById(ticket.getSchedule().getId())
@@ -73,40 +75,12 @@ public class TicketService {
     }
 
     /**
-     * Updates a ticket entity by ID and returns the updated ticket's information.
-     *
-     * @param id            The ID of the ticket to be updated.
-     * @param updatedTicket The updated ticket entity.
-     * @return A DTO containing the updated ticket's information.
-     * @throws EntityNotFoundException If the ticket is not found.
-     */
-    public TicketInfoDTO updateTicket(Long id, TicketInfoDTO updatedTicket) {
-        TicketEntity existingTicket = ticketRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Ticket not found"));
-
-        // Update the ticket information
-        existingTicket.setSeatNumber(updatedTicket.getSeatNumber());
-
-        // Update the associated user (if different)
-        if (!existingTicket.getUser().getId().equals(updatedTicket.getUser().getId())) {
-            existingTicket.setUser(userRepository.getReferenceById(updatedTicket.getUser().getId()));
-        }
-
-        // Update the associated schedule (if different)
-        if (!existingTicket.getSchedule().getId().equals(updatedTicket.getSchedule().getId())) {
-            existingTicket.setSchedule(scheduleRepository.getReferenceById(updatedTicket.getSchedule().getId()));
-        }
-
-        // Save changes to the ticket entity
-        return modelMapper.map(ticketRepository.save(existingTicket), TicketInfoDTO.class);
-    }
-
-    /**
      * Deletes a ticket by its ID.
      *
      * @param id The ID of the ticket to be deleted.
      * @throws EntityNotFoundException If the ticket is not found.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public void deleteTicketById(Long id) {
         // Find the ticket by ID or throw an exception if not found
         TicketEntity ticketEntity = ticketRepository.findById(id)
@@ -130,6 +104,7 @@ public class TicketService {
      * @return A DTO containing the ticket's information.
      * @throws EntityNotFoundException If the ticket is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public TicketInfoDTO getTicketById(Long id) {
         // Find the ticket by ID or throw an exception if not found
         TicketEntity ticketEntity = ticketRepository.findById(id)
@@ -143,6 +118,7 @@ public class TicketService {
      *
      * @return A list of DTOs containing ticket information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<TicketInfoDTO> getAllTickets() {
         // Retrieve all tickets from the repository
         List<TicketEntity> tickets = ticketRepository.findAll();
@@ -159,6 +135,7 @@ public class TicketService {
      * @param scheduleId The ID of the schedule.
      * @return A list of ticket entities that match the criteria.
      */
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public List<TicketEntity> findTicketsByUserAndSchedule(Long userId, Long scheduleId) {
         // Find tickets based on user ID and schedule ID
         return ticketRepository.findTicketsByUserIdAndScheduleId(userId, scheduleId);
@@ -170,6 +147,7 @@ public class TicketService {
      * @param scheduleId The ID of the schedule.
      * @return A list of ticket entities that match the schedule ID.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<TicketEntity> getTicketsByScheduleId(Long scheduleId) {
         return ticketRepository.findTicketsByScheduleId(scheduleId);
     }

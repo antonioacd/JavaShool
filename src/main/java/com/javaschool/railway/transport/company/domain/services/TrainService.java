@@ -1,16 +1,13 @@
 package com.javaschool.railway.transport.company.domain.services;
 
 import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
-import com.javaschool.railway.transport.company.domain.entitites.TrainEntity;
-import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.infodto.TrainInfoDTO;
 import com.javaschool.railway.transport.company.domain.repositories.StationRepository;
 import com.javaschool.railway.transport.company.domain.repositories.TrainRepository;
 import jakarta.persistence.EntityNotFoundException;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +30,7 @@ public class TrainService {
      * @param train The train entity to be created.
      * @return A DTO (Data Transfer Object) containing the train's information.
      */
+    @Secured({"ROLE_ADMIN"})
     public TrainInfoDTO createTrain(TrainEntity train) {
         // Set departure and arrival stations by reference
         train.setDepartureStation(stationRepository.getReferenceById(train.getDepartureStation().getId()));
@@ -48,6 +46,7 @@ public class TrainService {
      * @return A DTO (Data Transfer Object) containing the updated train's information.
      * @throws EntityNotFoundException If the train is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public TrainInfoDTO updateTrain(Long id, TrainInfoDTO train) {
         // Find the existing train by ID or throw an exception if not found
         TrainEntity existingTrain = trainRepository.findById(id)
@@ -69,6 +68,7 @@ public class TrainService {
      *
      * @param id The ID of the train to be deleted.
      */
+    @Secured({"ROLE_ADMIN"})
     public void deleteTrainById(Long id) {
         // Delete the train by ID
         trainRepository.deleteById(id);
@@ -81,6 +81,7 @@ public class TrainService {
      * @return A DTO containing the train's information.
      * @throws EntityNotFoundException If the train is not found.
      */
+    @Secured({"ROLE_ADMIN"})
     public TrainInfoDTO getTrainById(Long trainId) {
         // Find the train by ID or throw an exception if not found
         TrainEntity train = trainRepository.findById(trainId)
@@ -95,6 +96,7 @@ public class TrainService {
      *
      * @return A list of DTOs containing train information.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<TrainInfoDTO> getAllTrains() {
         // Retrieve all trains from the repository
         List<TrainEntity> trains = trainRepository.findAll();
@@ -111,6 +113,7 @@ public class TrainService {
      * @param arrivalCity   The city of arrival.
      * @return A list of train entities that match the criteria.
      */
+    @Secured({"ROLE_ADMIN"})
     public List<TrainEntity> findTrainsByDepartureAndArrivalStations(String departureCity, String arrivalCity) {
         // Find trains based on departure and arrival stations
         return trainRepository.findTrainsByDepartureAndArrivalStations(departureCity, arrivalCity);

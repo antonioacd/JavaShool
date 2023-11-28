@@ -5,7 +5,6 @@ import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +33,6 @@ public class TicketController {
      *
      * @return A list of DTOs containing ticket information.
      */
-    @Secured({"ROLE_ADMIN"})
     @GetMapping
     public List<TicketInfoDTO> getAllTickets() {
         return ticketService.getAllTickets();
@@ -46,7 +44,6 @@ public class TicketController {
      * @param id The ID of the ticket to retrieve.
      * @return A DTO containing the ticket's information.
      */
-    @Secured({"ROLE_ADMIN"})
     @GetMapping("/{id}")
     public TicketInfoDTO getTicketById(@PathVariable Long id) {
         return ticketService.getTicketById(id);
@@ -57,7 +54,6 @@ public class TicketController {
      *
      * @param id The ID of the ticket to be deleted.
      */
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @DeleteMapping("/{id}")
     public void deleteTicketById(@PathVariable Long id) {
         ticketService.deleteTicketById(id);
@@ -70,7 +66,6 @@ public class TicketController {
      * @param scheduleId The ID of the schedule.
      * @return ResponseEntity containing a list of ticket entities.
      */
-    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     @GetMapping("/searchTicketsByUserAndScheduleId")
     public ResponseEntity<List<TicketEntity>> findTicketsByUser(
             @RequestParam(name = "userId", required = false) Long userId,
@@ -79,7 +74,6 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
-    @Secured({"ROLE_ADMIN"})
     @GetMapping("search/{scheduleId}")
     public List<TicketEntity> getTicketsByScheduleId(@PathVariable Long scheduleId) {
         return ticketService.getTicketsByScheduleId(scheduleId);

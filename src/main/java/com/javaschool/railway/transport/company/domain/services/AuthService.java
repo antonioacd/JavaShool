@@ -81,7 +81,7 @@ public class AuthService {
 
         // Retrieve the "USER" role from the database or throw an exception if not found
         RoleEntity userRole = roleRepository.findByName("ROLE_USER")
-                .orElseThrow(() -> new IllegalStateException("Role 'USER' not found"));
+                .orElseThrow(() -> new IllegalStateException("Role 'ROLE_USER' not found"));
 
         // Assign the role to the user
         user.setRoles(Collections.singletonList(userRole));
