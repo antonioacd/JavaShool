@@ -34,3 +34,12 @@ services:
     ports:
       - "8080:8080"
 
+  frontend:
+    build:
+      context: ./path/to/your/frontend  # Change this to the actual path to your frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - java-app
+    environment:
+      REACT_APP_BACKEND_URL: http://localhost:8080  # Set the correct backend URL
