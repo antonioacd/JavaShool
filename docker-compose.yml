@@ -42,3 +42,10 @@ services:
       - java-app
     environment:
       REACT_APP_BACKEND_URL: http://localhost:8080
+
+  mkdocs:
+    image: squidfunk/mkdocs-material
+    volumes:
+      - ../javaschool-doc:/docs
+    ports:
+      - "8000:8000"
