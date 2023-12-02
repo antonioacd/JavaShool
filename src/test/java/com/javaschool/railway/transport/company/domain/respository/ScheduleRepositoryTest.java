@@ -22,7 +22,7 @@ import java.util.List;
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class ScheduleRepositoryTest {
+class ScheduleRepositoryTest {
 
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -37,7 +37,7 @@ public class ScheduleRepositoryTest {
      * Test case to verify saving a list of schedules.
      */
     @Test
-    public void ScheduleRepository_SaveAll_ReturnSavedSchedules() {
+    void ScheduleRepository_SaveAll_ReturnSavedSchedules() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -91,7 +91,7 @@ public class ScheduleRepositoryTest {
      * Test case to verify retrieving more than one schedule.
      */
     @Test
-    public void ScheduleRepository_GetAll_ReturnMoreThanOneSchedule() {
+    void ScheduleRepository_GetAll_ReturnMoreThanOneSchedule() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -145,7 +145,7 @@ public class ScheduleRepositoryTest {
      * Test case to verify retrieving a schedule by ID.
      */
     @Test
-    public void ScheduleRepository_GetById_ReturnMatchingSchedule() {
+    void ScheduleRepository_GetById_ReturnMatchingSchedule() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -193,7 +193,7 @@ public class ScheduleRepositoryTest {
      * Test case to verify retrieving schedules by cities and date.
      */
     /*@Test
-    public void ScheduleRepository_FindSchedulesByCitiesAndDate_ReturnMatchingSchedules() {
+    void ScheduleRepository_FindSchedulesByCitiesAndDate_ReturnMatchingSchedules() {
         // Create three stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -240,7 +240,7 @@ public class ScheduleRepositoryTest {
      * Test case to verify retrieving schedules by train number.
      */
     @Test
-    public void ScheduleRepository_FindSchedulesByTrainNumber_ReturnMatchingSchedules() {
+    void ScheduleRepository_FindSchedulesByTrainNumber_ReturnMatchingSchedules() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")

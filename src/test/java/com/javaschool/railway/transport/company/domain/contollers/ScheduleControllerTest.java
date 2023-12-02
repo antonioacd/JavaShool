@@ -37,7 +37,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class ScheduleControllerTest {
+class ScheduleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,7 +55,7 @@ public class ScheduleControllerTest {
     private ScheduleInfoDTO scheduleInfoDTO;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         scheduleEntity = ScheduleEntity.builder()
                 .id(1L)
                 .departureTime(new Date())
@@ -74,7 +74,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void createSchedule_ReturnCreated() throws Exception {
+    void createSchedule_ReturnCreated() throws Exception {
         // Arrange
         given(scheduleService.createSchedule(scheduleEntity)).willReturn(scheduleInfoDTO);
 
@@ -89,7 +89,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void updateSchedule_ReturnUpdated() throws Exception {
+    void updateSchedule_ReturnUpdated() throws Exception {
         // Arrange
         Long scheduleId = 1L;
         given(scheduleService.updateSchedule(eq(scheduleId), any(ScheduleInfoDTO.class))).willReturn(scheduleInfoDTO);
@@ -105,7 +105,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void getScheduleById_ReturnSchedule() throws Exception {
+    void getScheduleById_ReturnSchedule() throws Exception {
         // Arrange
         Long scheduleId = 1L;
         given(scheduleService.getScheduleById(scheduleId)).willReturn(scheduleInfoDTO);
@@ -120,7 +120,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void deleteScheduleById_ReturnNoContent() throws Exception {
+    void deleteScheduleById_ReturnNoContent() throws Exception {
         // Arrange
         Long scheduleId = 1L;
 
@@ -131,7 +131,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void getAllSchedules_ReturnListOfSchedules() throws Exception {
+    void getAllSchedules_ReturnListOfSchedules() throws Exception {
         // Arrange
         List<ScheduleInfoDTO> scheduleList = Arrays.asList(scheduleInfoDTO, scheduleInfoDTO);
         given(scheduleService.getAllSchedules()).willReturn(scheduleList);
@@ -146,7 +146,7 @@ public class ScheduleControllerTest {
     }
 
     @Test
-    public void searchSchedulesByTrainNumber_ReturnListOfSchedules() throws Exception {
+    void searchSchedulesByTrainNumber_ReturnListOfSchedules() throws Exception {
         // Arrange
         String trainNumber = "T123";
         List<ScheduleEntity> scheduleList = Arrays.asList(scheduleEntity, scheduleEntity);

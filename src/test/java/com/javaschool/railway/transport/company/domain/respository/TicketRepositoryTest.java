@@ -15,7 +15,7 @@ import java.util.List;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class TicketRepositoryTest {
+class TicketRepositoryTest {
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -36,7 +36,7 @@ public class TicketRepositoryTest {
     private ScheduleRepository scheduleRepository;
 
     @Test
-    public void TicketRepository_FindTicketsByUserIdAndScheduleId_ReturnMatchingTickets() {
+    void TicketRepository_FindTicketsByUserIdAndScheduleId_ReturnMatchingTickets() {
         // Create roles
         RoleEntity role = RoleEntity.builder().name("USER").build();
         RoleEntity adminRole = RoleEntity.builder().name("ADMIN").build();
@@ -110,7 +110,7 @@ public class TicketRepositoryTest {
     }
 
     @Test
-    public void TicketRepository_ExistsByScheduleIdAndSeatNumber_ReturnTrueForExistingTicket() {
+    void TicketRepository_ExistsByScheduleIdAndSeatNumber_ReturnTrueForExistingTicket() {
         // Create roles
         RoleEntity role = RoleEntity.builder().name("USER").build();
         RoleEntity adminRole = RoleEntity.builder().name("ADMIN").build();
@@ -180,7 +180,7 @@ public class TicketRepositoryTest {
     }
 
     @Test
-    public void TicketRepository_ExistsByScheduleIdAndSeatNumber_ReturnFalseForNonExistingTicket() {
+    void TicketRepository_ExistsByScheduleIdAndSeatNumber_ReturnFalseForNonExistingTicket() {
         // Create roles
         RoleEntity role = RoleEntity.builder().name("USER").build();
         RoleEntity adminRole = RoleEntity.builder().name("ADMIN").build();
@@ -250,7 +250,7 @@ public class TicketRepositoryTest {
     }
 
     @Test
-    public void TicketRepository_SaveTicket_ReturnSavedTicket() {
+    void TicketRepository_SaveTicket_ReturnSavedTicket() {
         // Create roles
         RoleEntity role = RoleEntity.builder().name("USER").build();
         RoleEntity adminRole = RoleEntity.builder().name("ADMIN").build();
@@ -321,7 +321,7 @@ public class TicketRepositoryTest {
     }
 
     @Test
-    public void TicketRepository_DeleteTicket_ReturnNoTicket() {
+    void TicketRepository_DeleteTicket_ReturnNoTicket() {
         // Create roles
         RoleEntity role = RoleEntity.builder().name("USER").build();
         RoleEntity adminRole = RoleEntity.builder().name("ADMIN").build();

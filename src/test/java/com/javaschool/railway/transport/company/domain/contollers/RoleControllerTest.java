@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class RoleControllerTest {
+class RoleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,7 +47,7 @@ public class RoleControllerTest {
      * Set up common data for tests.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         roleEntity = RoleEntity.builder().id(1L).name("ROLE_USER").build();
         roleInfoDTO = RoleInfoDTO.builder().id(1L).name("ROLE_USER").build();
     }
@@ -58,7 +58,7 @@ public class RoleControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void createRole_ReturnCreated() throws Exception {
+    void createRole_ReturnCreated() throws Exception {
         // Arrange
         given(roleService.createRole(roleEntity)).willReturn(roleInfoDTO);
 
@@ -77,7 +77,7 @@ public class RoleControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getRoleById_ReturnRole() throws Exception {
+    void getRoleById_ReturnRole() throws Exception {
         // Arrange
         Long roleId = 1L;
         given(roleService.getRoleById(roleId)).willReturn(roleInfoDTO);
@@ -96,7 +96,7 @@ public class RoleControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getAllRoles_ReturnListOfRoles() throws Exception {
+    void getAllRoles_ReturnListOfRoles() throws Exception {
         // Arrange
         List<RoleInfoDTO> roleList = Arrays.asList(
                 RoleInfoDTO.builder().id(1L).name("ROLE_USER").build(),

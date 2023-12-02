@@ -32,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class StationControllerTest {
+class StationControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,7 +50,7 @@ public class StationControllerTest {
      * Set up common data for tests.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         station = StationEntity.builder().id(1L).name("station1").city("city1").build();
         stationInfoDTO = StationInfoDTO.builder().id(1L).name("station1").city("city1").build();
     }
@@ -61,7 +61,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void createStation_ReturnCreated() throws Exception {
+    void createStation_ReturnCreated() throws Exception {
         given(stationService.createStation(station)).willReturn(stationInfoDTO);
 
         // Act and Assert
@@ -80,7 +80,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void updateStation_ReturnUpdated() throws Exception {
+    void updateStation_ReturnUpdated() throws Exception {
         // Arrange
         Long stationId = 1L;
         StationInfoDTO updatedStation = StationInfoDTO.builder().id(stationId).name("updatedStation").city("updatedCity").build();
@@ -102,7 +102,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getAllStations_ReturnListOfStations() throws Exception {
+    void getAllStations_ReturnListOfStations() throws Exception {
         // Arrange
         List<StationInfoDTO> stationList = Arrays.asList(
                 StationInfoDTO.builder().id(1L).name("station1").city("city1").build(),
@@ -126,7 +126,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getStationById_ReturnStation() throws Exception {
+    void getStationById_ReturnStation() throws Exception {
         // Arrange
         Long stationId = 1L;
         given(stationService.getStationById(stationId)).willReturn(stationInfoDTO);
@@ -146,7 +146,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void deleteStationById_ReturnNoContent() throws Exception {
+    void deleteStationById_ReturnNoContent() throws Exception {
         // Arrange
         Long stationId = 1L;
 
@@ -162,7 +162,7 @@ public class StationControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void searchStationsByCity_ReturnListOfStations() throws Exception {
+    void searchStationsByCity_ReturnListOfStations() throws Exception {
         // Arrange
         String city = "city1";
         List<StationEntity> stationList = Arrays.asList(

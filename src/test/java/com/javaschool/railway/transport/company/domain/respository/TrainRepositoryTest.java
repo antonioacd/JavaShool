@@ -20,7 +20,7 @@ import java.util.Optional;
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class TrainRepositoryTest {
+class TrainRepositoryTest {
 
     @Autowired
     private TrainRepository trainRepository;
@@ -32,7 +32,7 @@ public class TrainRepositoryTest {
      * Test case to verify saving a train entity.
      */
     @Test
-    public void TrainRepository_SaveAll_ReturnSavedTrain() {
+    void TrainRepository_SaveAll_ReturnSavedTrain() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -68,7 +68,7 @@ public class TrainRepositoryTest {
      * Test case to verify retrieving more than one train.
      */
     @Test
-    public void TrainRepository_GetAll_ReturnMoreThanOneTrain() {
+    void TrainRepository_GetAll_ReturnMoreThanOneTrain() {
         // Create two stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -116,7 +116,7 @@ public class TrainRepositoryTest {
      * Test case to verify saving and finding a train by ID.
      */
     @Test
-    public void TrainRepository_SaveAndFindById_ReturnMatchingTrain() {
+    void TrainRepository_SaveAndFindById_ReturnMatchingTrain() {
         // Create a station
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
@@ -150,7 +150,7 @@ public class TrainRepositoryTest {
      * Test case to verify finding trains by departure and arrival stations.
      */
     @Test
-    public void TrainRepository_FindTrainsByDepartureAndArrivalStations_ReturnMatchingTrains() {
+    void TrainRepository_FindTrainsByDepartureAndArrivalStations_ReturnMatchingTrains() {
         // Create three stations
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")

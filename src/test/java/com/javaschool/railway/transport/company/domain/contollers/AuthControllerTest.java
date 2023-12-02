@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class AuthControllerTest {
+class AuthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,7 +43,7 @@ public class AuthControllerTest {
      * Set up common data for tests.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         loginDTO = LoginDTO.builder().email("user@example.com").password("password").build();
     }
 
@@ -53,7 +53,7 @@ public class AuthControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void login_ReturnAuthToken() throws Exception {
+    void login_ReturnAuthToken() throws Exception {
         // Arrange
 
         given(authService.login(loginDTO)).willReturn(new ResponseEntity<>(new AuthResponseDTO("mocked-token"), HttpStatus.OK));
@@ -72,7 +72,7 @@ public class AuthControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void register_ReturnSuccessMessage() throws Exception {
+    void register_ReturnSuccessMessage() throws Exception {
         // Arrange
         String email = "newuser@example.com";
         String password = "newpassword";

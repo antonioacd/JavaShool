@@ -1,4 +1,4 @@
-package com.javaschool.railway.transport.company.domain.controllers;
+package com.javaschool.railway.transport.company.domain.contollers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class TicketControllerTest {
+class TicketControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,7 +47,7 @@ public class TicketControllerTest {
      * Set up common data for tests.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         ticketEntity = TicketEntity.builder().id(1L).seatNumber(1).build();
         ticketInfoDTO = TicketInfoDTO.builder().id(1L).seatNumber(1).build();
     }
@@ -58,7 +58,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void createTicket_ReturnCreated() throws Exception {
+    void createTicket_ReturnCreated() throws Exception {
         // Arrange
         given(ticketService.createTicket(ticketEntity)).willReturn(ticketInfoDTO);
 
@@ -77,7 +77,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getAllTickets_ReturnListOfTickets() throws Exception {
+    void getAllTickets_ReturnListOfTickets() throws Exception {
         // Arrange
         List<TicketInfoDTO> ticketList = Arrays.asList(
                 TicketInfoDTO.builder().id(1L).seatNumber(1).build(),
@@ -101,7 +101,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getTicketById_ReturnTicket() throws Exception {
+    void getTicketById_ReturnTicket() throws Exception {
         // Arrange
         Long ticketId = 1L;
         given(ticketService.getTicketById(ticketId)).willReturn(ticketInfoDTO);
@@ -120,7 +120,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void deleteTicketById_ReturnNoContent() throws Exception {
+    void deleteTicketById_ReturnNoContent() throws Exception {
         // Arrange
         Long ticketId = 1L;
 
@@ -136,7 +136,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void searchTicketsByUserAndSchedule_ReturnListOfTickets() throws Exception {
+    void searchTicketsByUserAndSchedule_ReturnListOfTickets() throws Exception {
         // Arrange
         Long userId = 1L;
         Long scheduleId = 1L;
@@ -164,7 +164,7 @@ public class TicketControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getTicketsByScheduleId_ReturnListOfTickets() throws Exception {
+    void getTicketsByScheduleId_ReturnListOfTickets() throws Exception {
         // Arrange
         Long scheduleId = 1L;
         List<TicketEntity> ticketList = Arrays.asList(

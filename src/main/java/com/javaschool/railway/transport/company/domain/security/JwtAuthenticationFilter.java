@@ -14,7 +14,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * JwtAuthenticationFilter is a custom filter responsible for extracting and validating JWT tokens from incoming requests.
@@ -46,7 +45,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (StringUtils.hasText(token) && tokenGenerator.validateToken(token)) {
             String email = tokenGenerator.getUsernameFromJWT(token);
-            List<String> roles = tokenGenerator.getRolesFromJWT(token);
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
             UsernamePasswordAuthenticationToken authenticationToken =

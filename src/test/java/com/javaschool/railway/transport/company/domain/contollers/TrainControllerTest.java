@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class TrainControllerTest {
+class TrainControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -54,7 +54,7 @@ public class TrainControllerTest {
     private TrainInfoDTO trainInfoDTO;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         trainEntity = TrainEntity.builder()
                 .id(1L)
                 .seats(100)
@@ -75,7 +75,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void createTrain_ReturnCreated() throws Exception {
+    void createTrain_ReturnCreated() throws Exception {
         // Arrange
         given(trainService.createTrain(trainEntity)).willReturn(trainInfoDTO);
 
@@ -92,7 +92,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void updateTrain_ReturnUpdated() throws Exception {
+    void updateTrain_ReturnUpdated() throws Exception {
         // Arrange
         Long trainId = 1L;
         given(trainService.updateTrain(eq(trainId), any(TrainInfoDTO.class))).willReturn(trainInfoDTO);
@@ -110,7 +110,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void getTrainById_ReturnTrain() throws Exception {
+    void getTrainById_ReturnTrain() throws Exception {
         // Arrange
         Long trainId = 1L;
         given(trainService.getTrainById(trainId)).willReturn(trainInfoDTO);
@@ -127,7 +127,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void deleteTrainById_ReturnNoContent() throws Exception {
+    void deleteTrainById_ReturnNoContent() throws Exception {
         // Arrange
         Long trainId = 1L;
 
@@ -138,7 +138,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void getAllTrains_ReturnListOfTrains() throws Exception {
+    void getAllTrains_ReturnListOfTrains() throws Exception {
         // Arrange
         List<TrainInfoDTO> trainList = Arrays.asList(trainInfoDTO, trainInfoDTO);
         given(trainService.getAllTrains()).willReturn(trainList);
@@ -153,7 +153,7 @@ public class TrainControllerTest {
     }
 
     @Test
-    public void findTrainsByDepartureStationAndArrivalStation_ReturnListOfTrains() throws Exception {
+    void findTrainsByDepartureStationAndArrivalStation_ReturnListOfTrains() throws Exception {
         // Arrange
         String departureStation = "Departure";
         String arrivalStation = "Arrival";

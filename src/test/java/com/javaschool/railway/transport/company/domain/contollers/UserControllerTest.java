@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
-public class UserControllerTest {
+class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -47,7 +47,7 @@ public class UserControllerTest {
      * Set up common data for tests.
      */
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         userEntity = UserEntity.builder()
                 .id(1L)
                 .name("John")
@@ -71,7 +71,7 @@ public class UserControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getUserById_ReturnUser() throws Exception {
+    void getUserById_ReturnUser() throws Exception {
         // Arrange
         Long userId = 1L;
         given(userService.getUserById(userId)).willReturn(userInfoDTO);
@@ -94,7 +94,7 @@ public class UserControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getUserByEmail_ReturnUser() throws Exception {
+    void getUserByEmail_ReturnUser() throws Exception {
         // Arrange
         String userEmail = "john.doe@example.com";
         given(userService.getUserByEmail(userEmail)).willReturn(userInfoDTO);
@@ -117,7 +117,7 @@ public class UserControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getAllUsers_ReturnListOfUsers() throws Exception {
+    void getAllUsers_ReturnListOfUsers() throws Exception {
         // Arrange
         List<UserInfoDTO> userList = Arrays.asList(userInfoDTO);
 
@@ -141,7 +141,7 @@ public class UserControllerTest {
      * @throws Exception If an error occurs during the test.
      */
     @Test
-    public void getUsersByScheduleId_ReturnListOfUsers() throws Exception {
+    void getUsersByScheduleId_ReturnListOfUsers() throws Exception {
         // Arrange
         Long scheduleId = 1L;
         List<UserEntity> userList = Arrays.asList(userEntity);

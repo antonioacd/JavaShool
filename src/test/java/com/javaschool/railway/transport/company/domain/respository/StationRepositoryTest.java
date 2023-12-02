@@ -16,7 +16,7 @@ import java.util.List;
  */
 @DataJpaTest
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
-public class StationRepositoryTest {
+class StationRepositoryTest {
 
     @Autowired
     private StationRepository stationRepository;
@@ -25,7 +25,7 @@ public class StationRepositoryTest {
      * Test saving a station and verifying that it is saved successfully.
      */
     @Test
-    public void StationRepository_SaveAll_ReturnSavedStation() {
+    void StationRepository_SaveAll_ReturnSavedStation() {
         // Create a station
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -44,7 +44,7 @@ public class StationRepositoryTest {
      * Test getting all stations and verifying that the list contains more than one station.
      */
     @Test
-    public void StationRepository_GetAll_ReturnMoreThanOneStation() {
+    void StationRepository_GetAll_ReturnMoreThanOneStation() {
         // Create two stations
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -71,7 +71,7 @@ public class StationRepositoryTest {
      * Test updating a station's name and verifying the name is updated successfully.
      */
     @Test
-    public void StationRepository_UpdateStation_ReturnUpdatedStation() {
+    void StationRepository_UpdateStation_ReturnUpdatedStation() {
         // Create a station
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -94,7 +94,7 @@ public class StationRepositoryTest {
      * Test deleting a station and verifying that it no longer exists in the repository.
      */
     @Test
-    public void StationRepository_DeleteStation_ReturnNoStation() {
+    void StationRepository_DeleteStation_ReturnNoStation() {
         // Create a station
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -114,7 +114,7 @@ public class StationRepositoryTest {
      * Test finding a station by its ID and verifying that it matches the saved station.
      */
     @Test
-    public void StationRepository_FindById_ReturnMatchingStation() {
+    void StationRepository_FindById_ReturnMatchingStation() {
         // Create a station
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -135,7 +135,7 @@ public class StationRepositoryTest {
      * Test finding stations by city and verifying that the list contains the expected stations.
      */
     @Test
-    public void StationRepository_FindStationsByCity_ReturnMatchingStations() {
+    void StationRepository_FindStationsByCity_ReturnMatchingStations() {
         // Create two stations in the same city
         StationEntity station1 = StationEntity.builder()
                 .name("Station 1")
