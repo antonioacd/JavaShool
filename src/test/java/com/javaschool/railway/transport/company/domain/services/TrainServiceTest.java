@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for the TrainService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class TrainServiceTest {
+class TrainServiceTest {
 
     @Mock
     private TrainRepository trainRepository;
@@ -47,7 +47,7 @@ public class TrainServiceTest {
      * Test for creating a train and returning a TrainInfoDTO.
      */
     @Test
-    public void createTrain_ReturnsTrainDTO() {
+    void createTrain_ReturnsTrainDTO() {
         // Arrange
         TrainEntity train = TrainEntity.builder()
                 .seats(100)
@@ -87,7 +87,7 @@ public class TrainServiceTest {
      * Test for updating a train and returning an updated TrainInfoDTO.
      */
     @Test
-    public void updateTrain_ReturnsUpdatedTrainDTO() {
+    void updateTrain_ReturnsUpdatedTrainDTO() {
         // Arrange
         Long trainId = 1L;
         TrainEntity existingTrain = TrainEntity.builder()
@@ -131,7 +131,7 @@ public class TrainServiceTest {
      * Test for deleting a train by its ID without any exceptions thrown.
      */
     @Test
-    public void deleteTrainById_NoExceptionsThrown() {
+    void deleteTrainById_NoExceptionsThrown() {
         // Arrange
         Long trainId = 1L;
         // Calling the method under test
@@ -144,7 +144,7 @@ public class TrainServiceTest {
      * Test for retrieving a train by its ID and returning a TrainInfoDTO.
      */
     @Test
-    public void getTrainById_ReturnsTrainDTO() {
+    void getTrainById_ReturnsTrainDTO() {
         // Arrange
         Long trainId = 1L;
         TrainEntity existingTrain = TrainEntity.builder()
@@ -182,7 +182,7 @@ public class TrainServiceTest {
      * Test for retrieving all trains and returning a list of TrainInfoDTOs.
      */
     @Test
-    public void getAllTrains_ReturnsTrainDTOs() {
+    void getAllTrains_ReturnsTrainDTOs() {
         // Arrange
         TrainEntity train1 = TrainEntity.builder()
                 .id(1L)
@@ -234,7 +234,6 @@ public class TrainServiceTest {
         List<TrainInfoDTO> allTrains = trainService.getAllTrains();
 
         // Verifying that the result is not null and contains the expected number of trains
-        assertThat(allTrains).isNotNull();
         assertThat(allTrains).hasSize(trains.size());
 
         // Additional assertions for each train
@@ -249,7 +248,7 @@ public class TrainServiceTest {
      * Test for finding trains by departure and arrival stations and returning a list of TrainEntities.
      */
     @Test
-    public void findTrainsByDepartureAndArrivalStations_ReturnsListOfTrainEntities() {
+    void findTrainsByDepartureAndArrivalStations_ReturnsListOfTrainEntities() {
         // Arrange
         List<TrainEntity> trainsByStations = Collections.singletonList(
                 TrainEntity.builder()
@@ -269,7 +268,6 @@ public class TrainServiceTest {
         List<TrainEntity> foundTrains = trainService.findTrainsByDepartureAndArrivalStations("City1", "City2");
 
         // Verifying that the result is not null and contains the expected number of trains
-        assertThat(foundTrains).isNotNull();
         assertThat(foundTrains).hasSize(trainsByStations.size());
 
         // Additional assertions for each train

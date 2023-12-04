@@ -8,21 +8,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-public class CustomUserDetailsServiceTest {
+class CustomUserDetailsServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -36,7 +32,7 @@ public class CustomUserDetailsServiceTest {
     }
 
     @Test
-    public void loadUserByUsername_UserFound_ReturnsUserDetails() {
+    void loadUserByUsername_UserFound_ReturnsUserDetails() {
         // Arrange
         String email = "test@example.com";
         UserEntity userEntity = new UserEntity();
@@ -59,7 +55,7 @@ public class CustomUserDetailsServiceTest {
     }
 
     @Test
-    public void loadUserByUsername_UserNotFound_ThrowsException() {
+    void loadUserByUsername_UserNotFound_ThrowsException() {
         // Arrange
         String email = "nonexistent@example.com";
         when(userRepository.findByEmail(email)).thenReturn(Optional.empty());
@@ -71,7 +67,7 @@ public class CustomUserDetailsServiceTest {
     }
 
     /*@Test
-    public void mapRolesToAuthorities_MapsRoles_ReturnsGrantedAuthorities() {
+    void mapRolesToAuthorities_MapsRoles_ReturnsGrantedAuthorities() {
         // Arrange
         RoleEntity roleEntity1 = new RoleEntity();
         roleEntity1.setName("ROLE_USER");

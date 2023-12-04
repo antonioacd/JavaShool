@@ -260,8 +260,9 @@ class TicketServiceTest {
         List<TicketInfoDTO> allTickets = ticketService.getAllTickets();
 
         // Assert
-        assertThat(allTickets).isNotNull();
-        assertThat(allTickets.size()).isEqualTo(2);
+        assertThat(allTickets)
+                .isNotNull()
+                .hasSize(2);
         assertThat(allTickets.get(0).getId()).isEqualTo(ticketDTOs.get(0).getId());
         assertThat(allTickets.get(1).getId()).isEqualTo(ticketDTOs.get(1).getId());
     }

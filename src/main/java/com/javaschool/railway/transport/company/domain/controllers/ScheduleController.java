@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ScheduleController {
 
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     /**
      * Creates a new schedule.

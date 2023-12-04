@@ -37,15 +37,15 @@ services:
     ports:
       - "8080:8080"
 
-  frontend:
-    container_name: Frontend
-    build: ../java-school-frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - java-app
-    environment:
-      REACT_APP_BACKEND_URL: http://localhost:8080
+    # frontend:
+    #   container_name: Frontend
+    #   build: ../java-school-frontend
+    #   ports:
+    #     - "3000:3000"
+    #   depends_on:
+    #     - java-app
+    #   environment:
+    #     REACT_APP_BACKEND_URL: http://localhost:8080
 
   mkdocs:
     container_name: Documentation

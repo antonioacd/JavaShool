@@ -37,7 +37,7 @@ class StationRepositoryTest {
 
         // Verify the saved station is not null and has a positive ID
         Assertions.assertThat(savedStation).isNotNull();
-        Assertions.assertThat(savedStation.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedStation.getId()).isPositive();
     }
 
     /**
@@ -63,8 +63,9 @@ class StationRepositoryTest {
         List<StationEntity> stationList = stationRepository.findAll();
 
         // Verify that the list is not null and contains two stations
-        Assertions.assertThat(stationList).isNotNull();
-        Assertions.assertThat(stationList.size()).isEqualTo(2);
+        Assertions.assertThat(stationList)
+                .isNotNull()
+                .hasSize(2);
     }
 
     /**
@@ -153,7 +154,8 @@ class StationRepositoryTest {
         List<StationEntity> foundStations = stationRepository.findStationsByCity("City 1");
 
         // Verify that the list is not null and contains two stations
-        Assertions.assertThat(foundStations).isNotNull();
-        Assertions.assertThat(foundStations.size()).isEqualTo(2);
+        Assertions.assertThat(foundStations)
+                .isNotNull()
+                .hasSize(2);
     }
 }

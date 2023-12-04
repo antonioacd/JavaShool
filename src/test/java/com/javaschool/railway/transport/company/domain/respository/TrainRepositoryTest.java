@@ -61,7 +61,7 @@ class TrainRepositoryTest {
 
         // Verify the train is saved
         Assertions.assertThat(savedTrain).isNotNull();
-        Assertions.assertThat(savedTrain.getId()).isGreaterThan(0);
+        Assertions.assertThat(savedTrain.getId()).isPositive();
     }
 
     /**
@@ -108,7 +108,6 @@ class TrainRepositoryTest {
         Iterable<TrainEntity> trainList = trainRepository.findAll();
 
         // Verify there are more than one train
-        Assertions.assertThat(trainList).isNotNull();
         Assertions.assertThat(trainList).hasSizeGreaterThan(1);
     }
 
@@ -195,8 +194,9 @@ class TrainRepositoryTest {
         List<TrainEntity> foundTrains = trainRepository.findTrainsByDepartureAndArrivalStations("Station 1", "Station 2");
 
         // Verify the found trains match the expected results
-        Assertions.assertThat(foundTrains).isNotNull();
-        Assertions.assertThat(foundTrains.size()).isEqualTo(1);
+        Assertions.assertThat(foundTrains)
+                .isNotNull()
+                .hasSize(1);
         Assertions.assertThat(foundTrains.get(0).getId()).isEqualTo(train1.getId());
     }
 }

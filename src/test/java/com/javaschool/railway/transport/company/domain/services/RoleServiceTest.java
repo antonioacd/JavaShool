@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class RoleServiceTest {
+class RoleServiceTest {
 
     @Mock
     private RoleRepository roleRepository;
@@ -32,7 +32,7 @@ public class RoleServiceTest {
     private RoleService roleService;
 
     @Test
-    public void createRole_ReturnsRoleDTO() {
+    void createRole_ReturnsRoleDTO() {
         // Arrange
         RoleEntity role = RoleEntity.builder()
                 .name("Admin")
@@ -59,7 +59,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void getRoleById_ReturnsRoleDTO() {
+    void getRoleById_ReturnsRoleDTO() {
         // Arrange
         Long roleId = 1L;
         RoleEntity existingRole = RoleEntity.builder()
@@ -89,7 +89,7 @@ public class RoleServiceTest {
     }
 
     @Test
-    public void getAllRoles_ReturnsRoleDTOs() {
+    void getAllRoles_ReturnsRoleDTOs() {
         // Arrange
         RoleEntity role1 = RoleEntity.builder()
                 .id(1L)
@@ -125,7 +125,6 @@ public class RoleServiceTest {
         List<RoleInfoDTO> allRoles = roleService.getAllRoles();
 
         // Assert
-        assertThat(allRoles).isNotNull();
         assertThat(allRoles).hasSize(roles.size());
 
         for (int i = 0; i < allRoles.size(); i++) {

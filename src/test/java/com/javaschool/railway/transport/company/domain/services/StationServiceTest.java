@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for the StationService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class StationServiceTest {
+class StationServiceTest {
 
     @Mock
     private StationRepository stationRepository;
@@ -41,7 +41,7 @@ public class StationServiceTest {
      * It verifies that the method returns a non-null StationDTO.
      */
     @Test
-    public void createStation_ReturnsStationDTO() {
+    void createStation_ReturnsStationDTO() {
         // Arrange
         StationEntity station = StationEntity.builder()
                 .name("Station")
@@ -76,7 +76,7 @@ public class StationServiceTest {
      * It verifies that the method returns an updated StationDTO.
      */
     @Test
-    public void updateStation_ReturnsUpdatedStationDTO() {
+    void updateStation_ReturnsUpdatedStationDTO() {
         // Existing StationEntity for the test
         Long stationId = 1L;
         StationEntity existingStation = StationEntity.builder()
@@ -114,7 +114,7 @@ public class StationServiceTest {
      * It verifies that the method deletes the station without throwing exceptions.
      */
     @Test
-    public void deleteStationById_NoExceptionsThrown() {
+    void deleteStationById_NoExceptionsThrown() {
         // Existing StationEntity for the test
         Long stationId = 1L;
         StationEntity existingStation = StationEntity.builder()
@@ -135,7 +135,7 @@ public class StationServiceTest {
      * It verifies that the method returns a non-null StationDTO.
      */
     @Test
-    public void getStationById_ReturnsStationDTO() {
+    void getStationById_ReturnsStationDTO() {
         // Existing StationEntity for the test
         Long stationId = 1L;
         StationEntity existingStation = StationEntity.builder()
@@ -162,7 +162,7 @@ public class StationServiceTest {
      * It verifies that the method returns a list of non-null StationDTOs.
      */
     @Test
-    public void StationService_GetAllStations_ReturnsStationDTOs() {
+    void StationService_GetAllStations_ReturnsStationDTOs() {
         // Arrange
         StationEntity station1 = StationEntity.builder()
                 .id(1L)
@@ -203,7 +203,6 @@ public class StationServiceTest {
         List<StationInfoDTO> allStations = stationService.getAllStations();
 
         // Verifying that the result is not null and contains the expected number of stations
-        assertThat(allStations).isNotNull();
         assertThat(allStations).hasSize(stations.size());
 
         // Additional assertions for each station
@@ -218,7 +217,7 @@ public class StationServiceTest {
      * It verifies that the method returns a list of non-null StationEntities.
      */
     @Test
-    public void findStationsByCity_ReturnsListOfStationEntities() {
+    void findStationsByCity_ReturnsListOfStationEntities() {
         // List of StationEntity for the test
         List<StationEntity> stationsByCity = Collections.singletonList(
                 StationEntity.builder().id(1L).name("Station1").city("City1").build()
@@ -231,7 +230,6 @@ public class StationServiceTest {
         List<StationEntity> foundStations = stationService.findStationsByCity("City1");
 
         // Verifying that the result is not null and contains the expected number of stations
-        assertThat(foundStations).isNotNull();
         assertThat(foundStations).hasSize(stationsByCity.size());
 
         // Additional assertions for each station

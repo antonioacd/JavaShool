@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
  * Unit tests for the ScheduleService class.
  */
 @ExtendWith(MockitoExtension.class)
-public class ScheduleServiceTest {
+class ScheduleServiceTest {
 
     @Mock
     private ScheduleRepository scheduleRepository;
@@ -50,7 +50,7 @@ public class ScheduleServiceTest {
      * Test for creating a schedule and returning a ScheduleInfoDTO.
      */
     @Test
-    public void createSchedule_ReturnsScheduleDTO() {
+    void createSchedule_ReturnsScheduleDTO() {
         // Arrange
         ScheduleEntity schedule = ScheduleEntity.builder()
                 .departureTime(new Date())
@@ -89,7 +89,7 @@ public class ScheduleServiceTest {
      * Test for updating a schedule and returning an updated ScheduleInfoDTO.
      */
     @Test
-    public void updateSchedule_ReturnsUpdatedScheduleDTO() {
+    void updateSchedule_ReturnsUpdatedScheduleDTO() {
         // Arrange
         Long scheduleId = 1L;
         ScheduleEntity existingSchedule = ScheduleEntity.builder()
@@ -132,7 +132,7 @@ public class ScheduleServiceTest {
      * Test for deleting a schedule by its ID without any exceptions thrown.
      */
     @Test
-    public void deleteScheduleById_NoExceptionsThrown() {
+    void deleteScheduleById_NoExceptionsThrown() {
         // Arrange
         Long scheduleId = 1L;
         // Calling the method under test
@@ -145,7 +145,7 @@ public class ScheduleServiceTest {
      * Test for retrieving a schedule by its ID and returning a ScheduleInfoDTO.
      */
     @Test
-    public void getScheduleById_ReturnsScheduleDTO() {
+    void getScheduleById_ReturnsScheduleDTO() {
         // Arrange
         Long scheduleId = 1L;
         ScheduleEntity existingSchedule = ScheduleEntity.builder()
@@ -179,7 +179,7 @@ public class ScheduleServiceTest {
      * Test for retrieving all schedules and returning a list of ScheduleInfoDTOs.
      */
     @Test
-    public void getAllSchedules_ReturnsScheduleDTOs() {
+    void getAllSchedules_ReturnsScheduleDTOs() {
 
         Date defaultDate = new Date();
         // Arrange
@@ -225,7 +225,6 @@ public class ScheduleServiceTest {
         List<ScheduleInfoDTO> allSchedules = scheduleService.getAllSchedules();
 
         // Verifying that the result is not null and contains the expected number of schedules
-        assertThat(allSchedules).isNotNull();
         assertThat(allSchedules).hasSize(schedules.size());
 
         // Additional assertions for each schedule
@@ -240,7 +239,7 @@ public class ScheduleServiceTest {
      * Test for finding schedules by cities, arrival date, and returning a list of ScheduleEntities.
      */
     /*@Test
-    public void findSchedulesByCitiesAndDate_ReturnsListOfScheduleEntities() throws ParseException {
+    void findSchedulesByCitiesAndDate_ReturnsListOfScheduleEntities() throws ParseException {
         // Arrange
         String departureCity = "City1";
         String arrivalCity = "City2";
@@ -277,7 +276,7 @@ public class ScheduleServiceTest {
      * Test for finding schedules by train number and returning a list of ScheduleEntities.
      */
     @Test
-    public void findSchedulesByTrainNumber_ReturnsListOfScheduleEntities() {
+    void findSchedulesByTrainNumber_ReturnsListOfScheduleEntities() {
         // Arrange
         String trainNumber = "T123";
 
@@ -303,7 +302,6 @@ public class ScheduleServiceTest {
         List<ScheduleEntity> foundSchedules = scheduleService.findByTrainNumber(trainNumber);
 
         // Verifying that the result is not null and contains the expected number of schedules
-        assertThat(foundSchedules).isNotNull();
         assertThat(foundSchedules).hasSize(schedulesByTrainNumber.size());
 
         // Additional assertions for each schedule

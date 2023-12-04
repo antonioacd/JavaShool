@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class AuthServiceTest {
+class AuthServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
@@ -52,7 +52,7 @@ public class AuthServiceTest {
 
 
     @Test
-    public void login_SuccessfulAuthentication_ReturnsToken() {
+    void login_SuccessfulAuthentication_ReturnsToken() {
         // Arrange
         LoginDTO loginDTO = new LoginDTO("test@example.com", "password");
         Authentication authentication = mock(Authentication.class);
@@ -69,7 +69,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void login_AuthenticationFailure_ReturnsUnauthorized() {
+    void login_AuthenticationFailure_ReturnsUnauthorized() {
         // Arrange
         LoginDTO loginDTO = new LoginDTO("test@example.com", "wrong-password");
         when(authenticationManager.authenticate(any())).thenThrow(new RuntimeException("Authentication failed"));
@@ -83,7 +83,7 @@ public class AuthServiceTest {
     }
 
     @Test
-    public void register_NewUser_ReturnsSuccessMessage() {
+    void register_NewUser_ReturnsSuccessMessage() {
         // Arrange
         RegisterDTO registerDTO = new RegisterDTO("John", "Doe", "john@example.com", "password");
         when(userRepository.existsByEmail("john@example.com")).thenReturn(false);
@@ -103,7 +103,7 @@ public class AuthServiceTest {
      * Tests the registration process when the user already exists.
      */
     @Test
-    public void register_UserAlreadyExists_ReturnsBadRequest() {
+    void register_UserAlreadyExists_ReturnsBadRequest() {
         // Arrange
         RegisterDTO registerDTO = new RegisterDTO("john@example.com", "password", "Jhon", "Example");
 

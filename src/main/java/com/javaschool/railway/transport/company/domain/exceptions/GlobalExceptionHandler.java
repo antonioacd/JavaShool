@@ -8,45 +8,51 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String INTERNAL_SERVER_ERROR_MESSAGE = "Server error: ";
+    private static final String FORBIDDEN_MESSAGE = "Access denied: ";
+    private static final String VALIDATION_ERROR_MESSAGE = "Validation error: ";
+    private static final String CONSTRAINT_VIOLATION_MESSAGE = "Constraint violation: ";
+    private static final String METHOD_ARGUMENT_TYPE_MISMATCH_MESSAGE = "Method argument type mismatch: ";
+    private static final String BIND_ERROR_MESSAGE = "Bind error: ";
+
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseEntity<String> handleException(Exception e) {
-        return new ResponseEntity<>("Server error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(INTERNAL_SERVER_ERROR_MESSAGE + e.getMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException e) {
-        return new ResponseEntity<>("Access denied: " + e.getMessage(), HttpStatus.FORBIDDEN);
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(FORBIDDEN_MESSAGE + e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
-        return new ResponseEntity<>("Validation error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(VALIDATION_ERROR_MESSAGE + e.getMessage());
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleConstraintViolation(ConstraintViolationException e) {
-        return new ResponseEntity<>("Constraint violation: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(CONSTRAINT_VIOLATION_MESSAGE + e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException e) {
-        return new ResponseEntity<>("Method argument type mismatch: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(METHOD_ARGUMENT_TYPE_MISMATCH_MESSAGE + e.getMessage());
     }
 
     @ExceptionHandler(BindException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<String> handleBindException(BindException e) {
-        return new ResponseEntity<>("Bind error: " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(BIND_ERROR_MESSAGE + e.getMessage());
     }
 }

@@ -23,7 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class UserServiceTest {
+class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -35,7 +35,7 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    public void deleteUserById_NoExceptionsThrown() {
+    void deleteUserById_NoExceptionsThrown() {
         // Arrange
         Long userId = 1L;
 
@@ -47,7 +47,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserById_ReturnsUserDTO() {
+    void getUserById_ReturnsUserDTO() {
         // Arrange
         Long userId = 1L;
         UserEntity existingUser = UserEntity.builder()
@@ -81,7 +81,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserByEmail_ReturnsUserDTOWithRoles() {
+    void getUserByEmail_ReturnsUserDTOWithRoles() {
         // Arrange
         String userEmail = "john.doe@example.com";
         UserEntity existingUser = UserEntity.builder()
@@ -121,7 +121,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getAllUsers_ReturnsUserDTOs() {
+    void getAllUsers_ReturnsUserDTOs() {
         // Arrange
         UserEntity user1 = UserEntity.builder()
                 .id(1L)
@@ -165,7 +165,6 @@ public class UserServiceTest {
         List<UserInfoDTO> allUsers = userService.getAllUsers();
 
         // Assert
-        assertThat(allUsers).isNotNull();
         assertThat(allUsers).hasSize(users.size());
 
         for (int i = 0; i < allUsers.size(); i++) {
@@ -174,7 +173,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUsersByScheduleId_ReturnsListOfUserEntities() {
+    void getUsersByScheduleId_ReturnsListOfUserEntities() {
         // Arrange
         Long scheduleId = 1L;
         List<UserEntity> usersByScheduleId = Collections.singletonList(
@@ -188,7 +187,6 @@ public class UserServiceTest {
         List<UserEntity> foundUsers = userService.getUsersByScheduleId(scheduleId);
 
         // Assert
-        assertThat(foundUsers).isNotNull();
         assertThat(foundUsers).hasSize(usersByScheduleId.size());
 
         for (int i = 0; i < foundUsers.size(); i++) {

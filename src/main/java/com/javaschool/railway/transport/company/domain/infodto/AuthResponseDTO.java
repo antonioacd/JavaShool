@@ -11,9 +11,9 @@ import lombok.Data;
 public class AuthResponseDTO {
 
     private String accessToken;
-    private static final String tokenType = SecurityConstants.TOKEN_TYPE;
+    private static final String TOKEN_TYPE = SecurityConstants.TOKEN_TYPE;
 
     public String getTokenType() {
-        return tokenType;
+        return TOKEN_TYPE;
     }
 }

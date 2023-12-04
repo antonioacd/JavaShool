@@ -3,7 +3,7 @@ package com.javaschool.railway.transport.company.domain.controllers;
 import com.javaschool.railway.transport.company.domain.entitites.TicketEntity;
 import com.javaschool.railway.transport.company.domain.infodto.TicketInfoDTO;
 import com.javaschool.railway.transport.company.domain.services.TicketService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +12,10 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/tickets")
+@AllArgsConstructor
 public class TicketController {
 
-    @Autowired
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     /**
      * Creates a new ticket.
