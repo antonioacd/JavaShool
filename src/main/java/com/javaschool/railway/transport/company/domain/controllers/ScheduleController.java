@@ -82,9 +82,9 @@ public class ScheduleController {
      */
     @GetMapping("/search")
     public ResponseEntity<List<ScheduleEntity>> searchSchedulesByCitiesAndDate(
-            @RequestParam("departureCity") String departureCity,
-            @RequestParam("arrivalCity") String arrivalCity,
-            @RequestParam("selectedDate") Date selectedDate) {
+            @RequestParam(name = "departureCity", required = false) String departureCity,
+            @RequestParam(name = "arrivalCity", required = false) String arrivalCity,
+            @RequestParam(name = "selectedDate", required = false) Date selectedDate) {
         List<ScheduleEntity> schedules = scheduleService.findSchedulesByCitiesAndDate(departureCity, arrivalCity, selectedDate);
         return ResponseEntity.ok(schedules);
     }
