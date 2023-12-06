@@ -13,11 +13,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -95,31 +93,21 @@ public class TicketService {
      * @return true if the schedule is departing soon, false otherwise.
      */
     private boolean isDepartingSoon(ScheduleEntity schedule) {
-        // Utilizar la zona horaria de Madrid explícitamente
+        // Use the Madrid time zone explicitly
         ZoneId madridZoneId = ZoneId.of("Europe/Madrid");
 
-        // Obtener la hora actual en la zona horaria de Madrid
+        // Get the current time in the Madrid time zone
         LocalDateTime now = LocalDateTime.now(madridZoneId);
 
-        // Convertir la fecha de partida a LocalDateTime en la zona horaria de Madrid
-        Date departureDate = schedule.getDepartureTime();
-        Instant instant = departureDate.toInstant();
-        ZoneId scheduleZoneId = madridZoneId;
-        LocalDateTime departureTime = LocalDateTime.ofInstant(instant, scheduleZoneId);
+        // Convert the departure date to LocalDateTime in the Madrid time zone and then to UTC
+        LocalDateTime departureTimeUTC = schedule.getDepartureTime()
+                .toInstant()
+                .atZone(madridZoneId)
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalDateTime();
 
-        // Convertir la fecha de partida a UTC
-        LocalDateTime departureTimeUTC = departureTime.atZone(scheduleZoneId).withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-
-        System.out.println("Current time (Madrid): " + now);
-        System.out.println("Departure time (UTC): " + departureTimeUTC);
-        System.out.println("Current time (Madrid) + 10 minutes: " + now.plusMinutes(10));
-        System.out.println("TimeZone : " + madridZoneId);
-
-        boolean isDepartingSoon = now.plusMinutes(10).isAfter(departureTimeUTC);
-
-        System.out.println("Is departing soon? " + isDepartingSoon);
-
-        return isDepartingSoon;
+        // Check if the schedule is departing in the next 10 minutes
+        return now.plusMinutes(10).isAfter(departureTimeUTC);
     }
 
 
