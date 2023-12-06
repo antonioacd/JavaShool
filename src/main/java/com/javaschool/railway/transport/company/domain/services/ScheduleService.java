@@ -87,7 +87,7 @@ public class ScheduleService {
      * @return A DTO containing the schedule's information.
      * @throws EntityNotFoundException If the schedule is not found.
      */
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN", "ROLE_USER"})
     public ScheduleInfoDTO getScheduleById(Long id) {
         // Find the schedule entity by ID or throw an exception if not found
         ScheduleEntity scheduleEntity = scheduleRepository.findById(id)
