@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(INTERNAL_SERVER_ERROR_MESSAGE + e.getMessage());
+                .body(e.getMessage());
     }
 
     @ExceptionHandler(AccessDeniedException.class)
@@ -55,4 +55,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(BIND_ERROR_MESSAGE + e.getMessage());
     }
+
 }
