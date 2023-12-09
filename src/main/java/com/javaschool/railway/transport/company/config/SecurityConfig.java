@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .configurationSource(request -> {
                             CorsConfiguration corsConfig = new CorsConfiguration();
                             corsConfig.applyPermitDefaultValues();
+                            corsConfig.addAllowedMethod(HttpMethod.GET);
                             corsConfig.addAllowedMethod(HttpMethod.PUT);
                             corsConfig.addAllowedMethod(HttpMethod.POST);
                             corsConfig.addAllowedMethod(HttpMethod.DELETE);

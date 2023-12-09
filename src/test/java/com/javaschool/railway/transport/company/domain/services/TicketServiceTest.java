@@ -17,6 +17,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -56,10 +58,23 @@ class TicketServiceTest {
      */
     @Test
     void createTicket_Successful() {
+
+        // Arrange
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date date = new Date();
+
+        try {
+            date = sdf.parse("20/02/2025");
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         // Arrange
         ScheduleEntity schedule = ScheduleEntity.builder()
                 .id(1L)
-                .departureTime(new Date())
+                .departureTime(date)
                 .arrivalTime(new Date())
                 .train(TrainEntity.builder().id(1L).seats(5).build())
                 .build();
