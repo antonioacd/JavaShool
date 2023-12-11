@@ -7,20 +7,24 @@ This project consists of three main components: Backend, Frontend, and Documenta
 To set up the project, follow these steps:
 
 1. Clone the Repositories
+
    - [Backend](https://github.com/antonioacd/JavaShool.git)
    - [Frontend](https://github.com/antonioacd/JavaSchoolFrontend.git)
    - [Documentation](https://github.com/antonioacd/javaschool-doc.git)
-3. Create a root folder and move all three projects into it:
+2. Create a root folder and move all three projects into it:
+
    ```
    project-root/
     ├── JavaSchool/           (Backend)
     ├── JavaSchoolFrontend/   (Frontend)
     └── javaschool-doc/       (Documentation)
    ```
-4. Navigate to Backend
+3. Navigate to Backend
+   
    ```
    cd project-root/JavaSchool/
    ```
-5. Use the following command to start the proyect
+4. Use the following command to start the proyect
+
    ```
    ./mvnw docker-compose up
