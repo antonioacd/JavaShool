@@ -10,9 +10,9 @@ To set up the project, follow these steps:
 2. Create a root folder and move all three projects into it:
    ```
    project-root/
-    ├── JavaSchool/    (Backend)
-    ├── JavaSchoolFrontend/      (Frontend)
-    └── javaschool-doc/ (Documentation)
+    ├── JavaSchool/           (Backend)
+    ├── JavaSchoolFrontend/   (Frontend)
+    └── javaschool-doc/       (Documentation)
    ```
 3. Navigate to Backend
    ```
