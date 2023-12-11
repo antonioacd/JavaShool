@@ -74,6 +74,12 @@ public class TicketController {
         return ResponseEntity.ok(tickets);
     }
 
+    /**
+     * Retrieves a list of tickets based on schedule ID.
+     *
+     * @param scheduleId The ID of the schedule.
+     * @return A list of ticket entities.
+     */
     @GetMapping("search/{scheduleId}")
     public List<TicketEntity> getTicketsByScheduleId(@PathVariable Long scheduleId) {
         return ticketService.getTicketsByScheduleId(scheduleId);

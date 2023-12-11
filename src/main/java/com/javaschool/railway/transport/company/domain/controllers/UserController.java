@@ -38,6 +38,12 @@ public class UserController {
         return userService.getUserByEmail(email);
     }
 
+    /**
+     * Retrieves a list of users associated with a specific schedule.
+     *
+     * @param scheduleId The ID of the schedule.
+     * @return A list of user entities.
+     */
     @GetMapping("/passengers/{scheduleId}")
     public List<UserEntity> getUsersByScheduleId(@PathVariable Long scheduleId) {
         return userService.getUsersByScheduleId(scheduleId);

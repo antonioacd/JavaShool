@@ -85,7 +85,6 @@ public class TicketService {
         throw new IllegalStateException("No available seats for this schedule.");
     }
 
-
     /**
      * Check if the schedule is departing in the next 10 minutes.
      *
@@ -109,7 +108,6 @@ public class TicketService {
         // Check if the schedule is departing in the next 10 minutes
         return now.plusMinutes(10).isAfter(departureTimeUTC);
     }
-
 
     /**
      * Deletes a ticket by its ID.

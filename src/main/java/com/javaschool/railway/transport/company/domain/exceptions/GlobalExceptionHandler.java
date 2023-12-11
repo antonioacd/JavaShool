@@ -10,50 +10,81 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+/**
+ * GlobalExceptionHandler handles exceptions globally for the entire application.
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    private static final String INTERNAL_SERVER_ERROR_MESSAGE = "Server error: ";
-    private static final String FORBIDDEN_MESSAGE = "Access denied: ";
-    private static final String VALIDATION_ERROR_MESSAGE = "Validation error: ";
-    private static final String CONSTRAINT_VIOLATION_MESSAGE = "Constraint violation: ";
-    private static final String METHOD_ARGUMENT_TYPE_MISMATCH_MESSAGE = "Method argument type mismatch: ";
-    private static final String BIND_ERROR_MESSAGE = "Bind error: ";
-
+    /**
+     * Handles generic exceptions and returns an INTERNAL_SERVER_ERROR response.
+     *
+     * @param e The exception to handle.
+     * @return ResponseEntity with an error message and HTTP status 500.
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(e.getMessage());
+                .body("Server error: " + e.getMessage());
     }
 
+    /**
+     * Handles AccessDeniedException and returns a FORBIDDEN response.
+     *
+     * @param e The AccessDeniedException to handle.
+     * @return ResponseEntity with an error message and HTTP status 403.
+     */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException e) {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                .body(FORBIDDEN_MESSAGE + e.getMessage());
+                .body("Access denied: " + e.getMessage());
     }
 
+    /**
+     * Handles MethodArgumentNotValidException and returns a BAD_REQUEST response.
+     *
+     * @param e The MethodArgumentNotValidException to handle.
+     * @return ResponseEntity with a validation error message and HTTP status 400.
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(VALIDATION_ERROR_MESSAGE + e.getMessage());
+                .body("Validation error: " + e.getMessage());
     }
 
+    /**
+     * Handles ConstraintViolationException and returns a BAD_REQUEST response.
+     *
+     * @param e The ConstraintViolationException to handle.
+     * @return ResponseEntity with a constraint violation error message and HTTP status 400.
+     */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<String> handleConstraintViolation(ConstraintViolationException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(CONSTRAINT_VIOLATION_MESSAGE + e.getMessage());
+                .body("Constraint violation: " + e.getMessage());
     }
 
+    /**
+     * Handles MethodArgumentTypeMismatchException and returns a BAD_REQUEST response.
+     *
+     * @param e The MethodArgumentTypeMismatchException to handle.
+     * @return ResponseEntity with a method argument type mismatch error message and HTTP status 400.
+     */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<String> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(METHOD_ARGUMENT_TYPE_MISMATCH_MESSAGE + e.getMessage());
+                .body("Method argument type mismatch: " + e.getMessage());
     }
 
+    /**
+     * Handles BindException and returns a BAD_REQUEST response.
+     *
+     * @param e The BindException to handle.
+     * @return ResponseEntity with a bind error message and HTTP status 400.
+     */
     @ExceptionHandler(BindException.class)
     public ResponseEntity<String> handleBindException(BindException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(BIND_ERROR_MESSAGE + e.getMessage());
+                .body("Bind error: " + e.getMessage());
     }
-
 }

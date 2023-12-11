@@ -20,7 +20,12 @@ import java.util.stream.Collectors;
 @Component
 public class JwtGenerator {
 
-
+    /**
+     * Retrieves the roles from the collection of authorities.
+     *
+     * @param authorities The collection of authorities.
+     * @return A list of role names.
+     */
     private List<String> getRolesFromAuthorities(Collection<? extends GrantedAuthority> authorities) {
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
@@ -39,7 +44,7 @@ public class JwtGenerator {
 
         return Jwts.builder()
                 .setSubject(email)
-                .claim("roles", roles)  // Agrega roles a las reclamaciones
+                .claim("roles", roles)  // Add roles to the claims
                 .setIssuedAt(new Date())
                 .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
                 .compact();
@@ -59,6 +64,12 @@ public class JwtGenerator {
         return claims.getSubject();
     }
 
+    /**
+     * Retrieves the roles from the provided JWT.
+     *
+     * @param token The JWT to parse.
+     * @return A list of role names.
+     */
     public List<String> getRolesFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(SecurityConstants.JWT_SECRET)

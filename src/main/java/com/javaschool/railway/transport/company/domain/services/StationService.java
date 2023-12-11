@@ -56,7 +56,6 @@ public class StationService {
         return modelMapper.map(stationRepository.save(existingStation), StationInfoDTO.class);
     }
 
-
     /**
      * Deletes a station by its ID.
      *
