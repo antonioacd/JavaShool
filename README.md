@@ -7,9 +7,9 @@ This project consists of three main components: Backend, Frontend, and Documenta
 To set up the project, follow these steps:
 
 1. Clone the Repositories
-   - [Backend](enlace-al-repositorio)
-   - [Frontend]([enlace-al-repositorio](https://github.com/antonioacd/JavaSchoolFrontend.git))
-   - [Documentation](enlace-al-repositorio)
+   - [Backend](https://github.com/antonioacd/JavaShool.git)
+   - [Frontend](https://github.com/antonioacd/JavaSchoolFrontend.git)
+   - [Documentation](https://github.com/antonioacd/javaschool-doc.git)
 3. Create a root folder and move all three projects into it:
    ```
    project-root/
