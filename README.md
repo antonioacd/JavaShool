@@ -19,4 +19,3 @@ To set up the project, follow these steps:
 5. Use the following command to start the proyect
    ```
     ./mvnw docker-compose up
-  ```
