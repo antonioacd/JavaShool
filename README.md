@@ -15,7 +15,9 @@ To set up the project, follow these steps:
     └── javaschool-doc/ (Documentation)
    ```
 3. Navigate to Backend
-```cd project-root/JavaSchool/```
+   ```
+   cd project-root/JavaSchool/
+   ```
 5. Use the following command to start the proyect
-```
-./mvnw docker-compose up
+   ```
+   ./mvnw docker-compose up
